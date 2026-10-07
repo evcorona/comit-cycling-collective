@@ -4,18 +4,18 @@ Aplicación en español para generar un QR de texto con datos de emergencia. Rea
 
 ## Desarrollo
 
-Requiere Node.js 22 o posterior y npm.
+Requiere Node.js 22 o posterior y pnpm 11.19.0.
 
 ```sh
-npm ci --cache /tmp/npm-cache
-npm run dev
+pnpm install --frozen-lockfile
+pnpm dev
 ```
 
 ## Compilación
 
 ```sh
-npm run build
-npm run preview
+pnpm build
+pnpm preview
 ```
 
 El directorio `dist` puede publicarse en cualquier alojamiento estático. No requiere servidor de datos, credenciales ni variables de entorno.
