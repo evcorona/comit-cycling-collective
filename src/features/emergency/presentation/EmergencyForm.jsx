@@ -1,0 +1,75 @@
+import { UserRound, Info, QrCode, ArrowRight, RotateCcw } from "lucide-react";
+import { emergencyFields } from "../domain/constants/fields";
+import { EmergencyField } from "./EmergencyField";
+export function EmergencyForm({
+  register,
+  errors,
+  isSubmitting,
+  submit,
+  clear,
+  error,
+  invalidate,
+}) {
+  return (
+    <form
+      noValidate
+      onSubmit={submit}
+      className="rounded-xl border border-stone-200 bg-white p-5 sm:p-6"
+    >
+      <div className="mb-5 flex items-center gap-3">
+        <span className="rounded-lg bg-cream p-2.5 text-black">
+          <UserRound size={20} />
+        </span>
+        <div>
+          <h3 className="font-bold text-black">Datos de emergencia</h3>
+          <p className="mt-1 text-xs text-muted">
+            Nombre y primer contacto con telefono son obligatorios. El resto es
+            opcional.
+          </p>
+        </div>
+      </div>
+      <div className="grid gap-x-5 gap-y-4 sm:grid-cols-2">
+        {emergencyFields.map((field) => (
+          <EmergencyField
+            key={field.name}
+            field={field}
+            register={register}
+            error={errors[field.name]}
+            onChange={invalidate}
+          />
+        ))}
+      </div>
+      <div className="mt-6 flex gap-2.5 rounded-lg bg-cream p-3 text-xs leading-5 text-muted">
+        <Info size={16} className="mt-0.5 shrink-0 text-black" />
+        <p>
+          Cuanta mas informacion relevante y actualizada compartas, mejor podra
+          un paramedico conocer tu situacion en una emergencia. Incluye
+          alergias, condiciones medicas y medicamentos si los conoces. Los
+          campos vacios no apareceran en tu QR.
+        </p>
+      </div>
+      {error && (
+        <p role="alert" className="mt-3 text-sm text-pink">
+          {error}
+        </p>
+      )}
+      <div className="mt-6 flex flex-wrap gap-3">
+        <button
+          disabled={isSubmitting}
+          className="primary flex flex-1 items-center justify-center gap-2 rounded-lg px-5 py-3.5 text-sm font-bold"
+        >
+          <QrCode size={18} />
+          {isSubmitting ? "Generando…" : "Generar mi QR"}
+          <ArrowRight size={17} className="ml-auto" />
+        </button>
+        <button
+          type="button"
+          onClick={clear}
+          className="flex items-center justify-center gap-2 rounded-lg border border-stone-200 px-4 py-3 text-xs font-semibold text-muted hover:bg-cream"
+        >
+          <RotateCcw size={14} /> Limpiar
+        </button>
+      </div>
+    </form>
+  );
+}

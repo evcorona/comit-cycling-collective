@@ -1,17 +1,85 @@
 @import "tailwindcss";
-@theme { --color-pink: #E5295D; --color-cream: #f7f7f7; --color-muted: #666666; }
-:root { font-family: Arial, Helvetica, sans-serif; color: #000; background: #fff; font-synthesis: none; }
-* { box-sizing: border-box; }
-.display { font-weight: 750; letter-spacing: -.04em; }
-input, textarea, select { width: 100%; border: 1px solid #d6d6d6; border-radius: 7px; background: #fff; padding: 11px 12px; font-size: 13px; color: #000; transition: border-color .15s, box-shadow .15s; }
-textarea { resize: vertical; min-height: 66px; }
-input::placeholder, textarea::placeholder { color: #737373; font-size: 12px; }
-input:focus, textarea:focus, select:focus { outline: none; border-color: #E5295D; box-shadow: 0 0 0 3px #E5295D20; }
-button, a, summary { -webkit-tap-highlight-color: transparent; }
-button { cursor: pointer; }
-button:disabled { opacity: .65; cursor: wait; }
-button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px solid #E5295D; outline-offset: 4px; }
-.primary { background: #E5295D; color: #fff; transition: background .15s, transform .15s; }
-.primary:hover { background: #cb194b; }
-.primary:active { transform: translateY(1px); }
-@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+@theme {
+  --color-pink: #e5295d;
+  --color-cream: #f7f7f7;
+  --color-muted: #666666;
+}
+:root {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #000;
+  background: #fff;
+  font-synthesis: none;
+}
+* {
+  box-sizing: border-box;
+}
+.display {
+  font-weight: 750;
+  letter-spacing: -0.04em;
+}
+input,
+textarea,
+select {
+  width: 100%;
+  border: 1px solid #d6d6d6;
+  border-radius: 7px;
+  background: #fff;
+  padding: 11px 12px;
+  font-size: 13px;
+  color: #000;
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+textarea {
+  resize: vertical;
+  min-height: 66px;
+}
+input::placeholder,
+textarea::placeholder {
+  color: #737373;
+  font-size: 12px;
+}
+input:focus,
+textarea:focus,
+select:focus {
+  outline: none;
+  border-color: #e5295d;
+  box-shadow: 0 0 0 3px #e5295d20;
+}
+button,
+a,
+summary {
+  -webkit-tap-highlight-color: transparent;
+}
+button {
+  cursor: pointer;
+}
+button:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+button:focus-visible,
+a:focus-visible,
+summary:focus-visible {
+  outline: 3px solid #e5295d;
+  outline-offset: 4px;
+}
+.primary {
+  background: #e5295d;
+  color: #fff;
+  transition:
+    background 0.15s,
+    transform 0.15s;
+}
+.primary:hover {
+  background: #cb194b;
+}
+.primary:active {
+  transform: translateY(1px);
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+  }
+}
