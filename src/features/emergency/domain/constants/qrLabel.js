@@ -1,7 +1,7 @@
 export const QR_LABEL = {
   previewPixels: 320,
   paddingCm: 0.025,
-  logoHeightRatio: 0.06,
+  logoHeightRatio: 0.12,
   logoAspectRatio: 3,
   logoGapCm: 0.01,
   cornerCm: 0.12,
