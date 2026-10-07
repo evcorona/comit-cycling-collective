@@ -9,6 +9,8 @@ export const formSchema = z.object(
         .trim()
         .max(maxLength, "Reduce la cantidad de texto.");
       if (required) rule = rule.min(1, `Completa ${label.toLowerCase()}.`);
+      if (type === "tel" || type === "number")
+        rule = rule.regex(/^\d*$/, "Ingresa solo valores numericos.");
       if (type === "select")
         rule = rule.refine(
           (value) => value === "" || bloodTypes.includes(value),

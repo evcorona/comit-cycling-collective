@@ -3,6 +3,7 @@ import { emergencyFields } from "../domain/constants/fields";
 import { EmergencyField } from "./EmergencyField";
 export function EmergencyForm({
   register,
+  control,
   errors,
   isSubmitting,
   submit,
@@ -34,6 +35,7 @@ export function EmergencyForm({
             key={field.name}
             field={field}
             register={register}
+            control={control}
             error={errors[field.name]}
             onChange={invalidate}
           />

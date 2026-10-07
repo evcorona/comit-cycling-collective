@@ -38,7 +38,7 @@ export const emergencyFields = [
   {
     name: "phone",
     label: "Telefono de emergencia 1",
-    placeholder: "Codigo de pais, ej. +52",
+    placeholder: "Incluye codigo de pais, ej. 525551234567",
     required: true,
     type: "tel",
     fullWidth: false,
@@ -56,7 +56,7 @@ export const emergencyFields = [
   {
     name: "phone2",
     label: "Telefono de emergencia 2",
-    placeholder: "Codigo de pais, ej. +52",
+    placeholder: "Incluye codigo de pais, ej. 525551234567",
     required: false,
     type: "tel",
     fullWidth: false,

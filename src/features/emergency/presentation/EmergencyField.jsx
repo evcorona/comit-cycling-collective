@@ -1,6 +1,8 @@
+import { Controller } from "react-hook-form";
+import { IMaskInput } from "react-imask";
 import { bloodTypes } from "../domain/constants/fields";
 import { localToday } from "../../../shared/date";
-export function EmergencyField({ field, register, error, onChange }) {
+export function EmergencyField({ field, register, control, error, onChange }) {
   const {
     name: key,
     label,
@@ -12,7 +14,7 @@ export function EmergencyField({ field, register, error, onChange }) {
   } = field;
   const common = {
     id: key,
-    ...register(key, { onChange: onChange }),
+    ...(type === "tel" || type === "number" ? {} : register(key, { onChange })),
     required,
     "aria-invalid": !!error,
     "aria-describedby": error ? `${key}-error` : undefined,
@@ -31,7 +33,33 @@ export function EmergencyField({ field, register, error, onChange }) {
           <span className="text-[10px] font-normal text-muted">Opcional</span>
         )}
       </label>
-      {type === "select" ? (
+      {type === "tel" || type === "number" ? (
+        <Controller
+          name={key}
+          control={control}
+          render={({ field: controlled }) => (
+            <IMaskInput
+              {...common}
+              name={controlled.name}
+              inputRef={controlled.ref}
+              onBlur={controlled.onBlur}
+              value={controlled.value}
+              mask={/^\d*$/}
+              type={type === "tel" ? "tel" : "text"}
+              inputMode="numeric"
+              maxLength={maxLength}
+              autoComplete="off"
+              placeholder={placeholder}
+              onAccept={(value) => {
+                if (value !== controlled.value) {
+                  controlled.onChange(value);
+                  onChange();
+                }
+              }}
+            />
+          )}
+        />
+      ) : type === "select" ? (
         <select {...common}>
           <option value="">Selecciona una opcion</option>
           {bloodTypes.map((value) => (

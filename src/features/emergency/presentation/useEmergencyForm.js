@@ -9,6 +9,7 @@ import { downloadImage } from "../../../shared/downloadImage";
 export function useEmergencyForm() {
   const {
     register,
+    control,
     handleSubmit,
     reset,
     setFocus,
@@ -48,6 +49,7 @@ export function useEmergencyForm() {
   }
   return {
     register,
+    control,
     errors,
     isSubmitting,
     result,
