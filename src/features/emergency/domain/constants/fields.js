@@ -1,3 +1,4 @@
+import { PHONE_DIGITS } from '@/features/emergency/domain/constants/phone'
 import { stripDiacritics } from '@/shared/stripDiacritics'
 import texts from '@/locales/es.json'
 export const emergencyFields = [
@@ -44,7 +45,7 @@ export const emergencyFields = [
     required: true,
     type: 'tel',
     fullWidth: false,
-    maxLength: 40,
+    maxLength: PHONE_DIGITS,
   },
   {
     name: 'contact2',
@@ -62,7 +63,7 @@ export const emergencyFields = [
     required: false,
     type: 'tel',
     fullWidth: false,
-    maxLength: 40,
+    maxLength: PHONE_DIGITS,
   },
   {
     name: 'allergies',

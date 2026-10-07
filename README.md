@@ -96,3 +96,17 @@ incluidos contactos adicionales, datos médicos y notas. El texto impreso ajusta
 su tamaño y se distribuye sin recortes. Se genera localmente con Canvas, sin
 almacenar ni enviar información. Las etiquetas impresas conservan los acentos;
 el QR permanece sin acentos. Imprimir al 100% de escala, sin ajustar a página.
+
+## Teléfonos y formato vCard
+
+Los teléfonos se capturan con máscara `00-0000-0000`. React Hook Form conserva
+solo los 10 dígitos, y Zod rechaza números incompletos. Los guiones no se
+incluyen en el contenido del QR.
+
+El selector permite conservar el QR de texto o generar vCard 3.0. Esta última
+codifica ambos teléfonos como `TEL` y toda la información de emergencia en
+`NOTE`, incluidos los nombres de cada contacto. Escapa los valores y pliega las
+líneas a 75 bytes. El contacto se identifica como los contactos de emergencia
+del titular. Los lectores compatibles pueden ofrecer llamar o guardar el
+contacto; las acciones y la presentación dependen del lector. No se requiere
+internet para leerlo. La tarjeta y el QR independiente usan el formato elegido.

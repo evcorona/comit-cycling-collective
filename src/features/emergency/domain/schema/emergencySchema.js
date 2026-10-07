@@ -1,3 +1,4 @@
+import { PHONE_DIGITS } from '@/features/emergency/domain/constants/phone'
 import { stripDiacritics } from '@/shared/stripDiacritics'
 import texts from '@/locales/es.json'
 import { z } from 'zod'
@@ -17,6 +18,11 @@ export const formSchema = z.object(
         )
       if (type === 'tel' || type === 'number')
         rule = rule.regex(/^\d*$/, texts.validation.numeric)
+      if (type === 'tel')
+        rule = rule.refine(
+          (value) => !value || value.length === PHONE_DIGITS,
+          texts.validation.phoneLength,
+        )
       if (type === 'select')
         rule = rule.refine(
           (value) => value === '' || bloodTypes.includes(value),

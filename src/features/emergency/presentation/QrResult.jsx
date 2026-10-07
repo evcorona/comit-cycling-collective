@@ -35,7 +35,7 @@ export function QrResult({ result }) {
             </p>
             <QrDownload
               key={result.image}
-              text={result.text}
+              text={result.encodedText}
             />
             <CardDownload
               key={result.image}

@@ -15,13 +15,14 @@ export function useEmergencyForm() {
     setFocus,
     formState: { errors, isSubmitting },
   } = useForm({ defaultValues, resolver: zodResolver(formSchema) })
+  const [format, setFormat] = useState('text')
   const [result, setResult] = useState(null)
   const [error, setError] = useState('')
   const [resetVersion, setResetVersion] = useState(0)
   async function generate(data) {
     setError('')
     try {
-      const qr = await createEmergencyQr(data, encodeQrImage)
+      const qr = await createEmergencyQr(data, encodeQrImage, format)
       setResult(qr)
     } catch {
       setError(texts.qr.generationError)
@@ -35,6 +36,10 @@ export function useEmergencyForm() {
 
     setFocus('name')
   }
+  function changeFormat(value) {
+    setFormat(value)
+    invalidate()
+  }
   function invalidate() {
     setResult(null)
     setError('')
@@ -42,6 +47,8 @@ export function useEmergencyForm() {
   return {
     register,
     control,
+    format,
+    changeFormat,
     errors,
     isSubmitting,
     result,

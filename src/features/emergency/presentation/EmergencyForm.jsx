@@ -5,6 +5,8 @@ import { emergencyFields } from '@/features/emergency/domain/constants/fields'
 import { EmergencyField } from '@/features/emergency/presentation/EmergencyField'
 export function EmergencyForm({
   register,
+  format,
+  changeFormat,
   resetVersion,
   control,
   errors,
@@ -55,6 +57,27 @@ export function EmergencyForm({
           className="mt-0.5 shrink-0 text-black"
         />
         <p>{texts.emergencyForm.medicalHint}</p>
+      </div>
+      <div className="mt-5">
+        <label
+          htmlFor="qr-format"
+          className="mb-2 block text-xs font-semibold"
+        >
+          {texts.qrFormat.label}
+        </label>
+        <select
+          id="qr-format"
+          value={format}
+          onChange={(event) => changeFormat(event.target.value)}
+        >
+          <option value="text">{texts.qrFormat.text}</option>
+          <option value="vcard">{texts.qrFormat.vcard}</option>
+        </select>
+        <p className="mt-2 text-xs leading-5 text-muted">
+          {format === 'vcard'
+            ? texts.qrFormat.vcardHint
+            : texts.qrFormat.textHint}
+        </p>
       </div>
       {error && (
         <p

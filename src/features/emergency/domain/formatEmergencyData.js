@@ -7,7 +7,10 @@ export function formatEmergencyData(data) {
       texts.qr.heading,
       ...emergencyFields
         .filter(({ name }) => data[name].trim())
-        .map(({ name, label }) => `${label}: ${data[name].trim()}`),
+        .map(
+          ({ name, label, type }) =>
+            `${label}: ${type === 'tel' ? data[name].replace(/\D/g, '') : data[name].trim()}`,
+        ),
     ].join('\n'),
   )
 }

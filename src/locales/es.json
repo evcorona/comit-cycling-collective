@@ -59,7 +59,7 @@
     },
     "phone": {
       "label": "Teléfono de emergencia 1",
-      "placeholder": "10 dígitos, ej. 55 1234 5678"
+      "placeholder": "55-1234-5678"
     },
     "contact2": {
       "label": "Contacto de emergencia 2",
@@ -67,7 +67,7 @@
     },
     "phone2": {
       "label": "Teléfono de emergencia 2",
-      "placeholder": "10 dígitos, ej. 55 1234 5678"
+      "placeholder": "55-1234-5678"
     },
     "allergies": {
       "label": "Alergias",
@@ -99,7 +99,8 @@
     "required": "Completa {field}.",
     "numeric": "Ingresa solo valores numéricos.",
     "bloodType": "Selecciona un tipo de sangre válido.",
-    "birthDate": "Ingresa una fecha de nacimiento válida que no sea futura."
+    "birthDate": "Ingresa una fecha de nacimiento válida que no sea futura.",
+    "phoneLength": "Ingresa un teléfono de 10 dígitos."
   },
   "qr": {
     "heading": "INFORMACIÓN DE EMERGENCIA",
@@ -137,5 +138,13 @@
     "scanHint": "Escanea para ver todos los datos médicos y las notas.",
     "footer": "Información proporcionada por el titular.",
     "printHint": "Imprime al 100% de escala para conservar las medidas."
+  },
+  "qrFormat": {
+    "label": "Formato del QR",
+    "text": "Texto de emergencia",
+    "vcard": "Contacto vCard (opción de llamar)",
+    "textHint": "Muestra toda la información como texto. Algunos lectores reconocen los teléfonos automáticamente.",
+    "vcardHint": "Los lectores compatibles ofrecen llamar o guardar los contactos. Los datos médicos y los nombres de cada contacto aparecen en las notas. Las opciones dependen del lector QR.",
+    "contactName": "Contactos de emergencia de {name}"
   }
 }
