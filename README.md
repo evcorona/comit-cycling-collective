@@ -86,3 +86,12 @@ texto QR, a 300 ppp y con metadatos PNG pHYs. El tamano en pixeles se calcula
 como `redondear(cm / 2.54 * 300)`. Para conservar la medida fisica, imprimir al
 100% de escala, sin ajustar a pagina. Comprueba siempre la lectura del QR ya
 impreso, especialmente si hay muchos datos en una imagen pequena.
+
+## Tarjeta de emergencia
+
+La sección de resultados ofrece una tarjeta PNG de formato A6 (10.5 × 14.8 cm) a
+300 ppp, con el logo de Comit, todos los campos completados y un QR con la misma
+información. El texto se distribuye sin recortes y ajusta su tamaño para
+entradas largas. La tarjeta se genera localmente con Canvas; no se envían ni
+guardan datos. Las etiquetas impresas conservan los acentos; el contenido
+codificado en el QR permanece sin acentos. Imprimir al 100% de escala.

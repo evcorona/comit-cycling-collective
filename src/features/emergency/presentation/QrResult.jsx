@@ -1,3 +1,4 @@
+import { CardDownload } from '@/features/emergency/presentation/CardDownload'
 import clsx from 'clsx'
 import { QrDownload } from '@/features/emergency/presentation/QrDownload'
 import texts from '@/locales/es.json'
@@ -35,6 +36,10 @@ export function QrResult({ result }) {
             <QrDownload
               key={result.image}
               text={result.text}
+            />
+            <CardDownload
+              key={result.image}
+              result={result}
             />
             <details className="mt-5 text-left">
               <summary className="cursor-pointer text-xs font-semibold text-black">

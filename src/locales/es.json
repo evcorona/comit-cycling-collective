@@ -19,7 +19,7 @@
     "scanHint": "Escanéalo para comprobar tus datos antes de salir.",
     "review": "Revisar los datos incluidos",
     "emptyTitle": "Tu QR aparecerá aquí.",
-    "emptyDescription": "Genera tu código y descárgalo para llevarlo contigo.",
+    "emptyDescription": "Completa el formulario para descargar tu QR o una tarjeta con tus datos.",
     "format": "Descarga en formato PNG",
     "offlineTitle": "Consulta sin internet",
     "offlineDescription": "Los datos están dentro del QR. Puedes leerlos con un lector QR sin conexión a internet.",
@@ -38,7 +38,7 @@
     "inputHint": "Escribe sin acentos. Si los introduces o pegas, se convierten automáticamente para facilitar la lectura del QR."
   },
   "emergencyPage": {
-    "description": "Completa tus datos, genera tu QR y llévalo en cada rodada."
+    "description": "Completa tus datos y elige cómo llevarlos: un QR o una tarjeta de emergencia."
   },
   "fields": {
     "name": {
@@ -90,7 +90,7 @@
     "optional": "Opcional",
     "select": "Selecciona una opción",
     "requiredMarker": "*",
-    "qrTitle": "Tu QR de emergencia",
+    "qrTitle": "Tu información de emergencia",
     "period": ".",
     "bloodTypes": ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-", "No lo sé"]
   },
@@ -127,5 +127,15 @@
   "meta": {
     "title": "Comit · Tu QR de emergencia",
     "description": "Crea tu QR de emergencia para rodar con tranquilidad. Tus datos no se guardan ni se envían."
+  },
+  "card": {
+    "title": "Tarjeta de emergencia",
+    "description": "Tus datos legibles, el logo de Comit y el QR en una tarjeta lista para imprimir. Se crea en tu navegador, sin guardar información.",
+    "size": "Formato A6 · 10.5 × 14.8 cm · PNG a 300 ppp",
+    "download": "Descargar tarjeta en PNG",
+    "error": "No pudimos crear la tarjeta. Vuelve a intentarlo o reduce la cantidad de texto.",
+    "scanHint": "Escanea el QR para consultar todos los datos sin conexión a internet.",
+    "footer": "Información proporcionada por el titular.",
+    "printHint": "Imprime al 100% de escala para conservar las medidas."
   }
 }
