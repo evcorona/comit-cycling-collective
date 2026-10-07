@@ -8,8 +8,7 @@ import texts from '@/locales/es.json'
 export function QrResult({ result }) {
   const headingRef = useRef(null)
   const [downloadType, setDownloadType] = useState('qr')
-  const [qrIndex, setQrIndex] = useState(0)
-  const qr = result?.qrs[qrIndex]
+  const qr = result?.qr
   useEffect(() => {
     if (result && window.innerWidth < 1024) {
       headingRef.current?.focus({ preventScroll: true })
@@ -73,45 +72,14 @@ export function QrResult({ result }) {
             ))}
           </div>
           <div hidden={downloadType !== 'qr'}>
-            <p className="mb-3 text-xs leading-5 text-muted">
-              {texts.qrResult.pairHint}
-            </p>
-            <div
-              className="grid grid-cols-2 gap-2"
-              role="group"
-              aria-label={texts.qrResult.selectQr}
-            >
-              {result.qrs.map((item, index) => (
-                <button
-                  key={item.id}
-                  type="button"
-                  aria-pressed={qrIndex === index}
-                  onClick={() => setQrIndex(index)}
-                  className={clsx(
-                    'min-h-11 rounded-lg border px-2 py-2 text-sm font-semibold',
-                    qrIndex === index
-                      ? 'border-pink bg-pink/5'
-                      : 'border-black/15 text-muted',
-                  )}
-                >
-                  {item.title}
-                </button>
-              ))}
-            </div>
-            <img
-              src={qr.image}
-              alt={texts.qrResult.imageAlt.replace('{title}', qr.title)}
-              className="mx-auto mt-3 aspect-square w-52 max-w-full"
-            />
-            <p className="mb-4 text-center text-sm font-semibold">{qr.title}</p>
             <QrDownload
-              key={`${qr.id}-${qr.image}`}
+              key={qr.text}
               qr={qr}
             />
           </div>
           {downloadType === 'card' && (
             <CardDownload
-              key={result.text}
+              key={qr.text}
               result={result}
             />
           )}
@@ -120,7 +88,7 @@ export function QrResult({ result }) {
               {texts.qrResult.review}
             </summary>
             <pre className="mt-2 whitespace-pre-wrap break-words rounded-lg bg-cream p-3 font-sans text-sm leading-6">
-              {result.text}
+              {qr.text}
             </pre>
           </details>
           <p className="mt-3 flex items-center justify-center gap-2 text-xs text-muted">

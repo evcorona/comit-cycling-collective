@@ -77,6 +77,17 @@ export const emergencyFields = [
     fullWidth: true,
     maxLength: 100,
   },
+  {
+    name: 'notes',
+    group: 'personal',
+    expandable: true,
+    label: texts.fields.notes.label,
+    placeholder: texts.fields.notes.placeholder,
+    required: false,
+    type: 'textarea',
+    fullWidth: true,
+    maxLength: 80,
+  },
 ]
 export const defaultValues = Object.fromEntries(
   emergencyFields.map(({ name }) => [name, '']),

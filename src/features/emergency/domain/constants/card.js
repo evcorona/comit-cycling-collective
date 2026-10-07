@@ -12,7 +12,9 @@ export const CARD_FRONT_ROWS = [
 ]
 export const CARD_BACK_ROWS = [
   [{ label: 'name', fields: ['name'] }],
-  ...medicalFieldNames.map((name) => [{ label: name, fields: [name] }]),
+  ...[...medicalFieldNames, 'notes'].map((name) => [
+    { label: name, fields: [name] },
+  ]),
 ]
 export const CARD_STYLE = {
   padding: 40,
@@ -24,4 +26,6 @@ export const CARD_STYLE = {
   columnGap: 24,
   minFontSize: 18,
   maxFontSize: 32,
+  noticeFontSize: 24,
+  lineHeightFactor: 1.25,
 }

@@ -1,5 +1,5 @@
 import { SecondaryContact } from '@/features/emergency/presentation/SecondaryContact'
-import { MedicalField } from '@/features/emergency/presentation/MedicalField'
+import { ExpandableField } from '@/features/emergency/presentation/ExpandableField'
 import texts from '@/locales/es.json'
 import { QrCode, RotateCcw } from 'lucide-react'
 import {
@@ -8,7 +8,7 @@ import {
 } from '@/features/emergency/domain/constants/fields'
 import { EmergencyField } from '@/features/emergency/presentation/EmergencyField'
 const groups = [
-  { title: 'personal', names: ['name', 'birthDate', 'bloodType'] },
+  { title: 'personal', names: ['name', 'birthDate', 'bloodType', 'notes'] },
   { title: 'contact', names: ['contact', 'phone'] },
   {
     title: 'medical',
@@ -53,7 +53,7 @@ export function EmergencyForm({
               {group.names.map((name) => {
                 const field = emergencyFields.find((item) => item.name === name)
                 const Component = field.expandable
-                  ? MedicalField
+                  ? ExpandableField
                   : EmergencyField
                 return (
                   <Component

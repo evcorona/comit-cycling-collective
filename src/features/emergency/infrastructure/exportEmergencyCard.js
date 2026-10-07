@@ -37,7 +37,7 @@ function drawFace(
   const end = drawCardLayout(context, layout, padding, bodyTop)
   if (noMedicalData) {
     context.fillStyle = '#000000'
-    context.font = '24px Arial'
+    context.font = `${CARD_STYLE.noticeFontSize}px Arial`
     context.fillText(texts.card.noMedicalData, padding, end)
   }
   context.fillStyle = '#E5295D'
@@ -59,6 +59,13 @@ export async function exportEmergencyCard(result) {
   const logo = await loadImage('/logo_rosa.png')
   const bodyWidth = faceWidth - CARD_STYLE.padding * 2
   const bodyHeight = faceHeight - CARD_STYLE.bottomSpace - CARD_STYLE.bodyTop
+  const noMedicalData = !medicalFieldNames.some((name) =>
+    result.data[name]?.trim(),
+  )
+  const noticeSpace = noMedicalData
+    ? Math.ceil(CARD_STYLE.noticeFontSize * CARD_STYLE.lineHeightFactor) +
+      CARD_STYLE.rowGap
+    : 0
   const front = createCardLayout(
     context,
     result.data,
@@ -71,7 +78,7 @@ export async function exportEmergencyCard(result) {
     result.data,
     CARD_BACK_ROWS,
     bodyWidth,
-    bodyHeight,
+    bodyHeight - noticeSpace,
   )
   const common = { width: faceWidth, height: faceHeight, logo }
   drawFace(context, { ...common, title: texts.card.title, layout: front })
@@ -83,7 +90,7 @@ export async function exportEmergencyCard(result) {
     ...common,
     title: texts.card.medicalTitle,
     layout: back,
-    noMedicalData: !medicalFieldNames.some((name) => result.data[name]?.trim()),
+    noMedicalData,
   })
   context.restore()
   context.strokeStyle = '#E5295D'

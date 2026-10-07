@@ -15,7 +15,7 @@ export function EmergencyPage() {
           <h1 className="display text-2xl text-black sm:text-4xl">
             {texts.common.qrTitle}
           </h1>
-          <p className="mt-2 text-sm leading-6 text-muted">
+          <p className="mt-2 text-sm font-semibold leading-6 text-muted">
             {texts.emergencyPage.description}
           </p>
         </div>

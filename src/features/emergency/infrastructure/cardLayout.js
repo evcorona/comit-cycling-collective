@@ -18,7 +18,7 @@ export function createCardLayout(context, data, rows, width, availableHeight) {
     fontSize >= CARD_STYLE.minFontSize;
     fontSize--
   ) {
-    const lineHeight = Math.ceil(fontSize * 1.25)
+    const lineHeight = Math.ceil(fontSize * CARD_STYLE.lineHeightFactor)
     context.font = `${fontSize}px Arial`
     const layout = populated.map((row) => {
       const cellWidth =

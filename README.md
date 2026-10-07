@@ -1,6 +1,6 @@
 # Comit · QR de emergencia
 
-Aplicacion en espanol para generar dos QR de texto y una tarjeta plegable con
+Aplicacion en espanol para generar un QR de texto y una tarjeta plegable con
 datos de emergencia. React, Vite y Tailwind CSS. Nombre y primer contacto de
 emergencia con telefono obligatorios. Segundo contacto, fecha de nacimiento,
 tipo de sangre y condiciones medicas opcionales. El campo de condiciones permite
@@ -79,45 +79,81 @@ El campo de condiciones medicas se muestra al pulsar su boton y permite incluir
 alergias, enfermedades y medicamentos. Las ayudas se presentan como subtitulos.
 Limpiar elimina los valores y vuelve a cerrar estos campos.
 
-## QR para el casco
+## QR de emergencia
 
-Se generan dos QR de texto directo, sin enlaces ni almacenamiento:
+Un solo QR contiene nombre, nacimiento, sangre, contactos, condiciones médicas y
+notas. El texto termina con `EMERGENCIA`, está en mayúsculas y no depende de
+URLs, servicios externos ni almacenamiento. Las etiquetas son breves (`NOMBRE`,
+`NACIMIENTO`, `SANGRE`, `CONTACTO-1`, `CONTACTO-2`, `INFO-MEDICA`, `NOTAS`).
+Cada contacto reúne nombre y teléfono en una línea, separados por un espacio. La
+revisión muestra exactamente el texto que se codifica. Si no hay información
+médica, se indica explícitamente.
 
-- `Identificacion`: nombre, nacimiento, sangre y contactos.
-- `Info medica`: nombre y condiciones médicas (incluidas alergias y
-  medicamentos). Si no se proporcionan datos médicos, lo indica explícitamente,
-  sin asumir que no hay alergias o enfermedades.
+El campo de condiciones médicas permite incluir alergias, enfermedades y
+medicamentos y tiene un límite de 100 caracteres. Notas tiene 80 caracteres.
+Ambos límites y los contadores usan la definición compartida con Zod. La máscara
+normaliza acentos y mayúsculas, cambia flechas y viñetas por espacios, cambia la
+raya larga por un guion y descarta emojis y caracteres fuera del ASCII
+imprimible. Zod rechaza texto que omita esas restricciones. Los saltos de línea
+se conservan para facilitar la lectura y requieren modo Byte / UTF-8.
 
-Cada contenido termina con su identificador. Todo el texto y las etiquetas de
-los QR se exportan en mayúsculas y sin acentos. La imagen descargada incluye la
-misma etiqueta debajo, fuera del QR y su margen blanco. Ambos son necesarios
-para consultar todos los datos; el nombre se repite para relacionarlos. Cada
-lector decide si convierte los teléfonos en enlaces de llamada.
+## Componente QR reutilizable
 
-La información médica se concentra en `conditions`, con un límite de 100
-caracteres compartido por la máscara y Zod y un contador visible. No hay campos
-separados de alergias, medicamentos ni notas. La máscara convierte los acentos
-(incluida ñ) a letras simples y elimina →, •, ✓ y —. El esquema rechaza esos
-símbolos, ñ, las vocales acentuadas, sus mayúsculas y marcas combinadas si se
-intenta omitir la máscara. Los límites no garantizan por sí solos la lectura
-física: la densidad se calcula con el contenido completo de cada QR.
+`src/components/qr/QRCodeGenerator.jsx` acepta `value`, `physicalSizeCm` (entero
+1–6), `errorCorrection` (`L`, `M`, `Q`, `H`, por defecto `M`), `showDiagnostics`
+(por defecto `false`) y un `title` opcional. Usa `QRCodeSVG` de `qrcode.react`
+sin logos ni gradientes, negro sobre blanco y quiet zone de cuatro módulos.
+`boostLevel={false}` respeta el nivel solicitado en vez de incrementarlo
+automáticamente.
 
-## Exportación para impresión
+`QRDiagnostics.jsx` agrupa en un desplegable los caracteres (puntos de código),
+bytes UTF-8 con `TextEncoder`, modo numérico, alfanumérico o Byte, estado, nivel
+de corrección, versión/matriz real y límites recomendados. Las sugerencias no
+modifican los datos. Las utilidades independientes están en `src/lib/qr`. Los
+límites M proporcionados son guías para Byte. Los presupuestos alfanuméricos y
+numéricos se cuentan en caracteres, con capacidades M de las mismas versiones y
+el mismo margen proporcional de recomendación. El peso UTF-8 se muestra por
+separado. La biblioteca elige la versión y genera toda la matriz.
 
-El deslizador permite elegir de 2 a 5 cm; el tamaño personalizado, de 2 a 30 cm.
-El valor inicial es 3 cm o la recomendación mayor que requieran los datos. El
-mínimo se calcula a partir de los módulos, incluido el margen blanco de cuatro
-módulos por lado, con una guía conservadora de 0.4 mm por módulo. Se redondea a
-píxeles enteros a 300 ppp. Los tamaños insuficientes se bloquean tanto en la
-interfaz como en el exportador. La recomendación se redondea hacia arriba a
-incrementos de 0.5 cm.
+Ejemplo de uso:
 
-El PNG incluye metadatos pHYs de 300 ppp. El lado del área QR es
-`redondear(cm / 2.54 * 300)` píxeles; la etiqueta añade 0.35 cm debajo. El QR se
-centra sin interpolación ni pérdida de su margen blanco. Para conservar las
-medidas, imprimir al 100%, sin ajustar a página. La densidad es una guía; hay
-que comprobar la lectura impresa con distintos teléfonos y en la superficie del
-casco antes de usarla.
+```jsx
+import { QRCodeGenerator } from '@/components/qr/QRCodeGenerator'
+
+;<QRCodeGenerator
+  value="VERONICA CORONA"
+  physicalSizeCm={3}
+  errorCorrection="M"
+  showDiagnostics
+/>
+```
+
+## Exportación e impresión
+
+El deslizador ofrece tamaños enteros de 1 a 6 cm. La aplicación parte de 3 cm o
+un tamaño recomendado mayor si hace falta. El contenido se clasifica como
+`optimal`, `warning` u `over-limit` con los presupuestos del modo detectado; el
+mínimo físico se comprueba además con la matriz real y una guía conservadora de
+0.4 mm por módulo, redondeada a píxeles enteros de 300 ppp. Los tamaños
+insuficientes se bloquean en la interfaz y ambos exportadores por versión y
+densidad reales. Un presupuesto M excedido no bloquea por sí solo una matriz
+válida, por ejemplo al usar un nivel de corrección diferente. Por esa guía,
+incluso un QR pequeño puede necesitar más de 1 cm aunque cumpla el presupuesto
+de bytes. Por encima del rango soportado, se pide resumir el texto; no se
+recorta automáticamente.
+
+SVG conserva el vector original de `qrcode.react`, con ancho y alto en cm, sin
+etiqueta externa. PNG se rasteriza desde ese mismo SVG, usando módulos de
+píxeles enteros y metadatos pHYs a 300 ppp; añade una etiqueta de 0.35 cm
+debajo. El lado QR se calcula con `redondear(cm / 2.54 * 300)`. El margen blanco
+se conserva en ambos formatos.
+
+La vista en pantalla es una previsualización adaptable de 208 px. La clase
+`qr-print` mantiene el tamaño físico seleccionado con unidades cm al imprimir y
+`break-inside: avoid`. Los diagnósticos y controles se ocultan en impresión; un
+QR marcado como insuficiente tampoco se imprime. Imprimir al 100%, sin ajustar a
+página, y comprobar físicamente la lectura con distintos teléfonos en la
+superficie del casco. Las pruebas digitales no sustituyen esa comprobación.
 
 ## Tarjeta de emergencia plegable
 
@@ -126,16 +162,46 @@ caras sin QR. Cada mitad mide 8.56 × 5.4 cm (1011 × 638 píxeles). El reverso
 está girado 180° para quedar orientado al plegar por la línea central. Imprimir
 al tamaño original, recortar el borde y doblar antes de enmicar.
 
-El frente muestra nombre, nacimiento, sangre y ambos contactos, cuando existen.
-El reverso contiene nombre y el campo de condiciones médicas, con alergias y
-medicamentos cuando se proporcionan. Se ajustan las líneas y la tipografía sin
-recortar datos; si el contenido no cabe con la tipografía mínima, se solicita
-resumirlo. Ambas caras llevan el logo y `Comit Cycling Collective`. Las
-etiquetas conservan los acentos. La vista previa y la descarga comparten el
-mismo PNG, generado en memoria con Canvas.
+El frente muestra nombre, nacimiento, sangre y contactos. El reverso contiene
+nombre, condiciones médicas y notas, incluidas alergias y medicamentos cuando se
+proporcionan. Las líneas y tipografía se ajustan sin recortar datos; si el
+contenido no cabe con la tipografía mínima, se solicita resumirlo. Ambas caras
+llevan el logo y `Comit Cycling Collective`. Las etiquetas conservan sus
+acentos. La vista previa y la descarga comparten el mismo PNG generado en
+memoria.
+
+## Verificación
+
+`pnpm test` ejecuta Vitest con los ejemplos ASCII, acentos, minúsculas, números,
+puntuación y emoji solicitados. Cubre UTF-8, detección de modo, límites de todos
+los tamaños, recomendaciones, quiet zone para los cuatro niveles, densidad
+física, máscaras, esquema, notas y la generación de un único QR completo.
 
 ## Teléfonos
 
 Los teléfonos se capturan con máscara `00-0000-0000`. React Hook Form conserva
 solo los 10 dígitos, y Zod rechaza números incompletos. Los guiones no se
-incluyen en el contenido de los QR.
+incluyen en el contenido del QR. Cada lector decide si convierte los números en
+enlaces para llamar.
+
+## Archivos de esta implementación
+
+- Creados: `src/components/qr/` (generador, diagnósticos, hook de medición y
+  prueba), `src/lib/qr/` (constantes, UTF-8, modos, métricas, presupuestos,
+  recomendaciones, matriz, SVG, unidades de impresión y pruebas),
+  `src/features/emergency/domain/formatQrData.test.js`,
+  `src/features/emergency/infrastructure/createPrintableQr.js` y
+  `src/features/emergency/presentation/ExpandableField.jsx`.
+- Actualizados: `package.json`, `pnpm-lock.yaml`, `vite.config.js`,
+  `src/style.css`, `src/locales/es.json`,
+  `src/features/emergency/application/createEmergencyQr.js`, los archivos de
+  `src/features/emergency/domain/constants/`, `domain/formatQrData.js`,
+  `domain/sanitizeEmergencyText.js`, `infrastructure/cardLayout.js`,
+  `infrastructure/exportEmergencyCard.js`, `infrastructure/exportQr.js`,
+  `presentation/EmergencyForm.jsx`, `presentation/EmergencyPage.jsx`,
+  `presentation/QrDownload.jsx`, `presentation/QrResult.jsx`,
+  `presentation/useEmergencyForm.js` y este README. Las rutas abreviadas de
+  dominio, infraestructura y presentación están bajo `src/features/emergency/`.
+- Reemplazados: `MedicalField.jsx` por `ExpandableField.jsx` y `qrImage.js` por
+  `createPrintableQr.js`. Eliminado `domain/formatEmergencyData.js`: la revisión
+  ahora usa directamente el único contenido QR, sin un segundo formateador.

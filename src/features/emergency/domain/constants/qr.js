@@ -1,24 +1,9 @@
-import { medicalFieldNames } from '@/features/emergency/domain/constants/fields'
-export const QR_GROUPS = [
-  {
-    id: 'identificacion',
-    title: 'identification',
-    fields: [
-      'name',
-      'birthDate',
-      'bloodType',
-      'contact',
-      'phone',
-      'contact2',
-      'phone2',
-    ],
-  },
-  {
-    id: 'info-medica',
-    title: 'medical',
-    fields: ['name', ...medicalFieldNames],
-  },
+export const QR_CONTENT_ROWS = [
+  { label: 'name', fields: ['name'] },
+  { label: 'birthDate', fields: ['birthDate'] },
+  { label: 'bloodType', fields: ['bloodType'] },
+  { label: 'contact', fields: ['contact', 'phone'] },
+  { label: 'contact2', fields: ['contact2', 'phone2'] },
+  { label: 'conditions', fields: ['conditions'] },
+  { label: 'notes', fields: ['notes'] },
 ]
-// A conservative print guideline, including the four-module quiet zone.
-export const QR_MIN_MODULE_MM = 0.4
-export const QR_MARGIN_MODULES = 4

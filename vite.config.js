@@ -29,4 +29,18 @@ export default defineConfig({
     },
   ],
   resolve: { alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) } },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-qr': [
+            'react',
+            'react-dom/client',
+            'react-dom/server',
+            'qrcode.react',
+          ],
+        },
+      },
+    },
+  },
 })

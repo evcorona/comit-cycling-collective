@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import texts from '@/locales/es.json'
 import { EmergencyField } from '@/features/emergency/presentation/EmergencyField'
 
-export function MedicalField({ field, ...props }) {
+export function ExpandableField({ field, ...props }) {
   const [isExpanded, setIsExpanded] = useState(false)
   return (
     <div
@@ -29,7 +29,7 @@ export function MedicalField({ field, ...props }) {
             size={15}
             className="text-pink"
           />
-          {texts.medical[field.name]}
+          {texts.expandable[field.name]}
         </button>
       )}
     </div>

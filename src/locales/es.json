@@ -18,20 +18,18 @@
   "qrResult": {
     "scanHint": "Comprueba que se lea antes de salir.",
     "review": "Revisar mis datos",
-    "emptyTitle": "Tus QR aparecerán aquí.",
-    "emptyDescription": "Tus QR aparecerán al completar el formulario.",
+    "emptyTitle": "Tu QR y tarjeta aparecerán aquí.",
+    "emptyDescription": "Tu QR y tarjeta aparecerán aquí al completar el formulario.",
     "format": "Descarga en formato PNG",
     "offlineTitle": "Consulta sin internet",
     "offlineDescription": "Los datos están dentro del QR. Puedes leerlos con un lector QR sin conexión a internet.",
     "regionLabel": "Datos para llevar",
     "imageAlt": "Código QR: {title}",
     "ready": "Listo para llevar",
-    "preview": "Vista previa",
+    "preview": "Vista previa de QR y tarjeta",
     "downloadType": "Qué quieres descargar",
-    "qrOption": "Dos QR",
-    "cardOption": "Tarjeta",
-    "selectQr": "Elige el QR",
-    "pairHint": "Lleva ambos QR: contactos e información médica."
+    "qrOption": "QR",
+    "cardOption": "Tarjeta"
   },
   "emergencyForm": {
     "title": "Datos de emergencia",
@@ -39,13 +37,13 @@
     "medicalHint": "Escribe datos breves y relevantes para un paramédico.",
     "clear": "Limpiar",
     "generating": "Generando…",
-    "generate": "Crear QR",
-    "inputHint": "Los acentos y símbolos no compatibles se ajustan automáticamente.",
+    "generate": "Crear QR/tarjeta",
+    "inputHint": "El texto se ajusta a mayúsculas, sin acentos ni emojis.",
     "addContact": "Agregar otro contacto",
     "counter": "{count}/{limit} caracteres"
   },
   "emergencyPage": {
-    "description": "Crea tu QR o tarjeta para llevar en cada rodada."
+    "description": "Crea tu QR y tarjeta para llevar en cada rodada."
   },
   "fields": {
     "name": {
@@ -83,6 +81,10 @@
     "conditions": {
       "label": "Condiciones médicas",
       "placeholder": "Incluye alergias, enfermedades y medicamentos con dosis, si aplica."
+    },
+    "notes": {
+      "label": "Notas",
+      "placeholder": "Otros datos útiles para una emergencia."
     }
   },
   "common": {
@@ -100,33 +102,28 @@
     "bloodType": "Selecciona un tipo de sangre válido.",
     "birthDate": "Ingresa una fecha de nacimiento válida que no sea futura.",
     "phoneLength": "Ingresa un teléfono de 10 dígitos.",
-    "unsupportedCharacters": "Usa texto sin acentos y evita flechas, viñetas y marcas."
+    "unsupportedCharacters": "Usa mayúsculas sin acentos, emojis ni símbolos especiales."
   },
   "qr": {
     "heading": "INFORMACIÓN DE EMERGENCIA",
     "generationError": "No pudimos crear el QR. Reduce la cantidad de texto e inténtalo de nuevo.",
     "exportError": "No se pudo descargar. Prueba con un tamaño mayor.",
     "titles": {
-      "identification": "Identificacion",
-      "medical": "Info medica"
+      "emergency": "EMERGENCIA"
     },
     "fields": {
-      "name": "Nombre",
-      "birthDate": "Nacimiento",
-      "bloodType": "Sangre",
-      "contact": "Contacto 1",
-      "phone": "Tel 1",
-      "contact2": "Contacto 2",
-      "phone2": "Tel 2",
-      "conditions": "Condiciones"
+      "name": "NOMBRE",
+      "birthDate": "NACIMIENTO",
+      "bloodType": "SANGRE",
+      "contact": "CONTACTO-1",
+      "contact2": "CONTACTO-2",
+      "conditions": "INFO-MEDICA",
+      "notes": "NOTAS"
     },
     "noMedicalData": "Sin datos medicos registrados"
   },
-  "medical": {
-    "conditions": "Agregar condiciones médicas"
-  },
   "export": {
-    "download": "Descargar QR",
+    "download": "PNG",
     "size": "Tamaño del QR",
     "custom": "Otro tamaño",
     "customLabel": "Lado del QR (cm)",
@@ -137,11 +134,13 @@
     "preset": "{size} cm",
     "done": "Descarga iniciada. Revisa tus archivos.",
     "unit": "cm",
-    "minSize": "2 cm",
-    "maxSize": "5 cm",
+    "minSize": "1 cm",
+    "maxSize": "6 cm",
     "smallHint": "Este QR necesita al menos {size} cm. Aumenta el tamaño o resume los datos.",
     "recommended": "Tamaño recomendado: {size} cm.",
-    "labelHint": "La etiqueta se imprime debajo; la medida corresponde solo al QR."
+    "labelHint": "PNG incluye la etiqueta debajo. SVG conserva el QR cuadrado, listo para imprimir.",
+    "downloadSvg": "SVG",
+    "downloadFile": "Descargar {format}"
   },
   "meta": {
     "title": "Comit · Tu QR de emergencia",
@@ -154,7 +153,7 @@
     "download": "Descargar tarjeta",
     "error": "No pudimos crear la tarjeta. Vuelve a intentarlo o reduce la cantidad de texto.",
     "footer": "Comit Cycling Collective",
-    "printHint": "Imprime al tamaño original, recorta el borde y dobla por la línea central antes de enmicar.",
+    "printHint": "Imprime al tamaño original. Recorta y dobla por la línea central; el reverso quedará orientado. Luego enmica.",
     "medicalTitle": "Información médica",
     "noMedicalData": "Sin información médica registrada.",
     "fold": "Dobla por la línea",
@@ -165,5 +164,56 @@
     "personal": "Tus datos",
     "contact": "Contacto de emergencia",
     "medical": "Información médica"
+  },
+  "qrDiagnostics": {
+    "title": "Detalles de impresión",
+    "characters": "Caracteres",
+    "bytes": "Bytes UTF-8",
+    "physicalSize": "Tamaño físico",
+    "recommendedLimit": "Presupuesto recomendado",
+    "maximumLimit": "Límite configurado para M",
+    "encoding": "Codificación",
+    "correction": "Corrección de errores",
+    "versionLimit": "Versión máxima recomendada",
+    "matrixLimit": "Matriz máxima recomendada",
+    "actualVersion": "Versión generada",
+    "actualMatrix": "Matriz generada",
+    "status": "Estado del contenido",
+    "modes": {
+      "alphanumeric": "Optimizada: alfanumérica",
+      "byte": "Byte / UTF-8",
+      "numeric": "Optimizada: numérica"
+    },
+    "statusNames": {
+      "optimal": "Recomendado",
+      "warning": "Por encima de la recomendación",
+      "over-limit": "Excede el límite"
+    },
+    "messages": {
+      "optimal": "Contenido recomendado para QR de {size} cm.",
+      "warning": "El QR puede funcionar, pero supera la cantidad recomendada para impresión.",
+      "over-limit": "El contenido excede el límite de este tamaño. Aumenta el tamaño o resume los datos."
+    },
+    "tooDense": "Para estos datos, usa al menos {size} cm o resume el texto.",
+    "reference": "Los bytes UTF-8 son el peso del texto, no la capacidad de los modos alfanumérico o numérico. Sus presupuestos se cuentan en caracteres. Las guías son para M; la versión y densidad reales determinan si se puede imprimir.",
+    "invalidSize": "Elige un tamaño entero de 1 a 6 cm.",
+    "generationError": "No pudimos generar este QR. Reduce el contenido o revisa el nivel de corrección.",
+    "unsupported": "El contenido supera el rango de impresión de 1 a 6 cm. Reduce el texto.",
+    "suggestions": {
+      "uppercase": "Usa mayúsculas para reducir la densidad.",
+      "ascii": "Evita acentos, emojis y otros caracteres Unicode.",
+      "lineBreaks": "Los saltos de línea requieren codificación Byte. Puedes usar / para separar datos si conservan su claridad.",
+      "punctuation": "Para codificación alfanumérica, usa letras mayúsculas, números y espacios, o $ % * + - . / :."
+    },
+    "validating": "Comprobando tamaño de impresión…",
+    "units": {
+      "bytes": "bytes",
+      "characters": "caracteres"
+    },
+    "matrixFits": "Supera la guía de contenido para M, pero la matriz generada cabe en este tamaño. Comprueba la lectura impresa."
+  },
+  "expandable": {
+    "conditions": "Agregar condiciones médicas",
+    "notes": "Agregar notas"
   }
 }

@@ -5,10 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { defaultValues } from '@/features/emergency/domain/constants/fields'
 import { formSchema } from '@/features/emergency/domain/schema/emergencySchema'
 import { createEmergencyQr } from '@/features/emergency/application/createEmergencyQr'
-import {
-  encodeQrImage,
-  getQrPrintSizing,
-} from '@/features/emergency/infrastructure/qrImage'
+import { createPrintableQr } from '@/features/emergency/infrastructure/createPrintableQr'
 export function useEmergencyForm() {
   const {
     register,
@@ -24,7 +21,7 @@ export function useEmergencyForm() {
   async function generate(data) {
     setError('')
     try {
-      const qr = await createEmergencyQr(data, encodeQrImage, getQrPrintSizing)
+      const qr = await createEmergencyQr(data, createPrintableQr)
       setResult(qr)
     } catch {
       setError(texts.qr.generationError)
