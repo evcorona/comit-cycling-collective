@@ -1,3 +1,4 @@
+minimumReleaseAge: 1440 # 24 hours
 allowBuilds:
   core-js-pure: false
   esbuild: true
