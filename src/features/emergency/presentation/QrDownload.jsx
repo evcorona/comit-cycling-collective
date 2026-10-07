@@ -1,12 +1,13 @@
 import { useState } from 'react'
 import clsx from 'clsx'
-import { Check, Download } from 'lucide-react'
+import { Download } from 'lucide-react'
 import texts from '@/locales/es.json'
-import { QRCodeGenerator } from '@/components/qr/QRCodeGenerator'
+import { QrLabelPreview } from '@/features/emergency/presentation/QrLabelPreview'
 import {
   exportQr,
   exportQrSvg,
 } from '@/features/emergency/infrastructure/exportQr'
+import { showDownloadToast } from '@/shared/showDownloadToast'
 import { downloadImage } from '@/shared/downloadImage'
 
 export function QrDownload({ qrBySize }) {
@@ -14,16 +15,17 @@ export function QrDownload({ qrBySize }) {
   const qr = qrBySize[size]
   const [isExporting, setIsExporting] = useState(false)
   const [error, setError] = useState('')
-  const [downloaded, setDownloaded] = useState(false)
   async function download(format) {
     if (!qr.canDownload) return
     setIsExporting(true)
     setError('')
     try {
       const blob =
-        format === 'svg' ? exportQrSvg(qr, size) : await exportQr(qr, size)
+        format === 'svg'
+          ? await exportQrSvg(qr, size)
+          : await exportQr(qr, size)
       downloadImage(blob, `comit-${qr.id}-${size}cm.${format}`)
-      setDownloaded(true)
+      showDownloadToast()
     } catch {
       setError(texts.qr.exportError)
     } finally {
@@ -32,11 +34,9 @@ export function QrDownload({ qrBySize }) {
   }
   return (
     <div className="space-y-4 text-left">
-      <QRCodeGenerator
-        value={qr.text}
-        physicalSizeCm={size}
-        showPrintStatus={false}
-        title={qr.title}
+      <QrLabelPreview
+        qr={qr}
+        size={size}
       />
       <div
         className={clsx(
@@ -95,7 +95,6 @@ export function QrDownload({ qrBySize }) {
           onChange={(event) => {
             setSize(Number(event.target.value))
             setError('')
-            setDownloaded(false)
           }}
         />
         <div className="flex justify-between text-xs text-muted">
@@ -141,15 +140,6 @@ export function QrDownload({ qrBySize }) {
           {qr.text}
         </pre>
       </details>
-      {downloaded && (
-        <p
-          role="status"
-          className="qr-controls flex items-center gap-2 text-sm text-muted"
-        >
-          <Check size={16} />
-          {texts.export.done}
-        </p>
-      )}
     </div>
   )
 }

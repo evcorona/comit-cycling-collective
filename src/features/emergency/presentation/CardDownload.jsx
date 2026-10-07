@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react'
-import { Check, CreditCard, Download } from 'lucide-react'
+import { CreditCard, Download } from 'lucide-react'
 import texts from '@/locales/es.json'
 import { exportEmergencyCard } from '@/features/emergency/infrastructure/exportEmergencyCard'
+import { showDownloadToast } from '@/shared/showDownloadToast'
 import { downloadImage } from '@/shared/downloadImage'
 
 export function CardDownload({ result }) {
   const [image, setImage] = useState(null)
   const [error, setError] = useState('')
-  const [downloaded, setDownloaded] = useState(false)
   const [attempt, setAttempt] = useState(0)
   useEffect(() => {
     let cancelled = false
@@ -33,7 +33,7 @@ export function CardDownload({ result }) {
       return
     }
     downloadImage(image.blob, 'comit-tarjeta-plegable.png')
-    setDownloaded(true)
+    showDownloadToast()
   }
   return (
     <div className="space-y-3 text-left">
@@ -73,15 +73,6 @@ export function CardDownload({ result }) {
           className="text-xs text-pink"
         >
           {error}
-        </p>
-      )}
-      {downloaded && (
-        <p
-          role="status"
-          className="flex items-center gap-1 text-xs text-muted"
-        >
-          <Check size={13} />
-          {texts.export.done}
         </p>
       )}
     </div>

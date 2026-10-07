@@ -154,3 +154,15 @@ input,
 textarea {
   caret-color: var(--color-pink);
 }
+
+.download-toast {
+  max-width: calc(100vw - 2rem);
+  border: 1px solid #a7f3d0;
+  border-radius: 12px;
+  font-size: 14px;
+  padding: 12px 16px;
+}
+.download-toast .toast-close {
+  color: inherit;
+  padding-left: 12px;
+}

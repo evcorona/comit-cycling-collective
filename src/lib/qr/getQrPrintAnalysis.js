@@ -8,10 +8,11 @@ import { getRecommendedQrSize } from '@/lib/qr/getRecommendedQrSize'
 import { getQrContentStatus } from '@/lib/qr/getQrContentStatus'
 import { getQrMatrixMetrics } from '@/lib/qr/getQrMatrixMetrics'
 
+export function getMinimumQrModulePixels() {
+  return Math.ceil((QR_MIN_MODULE_MM * PRINT_DPI) / (CM_PER_INCH * MM_PER_CM))
+}
 export function getQrPrintSizing(value, totalModules) {
-  const modulePixels = Math.ceil(
-    (QR_MIN_MODULE_MM * PRINT_DPI) / (CM_PER_INCH * MM_PER_CM),
-  )
+  const modulePixels = getMinimumQrModulePixels()
   const minimumCm =
     Math.ceil(
       ((totalModules * modulePixels * CM_PER_INCH) / PRINT_DPI) * MM_PER_CM,

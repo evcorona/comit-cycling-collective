@@ -152,11 +152,16 @@ guía, incluso un QR pequeño puede necesitar más de 1 cm aunque cumpla el
 presupuesto de bytes. Por encima del rango soportado, se pide resumir el texto;
 no se recorta automáticamente.
 
-SVG conserva el vector original de `qrcode.react`, con ancho y alto en cm, sin
-etiqueta externa. PNG se rasteriza desde ese mismo SVG, usando módulos de
-píxeles enteros y metadatos pHYs a 300 ppp; añade una etiqueta de 0.35 cm
-debajo. El lado QR se calcula con `redondear(cm / 2.54 * 300)`. El margen blanco
-se conserva en ambos formatos.
+PNG y SVG exportan la misma etiqueta cuadrada de 3–6 cm, incluido el logo
+`public/comit_words.png` centrado arriba, QR, EMERGENCIA y borde punteado
+redondeado para recortar. El tamaño mide toda la etiqueta. El cálculo de
+capacidad conserva la guía por modo y comprueba además el espacio real del QR
+tras reservar logo, márgenes y texto. Los módulos se ajustan a píxeles enteros
+con la guía conservadora de 300 ppp; el logo queda fuera de la zona de lectura.
+La vista previa usa el mismo SVG que se descarga y rasteriza a PNG. El logo
+queda incrustado en el SVG para que funcione sin archivos externos. El PNG
+mantiene metadatos pHYs a 300 ppp. Toastify JS muestra una confirmación temporal
+al iniciar la descarga de QR o tarjeta, sin mensajes fijos en la vista previa.
 
 La vista en pantalla es una previsualización adaptable de 208 px. La clase
 `qr-print` mantiene el tamaño físico seleccionado con unidades cm al imprimir y

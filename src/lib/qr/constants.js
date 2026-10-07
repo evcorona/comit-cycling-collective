@@ -57,8 +57,6 @@ export const QR_PREVIEW_SIZE = 208
 export const QR_VERSION_BASE_MODULES = 17
 export const QR_VERSION_MODULE_STEP = 4
 export const QR_ALPHANUMERIC_REGEX = /^[0-9A-Z $%*+\-./:]*$/
-export const QR_LABEL_HEIGHT_CM = 0.35
-export const QR_LABEL_FONT_CM = 0.18
 
 export const QR_MAX_CAPACITY = {
   byte: { L: 2953, M: 2331, Q: 1663, H: 1273 },

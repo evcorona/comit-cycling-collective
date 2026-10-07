@@ -16,8 +16,8 @@ const data = {
 }
 
 describe('size-aware emergency QR priorities', () => {
-  it('includes all fields at 3 cm when the full content is recommended', async () => {
-    const qr = await selectEmergencyQr(data, 3, createPrintableQr)
+  it('includes all fields at 4 cm when the full content is recommended', async () => {
+    const qr = await selectEmergencyQr(data, 4, createPrintableQr)
     expect(qr.text).toContain('CONTACTO-1: LUIS 5512345678')
     expect(qr.text).toContain('NACIMIENTO: 1990-05-12')
     expect(qr.text).toContain('INFO-MEDICA')

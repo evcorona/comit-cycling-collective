@@ -38,6 +38,9 @@ importers:
       tailwindcss:
         specifier: ^4.1.0
         version: 4.3.3
+      toastify-js:
+        specifier: ^1.12.0
+        version: 1.12.0
       zod:
         specifier: ^4.6.5
         version: 4.6.5
@@ -1931,6 +1934,9 @@ packages:
   tinyspy@4.0.6:
     resolution: {integrity: sha512-u8KszXvGfU68hVcZpRHKG28T0krMuv2G5nDhiHaMLen/gIuFEgIJhaJuO69qjnXg5paSrbPMFfx3brNuN8eVSg==}
     engines: {node: '>=14.0.0'}
+
+  toastify-js@1.12.0:
+    resolution: {integrity: sha512-HeMHCO9yLPvP9k0apGSdPUWrUbLnxUKNFzgUoZp1PHCLploIX/4DSQ7V8H25ef+h4iO9n0he7ImfcndnN6nDrQ==}
 
   ts-api-utils@2.5.0:
     resolution: {integrity: sha512-OJ/ibxhPlqrMM0UiNHJ/0CKQkoKF243/AEmplt3qpRgkW8VG7IfOS41h7V8TjITqdByHzrjcS/2si+y4lIh8NA==}
@@ -3976,6 +3982,8 @@ snapshots:
   tinyrainbow@2.0.0: {}
 
   tinyspy@4.0.6: {}
+
+  toastify-js@1.12.0: {}
 
   ts-api-utils@2.5.0(typescript@5.9.3):
     dependencies:

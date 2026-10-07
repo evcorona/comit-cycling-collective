@@ -1,5 +1,5 @@
 import { formatQrData } from '@/features/emergency/domain/formatQrData'
-import { getQrPrintAnalysis } from '@/lib/qr/getQrPrintAnalysis'
+import { analyzeQrLabel } from '@/features/emergency/domain/analyzeQrLabel'
 
 // Keep basic identification intact; add optional fields only in priority order.
 export async function selectEmergencyQr(data, size, encodeQr) {
@@ -13,21 +13,21 @@ export async function selectEmergencyQr(data, size, encodeQr) {
   for (const field of ['conditions', 'notes']) {
     if (!data[field]?.trim()) continue
     const candidate = await encode({ ...selected, [field]: data[field] })
-    const analysis = getQrPrintAnalysis(
+    const analysis = analyzeQrLabel(
       candidate.text,
       size,
       candidate.totalModules,
     )
-    if (!analysis.canPrint || analysis.status !== 'optimal') break
+    if (!analysis.canDownload) break
     selected[field] = data[field]
     included.push(field)
     qr = candidate
   }
 
-  const analysis = getQrPrintAnalysis(qr.text, size, qr.totalModules)
+  const analysis = analyzeQrLabel(qr.text, size, qr.totalModules)
   return {
     ...qr,
-    canDownload: analysis.canPrint && analysis.status === 'optimal',
+    canDownload: analysis.canDownload,
     included,
     omitted: ['conditions', 'notes'].filter(
       (field) => data[field]?.trim() && !included.includes(field),

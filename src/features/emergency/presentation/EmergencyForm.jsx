@@ -98,7 +98,7 @@ export function EmergencyForm({
       )}
       <div className="mt-5 grid grid-cols-[1fr_auto] gap-2">
         <button
-        type='submit'
+          type="submit"
           disabled={isSubmitting}
           className="primary flex min-h-12 items-center justify-center gap-2 rounded-xl px-3 py-3 text-sm font-bold"
         >
