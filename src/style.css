@@ -155,14 +155,18 @@ textarea {
   caret-color: var(--color-pink);
 }
 
-.download-toast {
-  max-width: calc(100vw - 2rem);
+.toastify.download-toast.toastify-right {
+  right: 12px;
+  left: auto;
+  margin: 0;
+  max-width: min(280px, calc(100vw - 24px));
   border: 1px solid #a7f3d0;
-  border-radius: 12px;
-  font-size: 14px;
-  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.4;
+  padding: 8px 10px;
 }
 .download-toast .toast-close {
   color: inherit;
-  padding-left: 12px;
+  padding-left: 8px;
 }

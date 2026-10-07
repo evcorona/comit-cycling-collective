@@ -6,8 +6,8 @@ export function showDownloadToast() {
   const toast = Toastify({
     text: texts.export.success,
     duration: 3500,
-    gravity: 'bottom',
-    position: 'center',
+    gravity: 'top',
+    position: 'right',
     close: true,
     stopOnFocus: true,
     ariaLive: 'polite',
