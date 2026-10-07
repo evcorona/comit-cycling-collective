@@ -19,12 +19,12 @@ export function EmergencyPage() {
             {texts.emergencyPage.description}
           </p>
         </div>
-        <div className="grid items-start gap-4 lg:grid-cols-[1.35fr_1fr]">
+        <div className="grid grid-cols-1 items-start gap-4 lg:grid-cols-[1.35fr_1fr]">
           <div className="min-w-0 space-y-4">
             <EmergencyForm {...form} />
             <PrivacyNotice />
           </div>
-          <div className="space-y-5">
+          <div className="min-w-0 space-y-5">
             <QrResult result={form.result} />
           </div>
         </div>

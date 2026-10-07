@@ -17,7 +17,6 @@
   },
   "qrResult": {
     "scanHint": "Comprueba que se lea antes de salir.",
-    "review": "Revisar mis datos",
     "emptyTitle": "Tu QR y tarjeta aparecerán aquí.",
     "emptyDescription": "Tu QR y tarjeta aparecerán aquí al completar el formulario.",
     "format": "Descarga en formato PNG",
@@ -108,7 +107,7 @@
   "qr": {
     "heading": "INFORMACIÓN DE EMERGENCIA",
     "generationError": "No pudimos crear el QR. Reduce la cantidad de texto e inténtalo de nuevo.",
-    "exportError": "No se pudo descargar. Prueba con un tamaño mayor.",
+    "exportError": "No se pudo descargar. Inténtalo de nuevo.",
     "titles": {
       "emergency": "EMERGENCIA"
     },
@@ -124,7 +123,7 @@
     "noMedicalData": "Sin datos medicos registrados"
   },
   "export": {
-    "download": "PNG",
+    "download": "Imagen",
     "size": "Tamaño del QR",
     "custom": "Otro tamaño",
     "customLabel": "Lado del QR (cm)",
@@ -139,14 +138,16 @@
     "maxSize": "6 cm",
     "smallHint": "Este QR necesita al menos {size} cm. Aumenta el tamaño o resume los datos.",
     "recommended": "Tamaño recomendado: {size} cm.",
-    "labelHint": "PNG incluye la etiqueta debajo. SVG conserva el QR cuadrado, listo para imprimir.",
-    "downloadSvg": "SVG",
+    "downloadSvg": "Vector",
     "downloadFile": "Descargar {format}",
-    "priority": "A 3 cm se incluyen los datos básicos. En tamaños mayores se agrega primero información médica y después notas, si caben.",
-    "basicIncluded": "Incluye: nombre, nacimiento, sangre y contactos que hayas completado.",
-    "omitted": "Fuera de este QR: {fields}. Aumenta el tamaño o resume el texto. La tarjeta conserva todos tus datos.",
-    "summarize": "Resume los textos para incluir más información sin dificultar la lectura. Los campos se agregan completos, por prioridad.",
-    "reviewQr": "Ver datos incluidos en este QR"
+    "allIncluded": "Tu QR incluye todos tus datos.",
+    "onlyBasic": "Tu QR incluye solo los datos básicos.",
+    "basicAndMedical": "Tu QR incluye los datos básicos y la información médica.",
+    "omittedFields": "No incluye: {fields}.",
+    "increaseOrResume": "Aumenta el tamaño o resume el texto para agregar más información.",
+    "resumeOnly": "Resume el texto para agregar más información.",
+    "basicTooLong": "Tus datos básicos son demasiado largos. Resume los nombres para descargar el QR.",
+    "cardComplete": "La tarjeta conserva toda tu información."
   },
   "meta": {
     "title": "Comit · Tu QR de emergencia",

@@ -83,16 +83,6 @@ export function QrResult({ result }) {
               result={result}
             />
           )}
-          {downloadType === 'card' && (
-            <details className="mt-5 border-t border-black/10 pt-3">
-              <summary className="flex min-h-11 cursor-pointer items-center text-sm font-semibold">
-                {texts.qrResult.review}
-              </summary>
-              <pre className="mt-2 whitespace-pre-wrap break-words rounded-lg bg-cream p-3 font-sans text-sm leading-6">
-                {qr.text}
-              </pre>
-            </details>
-          )}
           <p className="mt-3 flex items-center justify-center gap-2 text-xs text-muted">
             <WifiOff size={14} />
             {texts.qrResult.offlineTitle}

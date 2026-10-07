@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Check, Download } from 'lucide-react'
 import texts from '@/locales/es.json'
-import { getQrPrintAnalysis } from '@/lib/qr/getQrPrintAnalysis'
 import { QRCodeGenerator } from '@/components/qr/QRCodeGenerator'
 import {
   exportQr,
@@ -15,8 +14,8 @@ export function QrDownload({ qrBySize }) {
   const [isExporting, setIsExporting] = useState(false)
   const [error, setError] = useState('')
   const [downloaded, setDownloaded] = useState(false)
-  const analysis = getQrPrintAnalysis(qr.text, size, qr.totalModules)
   async function download(format) {
+    if (!qr.canDownload) return
     setIsExporting(true)
     setError('')
     try {
@@ -35,38 +34,42 @@ export function QrDownload({ qrBySize }) {
       <QRCodeGenerator
         value={qr.text}
         physicalSizeCm={size}
-        showDiagnostics
+        showPrintStatus={false}
         title={qr.title}
       />
-      <div className="qr-controls space-y-2 rounded-xl bg-cream p-3 text-sm leading-6">
-        <p>{texts.export.priority}</p>
-        <p
-          role="status"
-          aria-live="polite"
-        >
-          {texts.export.basicIncluded}
-          {qr.included
-            .map((field) => ` ${texts.fields[field].label}.`)
-            .join('')}
-        </p>
-        {qr.omitted.length > 0 && (
-          <p className="font-semibold">
-            {texts.export.omitted.replace(
-              '{fields}',
-              qr.omitted.map((field) => texts.fields[field].label).join(', '),
-            )}
-          </p>
+      <div
+        className="qr-controls space-y-2 rounded-xl bg-cream p-3 text-sm leading-6"
+        role="status"
+        aria-live="polite"
+      >
+        {!qr.canDownload ? (
+          <p className="font-semibold text-pink">{texts.export.basicTooLong}</p>
+        ) : qr.omitted.length === 0 ? (
+          <p>{texts.export.allIncluded}</p>
+        ) : (
+          <>
+            <p>
+              {qr.included.length === 0
+                ? texts.export.onlyBasic
+                : texts.export.basicAndMedical}
+            </p>
+            <p>
+              {texts.export.omittedFields.replace(
+                '{fields}',
+                qr.omitted
+                  .map((field) => texts.fields[field].label.toLowerCase())
+                  .join(', '),
+              )}
+            </p>
+            <p className="font-semibold">
+              {size === 6
+                ? texts.export.resumeOnly
+                : texts.export.increaseOrResume}
+            </p>
+            <p className="text-xs text-muted">{texts.export.cardComplete}</p>
+          </>
         )}
-        <p>{texts.export.summarize}</p>
       </div>
-      <details className="qr-controls border-t border-black/10 pt-3">
-        <summary className="flex min-h-11 cursor-pointer items-center text-sm font-semibold">
-          {texts.export.reviewQr}
-        </summary>
-        <pre className="mt-2 whitespace-pre-wrap break-words rounded-lg bg-cream p-3 font-sans text-sm leading-6">
-          {qr.text}
-        </pre>
-      </details>
       <fieldset
         className="qr-controls"
         disabled={isExporting}
@@ -107,9 +110,6 @@ export function QrDownload({ qrBySize }) {
         <p className="mt-3 text-xs leading-5 text-muted">
           {texts.export.description}
         </p>
-        <p className="mt-1 text-xs leading-5 text-muted">
-          {texts.export.labelHint}
-        </p>
         {error && (
           <p
             role="alert"
@@ -126,12 +126,9 @@ export function QrDownload({ qrBySize }) {
             <button
               key={format}
               type="button"
-              aria-label={texts.export.downloadFile.replace(
-                '{format}',
-                format.toUpperCase(),
-              )}
+              aria-label={texts.export.downloadFile.replace('{format}', label)}
               aria-busy={isExporting}
-              disabled={isExporting || !analysis.canPrint}
+              disabled={isExporting || !qr.canDownload}
               onClick={() => download(format)}
               className="primary flex min-h-12 items-center justify-center gap-2 rounded-xl px-3 py-3 text-sm font-bold disabled:opacity-50"
             >

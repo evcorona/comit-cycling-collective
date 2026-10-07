@@ -13,13 +13,14 @@ import { getQrPrintAnalysis } from '@/lib/qr/getQrPrintAnalysis'
 import { QRDiagnostics } from '@/components/qr/QRDiagnostics'
 
 /**
- * @param {{value: string, physicalSizeCm: 1|2|3|4|5|6, errorCorrection?: 'L'|'M'|'Q'|'H', showDiagnostics?: boolean, title?: string}} props
+ * @param {{value: string, physicalSizeCm: 1|2|3|4|5|6, errorCorrection?: 'L'|'M'|'Q'|'H', showDiagnostics?: boolean, showPrintStatus?: boolean, title?: string}} props
  */
 export function QRCodeGenerator({
   value,
   physicalSizeCm,
   errorCorrection = QR_DEFAULT_LEVEL,
   showDiagnostics = false,
+  showPrintStatus = true,
   title = texts.qrResult.regionLabel,
 }) {
   const { svgRef, model, canEncode } = useQrMatrix(value, errorCorrection)
@@ -77,18 +78,20 @@ export function QRCodeGenerator({
         </div>
       )}
       <p className="qr-status text-center text-sm font-semibold">{title}</p>
-      <p
-        role="status"
-        className={clsx(
-          'qr-status mt-2 text-xs leading-5',
-          analysis.canPrint && analysis.status === 'optimal'
-            ? 'text-muted'
-            : 'text-pink',
-        )}
-      >
-        {message}
-      </p>
-      {analysis.recommendedCm && (
+      {showPrintStatus && (
+        <p
+          role="status"
+          className={clsx(
+            'qr-status mt-2 text-xs leading-5',
+            analysis.canPrint && analysis.status === 'optimal'
+              ? 'text-muted'
+              : 'text-pink',
+          )}
+        >
+          {message}
+        </p>
+      )}
+      {showPrintStatus && analysis.recommendedCm && (
         <p className="qr-status mt-1 text-xs text-muted">
           {texts.export.recommended.replace('{size}', analysis.recommendedCm)}
         </p>

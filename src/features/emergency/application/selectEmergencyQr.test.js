@@ -16,17 +16,31 @@ const data = {
 }
 
 describe('size-aware emergency QR priorities', () => {
-  it('keeps only basic fields at 3 cm without a false missing-medical claim', async () => {
+  it('includes all fields at 3 cm when the full content is recommended', async () => {
     const qr = await selectEmergencyQr(data, 3, createPrintableQr)
     expect(qr.text).toContain('CONTACTO-1: LUIS 5512345678')
     expect(qr.text).toContain('NACIMIENTO: 1990-05-12')
-    expect(qr.text).not.toContain('INFO-MEDICA')
-    expect(qr.text).not.toContain('NOTAS')
+    expect(qr.text).toContain('INFO-MEDICA')
+    expect(qr.text).toContain('NOTAS')
     expect(qr.text).not.toContain('SIN DATOS')
-    expect(qr.omitted).toEqual(['conditions', 'notes'])
+    expect(qr.omitted).toEqual([])
+    expect(qr.canDownload).toBe(true)
     expect(getQrPrintAnalysis(qr.text, 3, qr.totalModules).canPrint).toBe(true)
     expect(data.conditions).toBe('ALERGIA A PENICILINA')
   })
+  it.each([3, 4, 5, 6])(
+    'falls back to basic fields at %scm if medical text cannot fit',
+    async (size) => {
+      const qr = await selectEmergencyQr(
+        { ...data, conditions: 'A'.repeat(2200) },
+        size,
+        createPrintableQr,
+      )
+      expect(qr.included).toEqual([])
+      expect(qr.omitted).toEqual(['conditions', 'notes'])
+      expect(qr.canDownload).toBe(true)
+    },
+  )
   it('adds medical information before notes when both fit', async () => {
     const qr = await selectEmergencyQr(data, 6, createPrintableQr)
     expect(qr.included).toEqual(['conditions', 'notes'])
@@ -79,5 +93,6 @@ describe('size-aware emergency QR priorities', () => {
     expect(qr.text).toContain('NOMBRE: ' + 'A'.repeat(100))
     expect(qr.text).toContain('CONTACTO-2: ' + 'C'.repeat(100))
     expect(getQrPrintAnalysis(qr.text, 3, qr.totalModules).canPrint).toBe(false)
+    expect(qr.canDownload).toBe(false)
   })
 })

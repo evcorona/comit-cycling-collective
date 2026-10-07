@@ -130,23 +130,26 @@ import { QRCodeGenerator } from '@/components/qr/QRCodeGenerator'
 
 ## Exportación e impresión
 
-El deslizador de emergencia ofrece tamaños enteros de 3 a 6 cm y parte de 3 cm
-con nombre, nacimiento, sangre y contactos. En tamaños mayores se agrega primero
+El deslizador de emergencia ofrece tamaños enteros de 3 a 6 cm y parte de 3 cm.
+En todos los tamaños se mantienen los datos básicos y se agrega primero
 información médica y después notas, completas, si el contenido está dentro de la
 recomendación del modo detectado y su matriz cabe. No se salta una prioridad
 para incluir la siguiente. La vista previa y las descargas usan el mismo
-contenido seleccionado; muestran inclusiones y omisiones. La tarjeta conserva
-todos los datos. Si los datos básicos son demasiado largos, se pide aumentar el
-tamaño sin recortarlos. El componente QR genérico conserva su API de 1 a 6 cm.
-El contenido se clasifica como `optimal`, `warning` u `over-limit` con los
-presupuestos del modo detectado; el mínimo físico se comprueba además con la
-matriz real y una guía conservadora de 0.4 mm por módulo, redondeada a píxeles
-enteros de 300 ppp. Los tamaños insuficientes se bloquean en la interfaz y ambos
-exportadores por versión y densidad reales. Un presupuesto M excedido no bloquea
-por sí solo una matriz válida, por ejemplo al usar un nivel de corrección
-diferente. Por esa guía, incluso un QR pequeño puede necesitar más de 1 cm
-aunque cumpla el presupuesto de bytes. Por encima del rango soportado, se pide
-resumir el texto; no se recorta automáticamente.
+contenido seleccionado. La tarjeta conserva todos los datos. Si los datos
+básicos no cumplen la recomendación o no caben, se bloquea la descarga y se pide
+resumir; no se recortan automáticamente. La página no muestra detalles técnicos
+ni una revisión duplicada de los datos: solo un aviso sobre el contenido
+incluido y omitido. Las descargas se llaman Imagen (PNG) y Vector (SVG). El
+componente QR genérico conserva su API de 1 a 6 cm y sus diagnósticos opcionales
+para otros usos. El contenido se clasifica como `optimal`, `warning` u
+`over-limit` con los presupuestos del modo detectado; el mínimo físico se
+comprueba además con la matriz real y una guía conservadora de 0.4 mm por
+módulo, redondeada a píxeles enteros de 300 ppp. Los tamaños insuficientes se
+bloquean en la interfaz y ambos exportadores por versión y densidad reales. Un
+presupuesto M excedido no bloquea por sí solo una matriz válida, por ejemplo al
+usar un nivel de corrección diferente. Por esa guía, incluso un QR pequeño puede
+necesitar más de 1 cm aunque cumpla el presupuesto de bytes. Por encima del
+rango soportado, se pide resumir el texto; no se recorta automáticamente.
 
 SVG conserva el vector original de `qrcode.react`, con ancho y alto en cm, sin
 etiqueta externa. PNG se rasteriza desde ese mismo SVG, usando módulos de
