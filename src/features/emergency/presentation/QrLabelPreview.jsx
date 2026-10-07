@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import texts from '@/locales/es.json'
 import { qrLabelSvg } from '@/features/emergency/infrastructure/qrLabelSvg'
-import { QR_PREVIEW_SIZE } from '@/lib/qr/constants'
+import { QR_LABEL } from '@/features/emergency/domain/constants/qrLabel'
 
 export function QrLabelPreview({ qr, size }) {
   const [image, setImage] = useState(null)
@@ -28,7 +28,7 @@ export function QrLabelPreview({ qr, size }) {
   return (
     <div
       className="qr-screen flex justify-center"
-      style={{ '--qr-preview-size': `${QR_PREVIEW_SIZE}px` }}
+      style={{ '--qr-preview-size': `${QR_LABEL.previewPixels}px` }}
     >
       {image ? (
         <img
