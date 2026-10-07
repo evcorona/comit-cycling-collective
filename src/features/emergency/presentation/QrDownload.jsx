@@ -108,6 +108,9 @@ export function QrDownload({ qrBySize }) {
           <span>{texts.export.maxSize}</span>
         </div>
         <p className="mt-3 text-xs leading-5 text-muted">
+          {texts.export.sizeHint}
+        </p>
+        <p className="mt-1 text-xs leading-5 text-muted">
           {texts.export.description}
         </p>
         {error && (
