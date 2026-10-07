@@ -4,6 +4,7 @@ import texts from '@/locales/es.json'
 export const emergencyFields = [
   {
     name: 'name',
+    lettersOnly: true,
     label: texts.fields.name.label,
     placeholder: texts.fields.name.placeholder,
     required: true,
@@ -31,6 +32,7 @@ export const emergencyFields = [
   },
   {
     name: 'contact',
+    lettersOnly: true,
     label: texts.fields.contact.label,
     placeholder: texts.fields.contact.placeholder,
     required: true,
@@ -49,6 +51,7 @@ export const emergencyFields = [
   },
   {
     name: 'contact2',
+    lettersOnly: true,
     label: texts.fields.contact2.label,
     placeholder: texts.fields.contact2.placeholder,
     required: false,

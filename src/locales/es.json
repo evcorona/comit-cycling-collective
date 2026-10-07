@@ -102,6 +102,7 @@
     "bloodType": "Selecciona un tipo de sangre válido.",
     "birthDate": "Ingresa una fecha de nacimiento válida que no sea futura.",
     "phoneLength": "Ingresa un teléfono de 10 dígitos.",
+    "nameCharacters": "Usa solo letras sin acentos y espacios.",
     "unsupportedCharacters": "Usa mayúsculas sin acentos, emojis ni símbolos especiales."
   },
   "qr": {

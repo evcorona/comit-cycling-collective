@@ -1,5 +1,8 @@
 import { PHONE_DIGITS } from '@/features/emergency/domain/constants/phone'
-import { ALLOWED_TEXT_PATTERN } from '@/features/emergency/domain/constants/input'
+import {
+  ALLOWED_TEXT_PATTERN,
+  NAME_PATTERN,
+} from '@/features/emergency/domain/constants/input'
 import { stripDiacritics } from '@/shared/stripDiacritics'
 import texts from '@/locales/es.json'
 import { z } from 'zod'
@@ -10,41 +13,46 @@ import {
 import { localToday } from '@/shared/date'
 export const formSchema = z.object(
   Object.fromEntries(
-    emergencyFields.map(({ name, label, required, type, maxLength }) => {
-      let rule = z.string().trim().max(maxLength, texts.validation.tooLong)
-      if (required)
-        rule = rule.min(
-          1,
-          texts.validation.required.replace('{field}', label.toLowerCase()),
-        )
-      if (type === 'tel' || type === 'number')
-        rule = rule.regex(/^\d*$/, texts.validation.numeric)
-      if (type === 'tel')
-        rule = rule.refine(
-          (value) => !value || value.length === PHONE_DIGITS,
-          texts.validation.phoneLength,
-        )
-      if (type === 'select')
-        rule = rule.refine(
-          (value) => value === '' || bloodTypes.includes(value),
-          texts.validation.bloodType,
-        )
-      if (type === 'date')
-        rule = rule.refine((value) => {
-          if (!value) return true
-          const date = new Date(`${value}T00:00:00Z`)
-          return (
-            /^\d{4}-\d{2}-\d{2}$/.test(value) &&
-            !Number.isNaN(date.getTime()) &&
-            date.toISOString().slice(0, 10) === value &&
-            value <= localToday()
+    emergencyFields.map(
+      ({ name, label, required, type, maxLength, lettersOnly }) => {
+        let rule = z.string()
+        if (lettersOnly)
+          rule = rule.regex(NAME_PATTERN, texts.validation.nameCharacters)
+        rule = rule.trim().max(maxLength, texts.validation.tooLong)
+        if (required)
+          rule = rule.min(
+            1,
+            texts.validation.required.replace('{field}', label.toLowerCase()),
           )
-        }, texts.validation.birthDate)
-      if (type === 'text' || type === 'textarea')
-        rule = rule
-          .regex(ALLOWED_TEXT_PATTERN, texts.validation.unsupportedCharacters)
-          .transform(stripDiacritics)
-      return [name, rule]
-    }),
+        if (type === 'tel' || type === 'number')
+          rule = rule.regex(/^\d*$/, texts.validation.numeric)
+        if (type === 'tel')
+          rule = rule.refine(
+            (value) => !value || value.length === PHONE_DIGITS,
+            texts.validation.phoneLength,
+          )
+        if (type === 'select')
+          rule = rule.refine(
+            (value) => value === '' || bloodTypes.includes(value),
+            texts.validation.bloodType,
+          )
+        if (type === 'date')
+          rule = rule.refine((value) => {
+            if (!value) return true
+            const date = new Date(`${value}T00:00:00Z`)
+            return (
+              /^\d{4}-\d{2}-\d{2}$/.test(value) &&
+              !Number.isNaN(date.getTime()) &&
+              date.toISOString().slice(0, 10) === value &&
+              value <= localToday()
+            )
+          }, texts.validation.birthDate)
+        if (type === 'text' || type === 'textarea')
+          rule = rule
+            .regex(ALLOWED_TEXT_PATTERN, texts.validation.unsupportedCharacters)
+            .transform(stripDiacritics)
+        return [name, rule]
+      },
+    ),
   ),
 )

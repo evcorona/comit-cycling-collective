@@ -26,7 +26,7 @@ export function MaskedControl({ field, controlled, inputProps, onChange }) {
           ? PHONE_MASK
           : isNumeric
             ? /^\d*$/
-            : createTextMask(field.maxLength)
+            : createTextMask(field.maxLength, field.lettersOnly)
       }
       unmask={field.type === 'tel'}
       prepare={sanitizeEmergencyText}

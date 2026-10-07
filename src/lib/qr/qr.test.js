@@ -142,6 +142,34 @@ describe('emergency input and single QR integration', () => {
       ).toBe(false)
     },
   )
+  it.each(['name', 'contact', 'contact2'])(
+    'restricts %s to uppercase ASCII letters and spaces in mask and schema',
+    (field) => {
+      const mask = createTextMask(100, true)
+      expect(mask.test('ANA MARIA')).toBe(true)
+      expect(
+        formSchema.safeParse({ ...data, [field]: 'ANA MARIA' }).success,
+      ).toBe(true)
+      for (const character of [
+        '1',
+        '-',
+        '.',
+        '/',
+        '@',
+        'á',
+        'ñ',
+        '\n',
+        '\t',
+        '😀',
+      ]) {
+        const value = 'ANA' + character
+        expect(mask.test(value)).toBe(false)
+        expect(formSchema.safeParse({ ...data, [field]: value }).success).toBe(
+          false,
+        )
+      }
+    },
+  )
   it('limits medical details and notes independently', () => {
     expect(formSchema.safeParse(data).success).toBe(true)
     expect(

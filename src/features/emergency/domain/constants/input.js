@@ -4,6 +4,11 @@ export const ALLOWED_TEXT_CHARACTERS =
 export const ALLOWED_TEXT_PATTERN = new RegExp(
   `^[${ALLOWED_TEXT_CHARACTERS}]*$`,
 )
-export function createTextMask(maxLength) {
-  return new RegExp(`^[${ALLOWED_TEXT_CHARACTERS}]{0,${maxLength}}$`)
+export const NAME_CHARACTERS = 'A-Z '
+export const NAME_PATTERN = /^[A-Z ]*$/
+
+export function createTextMask(maxLength, lettersOnly = false) {
+  return new RegExp(
+    `^[${lettersOnly ? NAME_CHARACTERS : ALLOWED_TEXT_CHARACTERS}]{0,${maxLength}}$`,
+  )
 }
