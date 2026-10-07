@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import QRCode from 'qrcode';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { z } from 'zod';
 import { ArrowRight, Check, Download, Info, QrCode, RotateCcw, ShieldCheck, UserRound, WifiOff } from 'lucide-react';
 import './style.css';
 
@@ -19,28 +22,38 @@ const fields = [
 ];
 const empty = Object.fromEntries(fields.map(([key]) => [key, '']));
 const bloodTypes = ['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-', 'No lo se'];
-const today = new Date().toLocaleDateString('en-CA');
+function localToday() {
+  const date = new Date();
+  return `${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;
+}
+const today = localToday();
+const formSchema = z.object(Object.fromEntries(fields.map(([key,label,,required,type]) => {
+  let rule = z.string().trim().max(type==='textarea'?200:type==='tel'?40:100, 'Reduce la cantidad de texto.');
+  if (required) rule = rule.min(1, `Completa ${label.toLowerCase()}.`);
+  if (type==='select') rule = rule.refine(value => value==='' || bloodTypes.includes(value), 'Selecciona un tipo de sangre valido.');
+  if (type==='date') rule = rule.refine(value => {
+    if (!value) return true;
+    const date = new Date(`${value}T00:00:00Z`);
+    return /^\d{4}-\d{2}-\d{2}$/.test(value) && !Number.isNaN(date.getTime()) && date.toISOString().slice(0,10)===value && value<=localToday();
+  }, 'Ingresa una fecha de nacimiento valida que no sea futura.');
+  return [key, rule];
+})));
 function payload(data) {
   return ['INFORMACION DE EMERGENCIA', ...fields.filter(([key]) => data[key].trim()).map(([key, label]) => `${label}: ${data[key].trim()}`)].join('\n');
 }
 function App() {
-  const [data, setData] = useState(empty);
+  const { register, handleSubmit, reset, setFocus, formState: { errors, isSubmitting } } = useForm({ defaultValues: empty, resolver: zodResolver(formSchema) });
   const [result, setResult] = useState(null);
   const [error, setError] = useState('');
-  const [busy, setBusy] = useState(false);
   const [downloaded, setDownloaded] = useState(false);
-  async function generate(event) {
-    event.preventDefault();
-    const missing = fields.find(([key, , , required]) => required && !data[key].trim());
-    if (missing) { setError(`Completa ${missing[1].toLowerCase()} para crear el QR.`); document.getElementById(missing[0]).focus(); return; }
-    setBusy(true); setError('');
+  async function generate(data) {
+    setError('');
     try {
       const image = await QRCode.toDataURL(payload(data), { width: 1200, margin: 4, errorCorrectionLevel: 'M', color: { dark: '#000000', light: '#ffffff' } });
       setResult({ image, data: { ...data } }); setDownloaded(false);
     } catch { setError('No pudimos crear el QR. Reduce la cantidad de texto e intentalo de nuevo.'); }
-    finally { setBusy(false); }
   }
-  function clear() { setData({ ...empty }); setResult(null); setError(''); setDownloaded(false); document.getElementById('name').focus(); }
+  function clear() { reset(empty); setResult(null); setError(''); setDownloaded(false); setFocus('name'); }
   function download() {
     const link = document.createElement('a'); link.href = result.image; link.download = 'comit-qr-emergencia.png'; link.click(); setDownloaded(true);
   }
@@ -55,20 +68,21 @@ function App() {
       <section id="formulario" className="mx-auto max-w-5xl px-5 py-7 sm:px-8 sm:py-9">
         <div className="mb-6"><h1 className="display text-3xl text-black sm:text-4xl">Tu QR de emergencia</h1><p className="mt-2 text-sm leading-6 text-muted">Completa tus datos, genera tu QR y llevalo en cada rodada.</p></div>
         <div className="grid items-start gap-6 lg:grid-cols-[1.35fr_1fr]">
-          <form onSubmit={generate} className="rounded-xl border border-stone-200 bg-white p-5 sm:p-6">
+          <form noValidate onSubmit={handleSubmit(generate)} className="rounded-xl border border-stone-200 bg-white p-5 sm:p-6">
             <div className="mb-5 flex items-center gap-3"><span className="rounded-lg bg-cream p-2.5 text-black"><UserRound size={20}/></span><div><h3 className="font-bold text-black">Datos de emergencia</h3><p className="mt-1 text-xs text-muted">Nombre y primer contacto con telefono son obligatorios. El resto es opcional.</p></div></div>
             <div className="grid gap-x-5 gap-y-4 sm:grid-cols-2">{fields.map(([key,label,placeholder,required,type,fullWidth])=>{
-              const common = { id: key, value: data[key], required, onChange: e => { setData({...data,[key]:e.target.value}); setResult(null); setError(''); } };
+              const common = { id: key, ...register(key, { onChange: () => { setResult(null); setError(''); } }), required, 'aria-invalid': !!errors[key], 'aria-describedby': errors[key] ? `${key}-error` : undefined };
               return <div key={key} className={fullWidth ? 'sm:col-span-2' : ''}>
                 <label htmlFor={key} className="mb-2 flex items-center justify-between text-xs font-semibold text-black"><span>{label}{required && <span className="ml-1">*</span>}</span>{!required && <span className="text-[10px] font-normal text-muted">Opcional</span>}</label>
                 {type==='select' ? <select {...common}><option value="">Selecciona una opcion</option>{bloodTypes.map(value=><option key={value} value={value}>{value}</option>)}</select>
                   : type==='textarea' ? <textarea {...common} maxLength={200} rows={2} placeholder={placeholder}/>
                   : <input {...common} type={type} max={type==='date'?today:undefined} maxLength={type==='tel'?40:100} autoComplete="off" placeholder={placeholder}/>}
+                {errors[key] && <p id={`${key}-error`} role="alert" className="mt-1.5 text-xs text-pink">{errors[key].message}</p>}
               </div>;
             })}</div>
-            <div className="mt-6 flex gap-2.5 rounded-lg bg-cream p-3 text-xs leading-5 text-muted"><Info size={16} className="mt-0.5 shrink-0 text-black"/><p>Incluye unicamente informacion util en una emergencia. Si dejas un campo vacio, no aparecera en tu QR.</p></div>
+            <div className="mt-6 flex gap-2.5 rounded-lg bg-cream p-3 text-xs leading-5 text-muted"><Info size={16} className="mt-0.5 shrink-0 text-black"/><p>Cuanta mas informacion relevante y actualizada compartas, mejor podra un paramedico conocer tu situacion en una emergencia. Incluye alergias, condiciones medicas y medicamentos si los conoces. Los campos vacios no apareceran en tu QR.</p></div>
             {error && <p role="alert" className="mt-3 text-sm text-pink">{error}</p>}
-            <div className="mt-6 flex flex-wrap gap-3"><button disabled={busy} className="primary flex flex-1 items-center justify-center gap-2 rounded-lg px-5 py-3.5 text-sm font-bold"><QrCode size={18}/>{busy?'Generando…':'Generar mi QR'}<ArrowRight size={17} className="ml-auto"/></button><button type="button" onClick={clear} className="flex items-center justify-center gap-2 rounded-lg border border-stone-200 px-4 py-3 text-xs font-semibold text-muted hover:bg-cream"><RotateCcw size={14}/> Limpiar</button></div>
+            <div className="mt-6 flex flex-wrap gap-3"><button disabled={isSubmitting} className="primary flex flex-1 items-center justify-center gap-2 rounded-lg px-5 py-3.5 text-sm font-bold"><QrCode size={18}/>{isSubmitting?'Generando…':'Generar mi QR'}<ArrowRight size={17} className="ml-auto"/></button><button type="button" onClick={clear} className="flex items-center justify-center gap-2 rounded-lg border border-stone-200 px-4 py-3 text-xs font-semibold text-muted hover:bg-cream"><RotateCcw size={14}/> Limpiar</button></div>
           </form>
           <div className="space-y-5">
             <section className="overflow-hidden rounded-xl border border-stone-200 bg-white" aria-label="Resultado del QR" aria-live="polite"><div className="flex items-center justify-between border-b border-stone-100 px-6 py-5"><h3 className="font-bold text-black">Tu QR de emergencia</h3><span className={`rounded-full px-2.5 py-1 text-[10px] font-semibold ${result?'bg-pink/10 text-black':'bg-cream text-muted'}`}>{result?'Listo para llevar':'Vista previa'}</span></div><div className="px-6 py-7 text-center">
