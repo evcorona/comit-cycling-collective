@@ -26,16 +26,11 @@ export function EmergencyField({ field, register, control, error, onChange }) {
         className="mb-2 flex items-center justify-between text-xs font-semibold text-black"
       >
         <span>
-          {label}
+          {texts.fields[key].shortLabel || label}
           {required && (
             <span className="ml-1">{texts.common.requiredMarker}</span>
           )}
         </span>
-        {!required && (
-          <span className="text-[10px] font-normal text-muted">
-            {texts.common.optional}
-          </span>
-        )}
       </label>
       {field.expandable && (
         <p
@@ -78,6 +73,11 @@ export function EmergencyField({ field, register, control, error, onChange }) {
           autoComplete="off"
           placeholder={placeholder}
         />
+      )}
+      {key === 'name' && (
+        <p className="mt-1.5 text-xs text-muted">
+          {texts.emergencyForm.inputHint}
+        </p>
       )}
       {error && (
         <p

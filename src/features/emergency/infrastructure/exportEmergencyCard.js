@@ -30,7 +30,7 @@ export async function exportEmergencyCard(result) {
   if (!context) throw new Error('Canvas unavailable')
   const [logo, qr] = await Promise.all([
     loadImage('/logo_rosa.png'),
-    encodeQrImage(result.encodedText, 350, true).then(loadImage),
+    encodeQrImage(result.text, 350, true).then(loadImage),
   ])
   const padding = 40
   const qrSize = 350

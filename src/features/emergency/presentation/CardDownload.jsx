@@ -22,7 +22,7 @@ export function CardDownload({ result }) {
     }
   }
   return (
-    <div className="mt-5 rounded-lg border border-pink/20 bg-pink/5 p-4 text-left">
+    <div className="space-y-3 text-left">
       <h4 className="flex items-center gap-2 text-sm font-bold">
         <CreditCard
           size={18}
@@ -38,7 +38,7 @@ export function CardDownload({ result }) {
         type="button"
         onClick={download}
         disabled={isExporting}
-        className="mt-3 flex w-full items-center justify-center gap-2 rounded-lg bg-black px-4 py-3 text-xs font-semibold text-white hover:bg-black/80"
+        className="mt-3 flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-black px-4 py-3 text-sm font-semibold text-white hover:bg-black/80"
       >
         <Download size={16} />
         {isExporting ? texts.export.busy : texts.card.download}

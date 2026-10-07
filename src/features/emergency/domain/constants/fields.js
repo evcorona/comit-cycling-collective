@@ -97,6 +97,7 @@ export const emergencyFields = [
   },
   {
     name: 'notes',
+    expandable: true,
     label: texts.fields.notes.label,
     placeholder: texts.fields.notes.placeholder,
     required: false,

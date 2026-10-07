@@ -10,35 +10,39 @@
     "motto": "Nobody Rides Alone."
   },
   "privacyNotice": {
-    "title": "Tu privacidad va primero",
-    "description": "No guardamos ni enviamos tu información. El QR se genera en tu navegador y tus datos se borran al recargar o cerrar la página.",
-    "warningTitle": "Compártelo con cuidado:",
-    "warning": "cualquiera que escanee tu QR podrá leer la información que incluyas. La imagen descargada conserva esos datos."
+    "title": "Tu información no se guarda",
+    "description": "Se borra al cerrar o recargar esta página.",
+    "warningTitle": "Cuida tu QR:",
+    "warning": "quien lo escanee podrá leer tus datos."
   },
   "qrResult": {
-    "scanHint": "Escanéalo para comprobar tus datos antes de salir.",
-    "review": "Revisar los datos incluidos",
+    "scanHint": "Comprueba que se lea antes de salir.",
+    "review": "Revisar mis datos",
     "emptyTitle": "Tu QR aparecerá aquí.",
-    "emptyDescription": "Completa el formulario para descargar tu QR o una tarjeta con tus datos.",
+    "emptyDescription": "Tu QR aparecerá al completar el formulario.",
     "format": "Descarga en formato PNG",
     "offlineTitle": "Consulta sin internet",
     "offlineDescription": "Los datos están dentro del QR. Puedes leerlos con un lector QR sin conexión a internet.",
     "regionLabel": "Resultado del QR",
     "imageAlt": "Código QR con tus datos de emergencia",
     "ready": "Listo para llevar",
-    "preview": "Vista previa"
+    "preview": "Vista previa",
+    "downloadType": "Qué quieres descargar",
+    "qrOption": "Solo QR",
+    "cardOption": "Tarjeta"
   },
   "emergencyForm": {
     "title": "Datos de emergencia",
-    "requiredHint": "Nombre y primer contacto con teléfono son obligatorios. El resto es opcional.",
-    "medicalHint": "Cuanta más información relevante y actualizada compartas, mejor podrá un paramédico conocer tu situación en una emergencia. Incluye alergias, condiciones médicas y medicamentos si los conoces. Los campos vacíos no aparecerán en tu QR.",
+    "requiredHint": "* Obligatorio. Los demás campos son opcionales.",
+    "medicalHint": "Estos datos pueden ayudar a un paramédico.",
     "clear": "Limpiar",
     "generating": "Generando…",
-    "generate": "Generar mi QR",
-    "inputHint": "Escribe sin acentos. Si los introduces o pegas, se convierten automáticamente para facilitar la lectura del QR."
+    "generate": "Crear QR",
+    "inputHint": "Los acentos se ajustan automáticamente.",
+    "addContact": "Agregar otro contacto"
   },
   "emergencyPage": {
-    "description": "Completa tus datos y elige cómo llevarlos: un QR o una tarjeta de emergencia."
+    "description": "Crea tu QR o tarjeta para llevar en cada rodada."
   },
   "fields": {
     "name": {
@@ -55,19 +59,23 @@
     },
     "contact": {
       "label": "Contacto de emergencia 1",
-      "placeholder": "Nombre de la persona a contactar"
+      "placeholder": "Nombre de la persona a contactar",
+      "shortLabel": "Nombre del contacto"
     },
     "phone": {
       "label": "Teléfono de emergencia 1",
-      "placeholder": "55-1234-5678"
+      "placeholder": "55-1234-5678",
+      "shortLabel": "Teléfono"
     },
     "contact2": {
       "label": "Contacto de emergencia 2",
-      "placeholder": "Nombre de otro contacto"
+      "placeholder": "Nombre de otro contacto",
+      "shortLabel": "Otro contacto"
     },
     "phone2": {
       "label": "Teléfono de emergencia 2",
-      "placeholder": "55-1234-5678"
+      "placeholder": "55-1234-5678",
+      "shortLabel": "Teléfono del otro contacto"
     },
     "allergies": {
       "label": "Alergias",
@@ -90,7 +98,7 @@
     "optional": "Opcional",
     "select": "Selecciona una opción",
     "requiredMarker": "*",
-    "qrTitle": "Tu información de emergencia",
+    "qrTitle": "Tu emergencia, a la mano",
     "period": ".",
     "bloodTypes": ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-", "No lo sé"]
   },
@@ -105,25 +113,29 @@
   "qr": {
     "heading": "INFORMACIÓN DE EMERGENCIA",
     "generationError": "No pudimos crear el QR. Reduce la cantidad de texto e inténtalo de nuevo.",
-    "exportError": "No pudimos exportar el QR. Intenta con un tamaño mayor."
+    "exportError": "No se pudo descargar. Prueba con un tamaño mayor."
   },
   "medical": {
     "allergies": "Agregar alergias",
     "conditions": "Agregar condiciones médicas",
-    "medications": "Agregar medicamentos"
+    "medications": "Agregar medicamentos",
+    "notes": "Agregar notas"
   },
   "export": {
-    "download": "Descargar QR en PNG",
-    "size": "Tamaño de impresión",
-    "custom": "Personalizado",
+    "download": "Descargar QR",
+    "size": "Tamaño del QR",
+    "custom": "Otro tamaño",
     "customLabel": "Lado del QR (cm)",
     "confirm": "Descargar",
-    "busy": "Exportando…",
-    "description": "PNG a 300 ppp. Imprime al 100% de escala para conservar el tamaño.",
-    "rangeError": "Elige un tamaño entre 2 y 30 cm.",
+    "busy": "Preparando…",
+    "description": "Para imprimir, usa el tamaño original.",
+    "rangeError": "Elige entre 1 y 30 cm.",
     "preset": "{size} cm",
-    "done": "Descarga iniciada",
-    "unit": "cm"
+    "done": "Descarga iniciada. Revisa tus archivos.",
+    "unit": "cm",
+    "minSize": "1 cm",
+    "maxSize": "5 cm",
+    "smallHint": "Para leerlo con facilidad, recomendamos 2 cm o más."
   },
   "meta": {
     "title": "Comit · Tu QR de emergencia",
@@ -131,20 +143,17 @@
   },
   "card": {
     "title": "Tarjeta de emergencia",
-    "description": "Una tarjeta para tu cartera con nombre, tipo de sangre, contacto principal y QR con todos tus datos. Se genera en tu navegador, sin guardar información.",
-    "size": "Tamaño tarjeta de crédito · 8.56 × 5.4 cm · PNG a 300 ppp",
-    "download": "Descargar tarjeta en PNG",
+    "description": "Datos principales y QR con toda tu información.",
+    "size": "Para cartera · 8.56 × 5.4 cm",
+    "download": "Descargar tarjeta",
     "error": "No pudimos crear la tarjeta. Vuelve a intentarlo o reduce la cantidad de texto.",
     "scanHint": "Escanea para ver todos los datos médicos y las notas.",
     "footer": "Información proporcionada por el titular.",
-    "printHint": "Imprime al 100% de escala para conservar las medidas."
+    "printHint": "Imprime en tamaño original."
   },
-  "qrFormat": {
-    "label": "Formato del QR",
-    "text": "Texto de emergencia",
-    "vcard": "Contacto vCard (opción de llamar)",
-    "textHint": "Muestra toda la información como texto. Algunos lectores reconocen los teléfonos automáticamente.",
-    "vcardHint": "Los lectores compatibles ofrecen llamar o guardar los contactos. Los datos médicos y los nombres de cada contacto aparecen en las notas. Las opciones dependen del lector QR.",
-    "contactName": "Contactos de emergencia de {name}"
+  "sections": {
+    "personal": "Tus datos",
+    "contact": "Contacto de emergencia",
+    "medical": "Información médica"
   }
 }

@@ -1,84 +1,114 @@
-import { CardDownload } from '@/features/emergency/presentation/CardDownload'
+import { useEffect, useRef, useState } from 'react'
 import clsx from 'clsx'
+import { QrCode, CreditCard, WifiOff } from 'lucide-react'
+import { CardDownload } from '@/features/emergency/presentation/CardDownload'
 import { QrDownload } from '@/features/emergency/presentation/QrDownload'
 import texts from '@/locales/es.json'
-import { QrCode, Download, WifiOff } from 'lucide-react'
+
 export function QrResult({ result }) {
+  const headingRef = useRef(null)
+  const [downloadType, setDownloadType] = useState('qr')
+  useEffect(() => {
+    if (result && window.innerWidth < 1024) {
+      headingRef.current?.focus({ preventScroll: true })
+      headingRef.current?.scrollIntoView({
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches
+          ? 'auto'
+          : 'smooth',
+        block: 'start',
+      })
+    }
+  }, [result])
   return (
     <section
-      className="overflow-hidden rounded-xl border border-stone-200 bg-white"
+      className={clsx(
+        'min-w-0 rounded-2xl border border-black/10 bg-white p-4 sm:p-6',
+        { 'hidden lg:block': !result },
+      )}
       aria-label={texts.qrResult.regionLabel}
-      aria-live="polite"
     >
-      <div className="flex items-center justify-between border-b border-stone-100 px-6 py-5">
-        <h3 className="font-bold text-black">{texts.common.qrTitle}</h3>
-        <span
-          className={clsx(
-            'rounded-full px-2.5 py-1 text-[10px] font-semibold',
-            result ? 'bg-pink/10 text-black' : 'bg-cream text-muted',
-          )}
-        >
-          {result ? texts.qrResult.ready : texts.qrResult.preview}
-        </span>
-      </div>
-      <div className="px-6 py-7 text-center">
-        {result ? (
-          <>
-            <img
-              src={result.image}
-              alt={texts.qrResult.imageAlt}
-              className="mx-auto aspect-square w-60 max-w-full"
-            />
-            <h4 className="mt-3 font-bold text-black">{result.data.name}</h4>
-            <p className="mt-2 text-xs leading-5 text-muted">
-              {texts.qrResult.scanHint}
-            </p>
+      <h2
+        ref={headingRef}
+        tabIndex={-1}
+        className="scroll-mt-5 text-lg font-bold outline-none"
+      >
+        {result ? texts.qrResult.ready : texts.qrResult.preview}
+      </h2>
+      {result ? (
+        <>
+          <img
+            src={result.image}
+            alt={texts.qrResult.imageAlt}
+            className="mx-auto my-3 aspect-square w-52 max-w-full"
+          />
+          <p className="break-words text-center font-semibold">
+            {result.data.name}
+          </p>
+          <p className="mt-1 text-center text-xs leading-5 text-muted">
+            {texts.qrResult.scanHint}
+          </p>
+          <div
+            className="my-5 grid grid-cols-2 gap-2"
+            role="group"
+            aria-label={texts.qrResult.downloadType}
+          >
+            {[
+              ['qr', QrCode, texts.qrResult.qrOption],
+              ['card', CreditCard, texts.qrResult.cardOption],
+            ].map(([value, Icon, label]) => (
+              <button
+                type="button"
+                key={value}
+                aria-pressed={downloadType === value}
+                onClick={() => setDownloadType(value)}
+                className={clsx(
+                  'flex min-h-12 items-center justify-center gap-2 rounded-xl border px-3 py-2 text-sm font-semibold',
+                  downloadType === value
+                    ? 'border-pink bg-pink/5 text-black'
+                    : 'border-black/15 text-muted',
+                )}
+              >
+                <Icon size={17} />
+                {label}
+              </button>
+            ))}
+          </div>
+          <div hidden={downloadType !== 'qr'}>
             <QrDownload
               key={result.image}
-              text={result.encodedText}
+              text={result.text}
             />
+          </div>
+          <div hidden={downloadType !== 'card'}>
             <CardDownload
               key={result.image}
               result={result}
             />
-            <details className="mt-5 text-left">
-              <summary className="cursor-pointer text-xs font-semibold text-black">
-                {texts.qrResult.review}
-              </summary>
-              <pre className="mt-3 whitespace-pre-wrap break-words rounded-lg bg-cream p-3 font-sans text-xs leading-6 text-muted">
-                {result.text}
-              </pre>
-            </details>
-          </>
-        ) : (
-          <>
-            <div className="qr-placeholder mx-auto flex h-48 w-48 items-center justify-center rounded-xl border border-dashed border-stone-300 bg-cream">
-              <QrCode
-                size={110}
-                strokeWidth={1}
-                className="text-stone-300"
-              />
-            </div>
-            <h4 className="mt-6 text-sm font-semibold text-black">
-              {texts.qrResult.emptyTitle}
-            </h4>
-            <p className="mx-auto mt-2 max-w-64 text-xs leading-6 text-muted">
-              {texts.qrResult.emptyDescription}
-            </p>
-            <div className="mt-6 flex items-center justify-center gap-2 text-[11px] text-muted">
-              <Download size={14} />
-              {texts.qrResult.format}
-            </div>
-          </>
-        )}
-        <div className="mt-5 rounded-lg bg-cream p-3 text-xs leading-5 text-muted">
-          <p className="flex items-center justify-center gap-2 font-semibold text-black">
-            <WifiOff size={15} />
+          </div>
+          <details className="mt-5 border-t border-black/10 pt-3">
+            <summary className="flex min-h-11 cursor-pointer items-center text-sm font-semibold">
+              {texts.qrResult.review}
+            </summary>
+            <pre className="mt-2 whitespace-pre-wrap break-words rounded-lg bg-cream p-3 font-sans text-sm leading-6">
+              {result.text}
+            </pre>
+          </details>
+          <p className="mt-3 flex items-center justify-center gap-2 text-xs text-muted">
+            <WifiOff size={14} />
             {texts.qrResult.offlineTitle}
           </p>
-          <p className="mt-1">{texts.qrResult.offlineDescription}</p>
+        </>
+      ) : (
+        <div className="py-8 text-center">
+          <QrCode
+            size={72}
+            className="mx-auto mb-4 text-black/15"
+          />
+          <p className="text-sm leading-6 text-muted">
+            {texts.qrResult.emptyDescription}
+          </p>
         </div>
-      </div>
+      )}
     </section>
   )
 }

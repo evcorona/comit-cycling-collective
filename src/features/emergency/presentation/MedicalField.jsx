@@ -23,7 +23,7 @@ export function MedicalField({ field, ...props }) {
           aria-expanded={isExpanded}
           aria-controls={field.name}
           onClick={() => setIsExpanded(true)}
-          className="flex w-full items-center gap-2 rounded-lg border border-dashed border-black/20 px-3 py-2.5 text-left text-xs font-semibold hover:border-pink hover:bg-pink/5"
+          className="flex w-full items-center gap-2 rounded-lg border border-dashed border-black/20 min-h-11 px-3 py-3 text-left text-sm font-semibold hover:border-pink hover:bg-pink/5"
         >
           <Plus
             size={15}
