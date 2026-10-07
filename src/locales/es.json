@@ -123,7 +123,7 @@
     "noMedicalData": "Sin datos medicos registrados"
   },
   "export": {
-    "download": "Imagen",
+    "download": "PNG",
     "size": "Tamaño del QR",
     "sizeHint": "Para facilitar la lectura, el QR incluye la información adecuada para el tamaño elegido.",
     "custom": "Otro tamaño",
@@ -139,7 +139,7 @@
     "maxSize": "6 cm",
     "smallHint": "Este QR necesita al menos {size} cm. Aumenta el tamaño o resume los datos.",
     "recommended": "Tamaño recomendado: {size} cm.",
-    "downloadSvg": "Vector",
+    "downloadSvg": "SVG",
     "downloadFile": "Descargar {format}",
     "allIncluded": "Tu QR incluye todos tus datos.",
     "onlyBasic": "Tu QR incluye solo los datos básicos.",
