@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import clsx from 'clsx'
 import { Check, Download } from 'lucide-react'
 import texts from '@/locales/es.json'
 import { QRCodeGenerator } from '@/components/qr/QRCodeGenerator'
@@ -38,13 +39,22 @@ export function QrDownload({ qrBySize }) {
         title={qr.title}
       />
       <div
-        className="qr-controls space-y-2 rounded-xl bg-cream p-3 text-sm leading-6"
+        className={clsx(
+          'qr-controls space-y-2 rounded-xl border p-3 text-sm leading-6',
+          qr.canDownload && qr.omitted.length === 0
+            ? 'border-emerald-200 bg-emerald-50 text-emerald-900'
+            : 'border-amber-200 bg-amber-50 text-amber-900',
+        )}
         role="status"
         aria-live="polite"
       >
-        <p>{texts.export.sizeHint}</p>
+        <p>
+          {qr.canDownload && qr.omitted.length === 0
+            ? texts.export.allIncluded
+            : texts.export.sizeHint}
+        </p>
         {!qr.canDownload ? (
-          <p className="font-semibold text-pink">{texts.export.basicTooLong}</p>
+          <p className="font-semibold">{texts.export.basicTooLong}</p>
         ) : (
           qr.omitted.length > 0 && (
             <p className="font-semibold">
