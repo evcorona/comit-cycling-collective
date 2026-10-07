@@ -1,8 +1,11 @@
+import { MedicalField } from '@/features/emergency/presentation/MedicalField'
+import texts from '@/locales/es.json'
 import { UserRound, Info, QrCode, ArrowRight, RotateCcw } from 'lucide-react'
 import { emergencyFields } from '@/features/emergency/domain/constants/fields'
 import { EmergencyField } from '@/features/emergency/presentation/EmergencyField'
 export function EmergencyForm({
   register,
+  resetVersion,
   control,
   errors,
   isSubmitting,
@@ -22,36 +25,33 @@ export function EmergencyForm({
           <UserRound size={20} />
         </span>
         <div>
-          <h3 className="font-bold text-black">Datos de emergencia</h3>
+          <h3 className="font-bold text-black">{texts.emergencyForm.title}</h3>
           <p className="mt-1 text-xs text-muted">
-            Nombre y primer contacto con telefono son obligatorios. El resto es
-            opcional.
+            {texts.emergencyForm.requiredHint}
           </p>
         </div>
       </div>
       <div className="grid gap-x-5 gap-y-4 sm:grid-cols-2">
-        {emergencyFields.map((field) => (
-          <EmergencyField
-            key={field.name}
-            field={field}
-            register={register}
-            control={control}
-            error={errors[field.name]}
-            onChange={invalidate}
-          />
-        ))}
+        {emergencyFields.map((field) => {
+          const Component = field.expandable ? MedicalField : EmergencyField
+          return (
+            <Component
+              key={`${field.name}-${field.expandable ? resetVersion : 0}`}
+              field={field}
+              register={register}
+              control={control}
+              error={errors[field.name]}
+              onChange={invalidate}
+            />
+          )
+        })}
       </div>
       <div className="mt-6 flex gap-2.5 rounded-lg bg-cream p-3 text-xs leading-5 text-muted">
         <Info
           size={16}
           className="mt-0.5 shrink-0 text-black"
         />
-        <p>
-          Cuanta mas informacion relevante y actualizada compartas, mejor podra
-          un paramedico conocer tu situacion en una emergencia. Incluye
-          alergias, condiciones medicas y medicamentos si los conoces. Los
-          campos vacios no apareceran en tu QR.
-        </p>
+        <p>{texts.emergencyForm.medicalHint}</p>
       </div>
       {error && (
         <p
@@ -67,7 +67,9 @@ export function EmergencyForm({
           className="primary flex flex-1 items-center justify-center gap-2 rounded-lg px-5 py-3.5 text-sm font-bold"
         >
           <QrCode size={18} />
-          {isSubmitting ? 'Generando…' : 'Generar mi QR'}
+          {isSubmitting
+            ? texts.emergencyForm.generating
+            : texts.emergencyForm.generate}
           <ArrowRight
             size={17}
             className="ml-auto"
@@ -78,7 +80,8 @@ export function EmergencyForm({
           onClick={clear}
           className="flex items-center justify-center gap-2 rounded-lg border border-stone-200 px-4 py-3 text-xs font-semibold text-muted hover:bg-cream"
         >
-          <RotateCcw size={14} /> Limpiar
+          <RotateCcw size={14} />
+          {texts.emergencyForm.clear}
         </button>
       </div>
     </form>

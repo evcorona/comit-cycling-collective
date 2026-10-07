@@ -1,3 +1,4 @@
+import texts from '@/locales/es.json'
 import { useEmergencyForm } from '@/features/emergency/presentation/useEmergencyForm'
 import { EmergencyForm } from '@/features/emergency/presentation/EmergencyForm'
 import { QrResult } from '@/features/emergency/presentation/QrResult'
@@ -12,20 +13,16 @@ export function EmergencyPage() {
       >
         <div className="mb-6">
           <h1 className="display text-3xl text-black sm:text-4xl">
-            Tu QR de emergencia
+            {texts.common.qrTitle}
           </h1>
           <p className="mt-2 text-sm leading-6 text-muted">
-            Completa tus datos, genera tu QR y llevalo en cada rodada.
+            {texts.emergencyPage.description}
           </p>
         </div>
         <div className="grid items-start gap-6 lg:grid-cols-[1.35fr_1fr]">
           <EmergencyForm {...form} />
           <div className="space-y-5">
-            <QrResult
-              result={form.result}
-              download={form.download}
-              downloaded={form.downloaded}
-            />
+            <QrResult result={form.result} />
             <PrivacyNotice />
           </div>
         </div>

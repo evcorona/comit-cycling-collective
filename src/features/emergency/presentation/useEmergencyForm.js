@@ -1,3 +1,4 @@
+import texts from '@/locales/es.json'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -5,7 +6,6 @@ import { defaultValues } from '@/features/emergency/domain/constants/fields'
 import { formSchema } from '@/features/emergency/domain/schema/emergencySchema'
 import { createEmergencyQr } from '@/features/emergency/application/createEmergencyQr'
 import { encodeQrImage } from '@/features/emergency/infrastructure/qrImage'
-import { downloadImage } from '@/shared/downloadImage'
 export function useEmergencyForm() {
   const {
     register,
@@ -17,35 +17,27 @@ export function useEmergencyForm() {
   } = useForm({ defaultValues, resolver: zodResolver(formSchema) })
   const [result, setResult] = useState(null)
   const [error, setError] = useState('')
-  const [downloaded, setDownloaded] = useState(false)
+  const [resetVersion, setResetVersion] = useState(0)
   async function generate(data) {
     setError('')
     try {
       const qr = await createEmergencyQr(data, encodeQrImage)
       setResult(qr)
-      setDownloaded(false)
     } catch {
-      setError(
-        'No pudimos crear el QR. Reduce la cantidad de texto e intentalo de nuevo.',
-      )
+      setError(texts.qr.generationError)
     }
   }
   function clear() {
     reset(defaultValues)
+    setResetVersion((value) => value + 1)
     setResult(null)
     setError('')
-    setDownloaded(false)
+
     setFocus('name')
-  }
-  function download() {
-    if (!result) return
-    downloadImage(result.image, 'comit-qr-emergencia.png')
-    setDownloaded(true)
   }
   function invalidate() {
     setResult(null)
     setError('')
-    setDownloaded(false)
   }
   return {
     register,
@@ -54,10 +46,9 @@ export function useEmergencyForm() {
     isSubmitting,
     result,
     error,
-    downloaded,
+    resetVersion,
     submit: handleSubmit(generate),
     clear,
-    download,
     invalidate,
   }
 }

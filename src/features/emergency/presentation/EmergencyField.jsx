@@ -1,3 +1,5 @@
+import clsx from 'clsx'
+import texts from '@/locales/es.json'
 import { Controller } from 'react-hook-form'
 import { IMaskInput } from 'react-imask'
 import { bloodTypes } from '@/features/emergency/domain/constants/fields'
@@ -17,12 +19,15 @@ export function EmergencyField({ field, register, control, error, onChange }) {
     ...(type === 'tel' || type === 'number' ? {} : register(key, { onChange })),
     required,
     'aria-invalid': !!error,
-    'aria-describedby': error ? `${key}-error` : undefined,
+    'aria-describedby':
+      [field.expandable && `${key}-hint`, error && `${key}-error`]
+        .filter(Boolean)
+        .join(' ') || undefined,
   }
   return (
     <div
       key={key}
-      className={fullWidth ? 'sm:col-span-2' : ''}
+      className={clsx({ 'sm:col-span-2': fullWidth })}
     >
       <label
         htmlFor={key}
@@ -30,12 +35,24 @@ export function EmergencyField({ field, register, control, error, onChange }) {
       >
         <span>
           {label}
-          {required && <span className="ml-1">*</span>}
+          {required && (
+            <span className="ml-1">{texts.common.requiredMarker}</span>
+          )}
         </span>
         {!required && (
-          <span className="text-[10px] font-normal text-muted">Opcional</span>
+          <span className="text-[10px] font-normal text-muted">
+            {texts.common.optional}
+          </span>
         )}
       </label>
+      {field.expandable && (
+        <p
+          id={`${key}-hint`}
+          className="mb-2 text-xs text-muted"
+        >
+          {placeholder}
+        </p>
+      )}
       {type === 'tel' || type === 'number' ? (
         <Controller
           name={key}
@@ -64,7 +81,7 @@ export function EmergencyField({ field, register, control, error, onChange }) {
         />
       ) : type === 'select' ? (
         <select {...common}>
-          <option value="">Selecciona una opcion</option>
+          <option value="">{texts.common.select}</option>
           {bloodTypes.map((value) => (
             <option
               key={value}
@@ -79,7 +96,8 @@ export function EmergencyField({ field, register, control, error, onChange }) {
           {...common}
           maxLength={maxLength}
           rows={2}
-          placeholder={placeholder}
+          autoFocus={field.expandable}
+          placeholder={field.expandable ? undefined : placeholder}
         />
       ) : (
         <input

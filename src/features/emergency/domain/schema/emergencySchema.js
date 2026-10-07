@@ -1,3 +1,4 @@
+import texts from '@/locales/es.json'
 import { z } from 'zod'
 import {
   emergencyFields,
@@ -7,17 +8,18 @@ import { localToday } from '@/shared/date'
 export const formSchema = z.object(
   Object.fromEntries(
     emergencyFields.map(({ name, label, required, type, maxLength }) => {
-      let rule = z
-        .string()
-        .trim()
-        .max(maxLength, 'Reduce la cantidad de texto.')
-      if (required) rule = rule.min(1, `Completa ${label.toLowerCase()}.`)
+      let rule = z.string().trim().max(maxLength, texts.validation.tooLong)
+      if (required)
+        rule = rule.min(
+          1,
+          texts.validation.required.replace('{field}', label.toLowerCase()),
+        )
       if (type === 'tel' || type === 'number')
-        rule = rule.regex(/^\d*$/, 'Ingresa solo valores numericos.')
+        rule = rule.regex(/^\d*$/, texts.validation.numeric)
       if (type === 'select')
         rule = rule.refine(
           (value) => value === '' || bloodTypes.includes(value),
-          'Selecciona un tipo de sangre valido.',
+          texts.validation.bloodType,
         )
       if (type === 'date')
         rule = rule.refine((value) => {
@@ -29,7 +31,7 @@ export const formSchema = z.object(
             date.toISOString().slice(0, 10) === value &&
             value <= localToday()
           )
-        }, 'Ingresa una fecha de nacimiento valida que no sea futura.')
+        }, texts.validation.birthDate)
       return [name, rule]
     }),
   ),

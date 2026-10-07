@@ -1,8 +1,9 @@
+import texts from '@/locales/es.json'
 export const emergencyFields = [
   {
     name: 'name',
-    label: 'Nombre completo',
-    placeholder: 'Como aparece en tu identificacion',
+    label: texts.fields.name.label,
+    placeholder: texts.fields.name.placeholder,
     required: true,
     type: 'text',
     fullWidth: true,
@@ -10,8 +11,8 @@ export const emergencyFields = [
   },
   {
     name: 'birthDate',
-    label: 'Fecha de nacimiento',
-    placeholder: '',
+    label: texts.fields.birthDate.label,
+    placeholder: texts.fields.birthDate.placeholder,
     required: false,
     type: 'date',
     fullWidth: false,
@@ -19,8 +20,8 @@ export const emergencyFields = [
   },
   {
     name: 'bloodType',
-    label: 'Tipo de sangre',
-    placeholder: '',
+    label: texts.fields.bloodType.label,
+    placeholder: texts.fields.bloodType.placeholder,
     required: false,
     type: 'select',
     fullWidth: false,
@@ -28,8 +29,8 @@ export const emergencyFields = [
   },
   {
     name: 'contact',
-    label: 'Contacto de emergencia 1',
-    placeholder: 'Nombre de la persona a contactar',
+    label: texts.fields.contact.label,
+    placeholder: texts.fields.contact.placeholder,
     required: true,
     type: 'text',
     fullWidth: false,
@@ -37,8 +38,8 @@ export const emergencyFields = [
   },
   {
     name: 'phone',
-    label: 'Telefono de emergencia 1',
-    placeholder: '10 digitos, ej. 55 1234 5678',
+    label: texts.fields.phone.label,
+    placeholder: texts.fields.phone.placeholder,
     required: true,
     type: 'tel',
     fullWidth: false,
@@ -46,8 +47,8 @@ export const emergencyFields = [
   },
   {
     name: 'contact2',
-    label: 'Contacto de emergencia 2',
-    placeholder: 'Nombre de otro contacto',
+    label: texts.fields.contact2.label,
+    placeholder: texts.fields.contact2.placeholder,
     required: false,
     type: 'text',
     fullWidth: false,
@@ -55,8 +56,8 @@ export const emergencyFields = [
   },
   {
     name: 'phone2',
-    label: 'Telefono de emergencia 2',
-    placeholder: '10 digitos, ej. 55 1234 5678',
+    label: texts.fields.phone2.label,
+    placeholder: texts.fields.phone2.placeholder,
     required: false,
     type: 'tel',
     fullWidth: false,
@@ -64,8 +65,9 @@ export const emergencyFields = [
   },
   {
     name: 'allergies',
-    label: 'Alergias',
-    placeholder: 'Medicamentos, alimentos u otras alergias',
+    expandable: true,
+    label: texts.fields.allergies.label,
+    placeholder: texts.fields.allergies.placeholder,
     required: false,
     type: 'textarea',
     fullWidth: true,
@@ -73,8 +75,9 @@ export const emergencyFields = [
   },
   {
     name: 'conditions',
-    label: 'Condiciones medicas',
-    placeholder: 'Informacion relevante en una emergencia',
+    expandable: true,
+    label: texts.fields.conditions.label,
+    placeholder: texts.fields.conditions.placeholder,
     required: false,
     type: 'textarea',
     fullWidth: true,
@@ -82,8 +85,9 @@ export const emergencyFields = [
   },
   {
     name: 'medications',
-    label: 'Medicamentos',
-    placeholder: 'Nombre y dosis, si aplica',
+    expandable: true,
+    label: texts.fields.medications.label,
+    placeholder: texts.fields.medications.placeholder,
     required: false,
     type: 'textarea',
     fullWidth: true,
@@ -91,8 +95,8 @@ export const emergencyFields = [
   },
   {
     name: 'notes',
-    label: 'Notas',
-    placeholder: 'Otros datos utiles en una emergencia',
+    label: texts.fields.notes.label,
+    placeholder: texts.fields.notes.placeholder,
     required: false,
     type: 'textarea',
     fullWidth: true,
@@ -102,14 +106,4 @@ export const emergencyFields = [
 export const defaultValues = Object.fromEntries(
   emergencyFields.map(({ name }) => [name, '']),
 )
-export const bloodTypes = [
-  'A+',
-  'A-',
-  'B+',
-  'B-',
-  'AB+',
-  'AB-',
-  'O+',
-  'O-',
-  'No lo se',
-]
+export const bloodTypes = texts.common.bloodTypes
