@@ -1,9 +1,8 @@
 import texts from '@/locales/es.json'
-import { emergencyFields } from '@/features/emergency/domain/constants/fields'
 import {
   CARD_WIDTH_CM,
   CARD_HEIGHT_CM,
-  CARD_PRINTED_FIELDS,
+  CARD_PRINTED_SECTIONS,
 } from '@/features/emergency/domain/constants/card'
 import {
   PRINT_DPI,
@@ -36,26 +35,41 @@ export async function exportEmergencyCard(result) {
   const qrSize = 350
   const qrLeft = canvas.width - qrSize - padding
   const bodyWidth = qrLeft - padding * 2
-  const rows = emergencyFields.filter(
-    ({ name }) =>
-      CARD_PRINTED_FIELDS.includes(name) && result.data[name].trim(),
-  )
+  const bodyTop = 140
+  const bodyBottom = canvas.height - 64
+  const labelHeight = 24
+  const labelGap = 8
+  const sectionGap = 16
+  const rows = CARD_PRINTED_SECTIONS.map(({ label, fields }) => ({
+    label: texts.fields[label].label,
+    values: fields.map((name) => result.data[name]?.trim()).filter(Boolean),
+  })).filter(({ values }) => values.length)
   let fontSize = 32
+  let lineHeight
   let layout
   do {
+    lineHeight = Math.ceil(fontSize * 1.25)
     context.font = `${fontSize}px Arial`
-    layout = rows.map(({ name, label }) => ({
+    layout = rows.map(({ values, label }) => ({
       label,
-      lines: wrapCanvasText(context, result.data[name], bodyWidth),
+      lines: values.flatMap((value) =>
+        wrapCanvasText(context, value, bodyWidth),
+      ),
     }))
-    const height = layout.reduce(
-      (sum, row) => sum + 24 + row.lines.length * (fontSize + 5) + 14,
-      0,
-    )
-    if (height <= canvas.height - 200) break
+    const height =
+      layout.reduce(
+        (sum, row) =>
+          sum +
+          labelHeight +
+          labelGap +
+          row.lines.length * lineHeight +
+          sectionGap,
+        0,
+      ) - sectionGap
+    if (height <= bodyBottom - bodyTop) break
     fontSize--
-  } while (fontSize >= 18)
-  if (fontSize < 18) throw new Error('Card capacity exceeded')
+  } while (fontSize >= 16)
+  if (fontSize < 16) throw new Error('Card capacity exceeded')
   context.fillStyle = '#ffffff'
   context.fillRect(0, 0, canvas.width, canvas.height)
   context.fillStyle = '#000000'
@@ -66,20 +80,22 @@ export async function exportEmergencyCard(result) {
   context.fillText(texts.card.title, 155, 50)
   context.font = 'italic 21px Arial'
   context.fillText(texts.header.motto, 155, 82)
-  let y = 155
+  context.textBaseline = 'top'
+  let y = bodyTop
   for (const row of layout) {
     context.fillStyle = '#E5295D'
     context.font = 'bold 20px Arial'
     context.fillText(row.label, padding, y)
-    y += 24
+    y += labelHeight + labelGap
     context.fillStyle = '#000000'
     context.font = `${fontSize}px Arial`
     for (const line of row.lines) {
       context.fillText(line, padding, y)
-      y += fontSize + 5
+      y += lineHeight
     }
-    y += 14
+    y += sectionGap
   }
+  context.textBaseline = 'alphabetic'
   context.imageSmoothingEnabled = false
   context.drawImage(
     qr,

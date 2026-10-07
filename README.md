@@ -92,11 +92,13 @@ pequena.
 
 La sección de resultados ofrece una tarjeta PNG de 8.56 × 5.4 cm, equivalente a
 una tarjeta de crédito, a 300 ppp. Incluye el logo de Comit, nombre, tipo de
-sangre y contacto principal en texto. El QR conserva todos los datos completos,
-incluidos contactos adicionales, datos médicos y notas. El texto impreso ajusta
-su tamaño y se distribuye sin recortes. Se genera localmente con Canvas, sin
-almacenar ni enviar información. Las etiquetas impresas conservan los acentos;
-el QR permanece sin acentos. Imprimir al 100% de escala, sin ajustar a página.
+sangre y ambos contactos en texto, cuando se proporciona el segundo. Cada
+contacto agrupa su nombre y teléfono con espacio entre etiquetas y valores. El
+QR conserva todos los datos completos, incluidos contactos adicionales, datos
+médicos y notas. El texto impreso ajusta su tamaño y se distribuye sin recortes.
+Se genera localmente con Canvas, sin almacenar ni enviar información. Las
+etiquetas impresas conservan los acentos; el QR permanece sin acentos. Imprimir
+al 100% de escala, sin ajustar a página.
 
 ## Teléfonos y formato del QR
 
