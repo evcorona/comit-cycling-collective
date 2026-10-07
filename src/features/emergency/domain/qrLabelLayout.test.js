@@ -23,16 +23,20 @@ describe('complete emergency label sizing', () => {
       expect(layout.logoY + layout.logoHeight).toBeLessThan(layout.qrY)
       expect(layout.qrX).toBeGreaterThan(0)
       expect(layout.qrX + layout.qrPixels).toBeLessThan(layout.size)
-      expect(layout.qrY + layout.qrPixels).toBeLessThan(layout.captionY)
-      expect(layout.captionY).toBeLessThan(layout.size)
+      expect(layout.qrY + layout.qrPixels).toBeLessThan(layout.size)
     },
   )
   it('rejects a dense QR that fit at 3cm before adding branding', () => {
-    const value = 'A'.repeat(300)
+    const value = 'A'.repeat(360)
     const model = createPrintableQr(value)
     expect(getQrPrintAnalysis(value, 3, model.totalModules).canPrint).toBe(true)
     expect(analyzeQrLabel(value, 3, model.totalModules).canDownload).toBe(false)
     expect(analyzeQrLabel(value, 4, model.totalModules).canDownload).toBe(true)
+  })
+  it('admits 300 alphanumeric characters at 3cm with compact branding', () => {
+    const value = 'A'.repeat(300)
+    const model = createPrintableQr(value)
+    expect(analyzeQrLabel(value, 3, model.totalModules).canDownload).toBe(true)
   })
   it('includes all short optional data when the complete 3cm label permits it', async () => {
     const qr = await selectEmergencyQr(

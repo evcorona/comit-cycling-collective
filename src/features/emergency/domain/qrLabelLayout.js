@@ -7,10 +7,9 @@ export function qrLabelLayout(sizeCm, totalModules) {
   const logoHeight = cmToPrintPixels(sizeCm * QR_LABEL.logoHeightRatio)
   const logoWidth = logoHeight * QR_LABEL.logoAspectRatio
   const qrY = padding + logoHeight + cmToPrintPixels(QR_LABEL.logoGapCm)
-  const captionHeight = cmToPrintPixels(QR_LABEL.captionHeightCm)
   const available = Math.min(
     size - padding * 2,
-    size - qrY - captionHeight - cmToPrintPixels(QR_LABEL.bottomCm),
+    size - qrY - cmToPrintPixels(QR_LABEL.bottomCm),
   )
   const qrPixels = Math.floor(available / totalModules) * totalModules
   return {
@@ -23,6 +22,5 @@ export function qrLabelLayout(sizeCm, totalModules) {
     qrX: Math.floor((size - qrPixels) / 2),
     qrY,
     qrCm: (qrPixels * CM_PER_INCH) / PRINT_DPI,
-    captionY: qrY + qrPixels + captionHeight / 2,
   }
 }

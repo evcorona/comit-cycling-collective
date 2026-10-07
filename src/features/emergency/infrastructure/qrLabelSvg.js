@@ -1,4 +1,3 @@
-import texts from '@/locales/es.json'
 import { QR_LABEL } from '@/features/emergency/domain/constants/qrLabel'
 import { analyzeQrLabel } from '@/features/emergency/domain/analyzeQrLabel'
 import { cmToPrintPixels } from '@/lib/qr/printUnits'
@@ -38,7 +37,6 @@ export async function qrLabelSvg(qr, sizeCm) {
 <rect width="100%" height="100%" fill="white"/>
 <image href="${logo}" x="${layout.logoX}" y="${layout.logoY}" width="${layout.logoWidth}" height="${layout.logoHeight}"/>
 ${qrSvg}
-<text x="${layout.size / 2}" y="${layout.captionY}" text-anchor="middle" dominant-baseline="central" font-family="Arial, sans-serif" font-size="${cmToPrintPixels(QR_LABEL.captionFontCm)}" font-weight="bold" fill="black">${texts.qr.titles.emergency}</text>
 <rect x="${inset}" y="${inset}" width="${layout.size - inset * 2}" height="${layout.size - inset * 2}" rx="${cmToPrintPixels(QR_LABEL.cornerCm)}" fill="none" stroke="#888" stroke-width="${cmToPrintPixels(QR_LABEL.borderWidthCm)}" stroke-dasharray="${cmToPrintPixels(QR_LABEL.dashCm)}"/>
 </svg>`
 }
