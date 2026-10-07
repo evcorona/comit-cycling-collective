@@ -130,11 +130,11 @@
   },
   "card": {
     "title": "Tarjeta de emergencia",
-    "description": "Tus datos legibles, el logo de Comit y el QR en una tarjeta lista para imprimir. Se crea en tu navegador, sin guardar información.",
-    "size": "Formato A6 · 10.5 × 14.8 cm · PNG a 300 ppp",
+    "description": "Una tarjeta para tu cartera con nombre, tipo de sangre, contacto principal y QR con todos tus datos. Se genera en tu navegador, sin guardar información.",
+    "size": "Tamaño tarjeta de crédito · 8.56 × 5.4 cm · PNG a 300 ppp",
     "download": "Descargar tarjeta en PNG",
     "error": "No pudimos crear la tarjeta. Vuelve a intentarlo o reduce la cantidad de texto.",
-    "scanHint": "Escanea el QR para consultar todos los datos sin conexión a internet.",
+    "scanHint": "Escanea para ver todos los datos médicos y las notas.",
     "footer": "Información proporcionada por el titular.",
     "printHint": "Imprime al 100% de escala para conservar las medidas."
   }

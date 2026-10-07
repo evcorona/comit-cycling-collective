@@ -89,9 +89,10 @@ impreso, especialmente si hay muchos datos en una imagen pequena.
 
 ## Tarjeta de emergencia
 
-La sección de resultados ofrece una tarjeta PNG de formato A6 (10.5 × 14.8 cm) a
-300 ppp, con el logo de Comit, todos los campos completados y un QR con la misma
-información. El texto se distribuye sin recortes y ajusta su tamaño para
-entradas largas. La tarjeta se genera localmente con Canvas; no se envían ni
-guardan datos. Las etiquetas impresas conservan los acentos; el contenido
-codificado en el QR permanece sin acentos. Imprimir al 100% de escala.
+La sección de resultados ofrece una tarjeta PNG de 8.56 × 5.4 cm, equivalente a
+una tarjeta de crédito, a 300 ppp. Incluye el logo de Comit, nombre, tipo de
+sangre y contacto principal en texto. El QR conserva todos los datos completos,
+incluidos contactos adicionales, datos médicos y notas. El texto impreso ajusta
+su tamaño y se distribuye sin recortes. Se genera localmente con Canvas, sin
+almacenar ni enviar información. Las etiquetas impresas conservan los acentos;
+el QR permanece sin acentos. Imprimir al 100% de escala, sin ajustar a página.

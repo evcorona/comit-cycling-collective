@@ -3,6 +3,7 @@ import { emergencyFields } from '@/features/emergency/domain/constants/fields'
 import {
   CARD_WIDTH_CM,
   CARD_HEIGHT_CM,
+  CARD_PRINTED_FIELDS,
 } from '@/features/emergency/domain/constants/card'
 import {
   PRINT_DPI,
@@ -29,13 +30,17 @@ export async function exportEmergencyCard(result) {
   if (!context) throw new Error('Canvas unavailable')
   const [logo, qr] = await Promise.all([
     loadImage('/logo_rosa.png'),
-    encodeQrImage(result.text, 360).then(loadImage),
+    encodeQrImage(result.text, 350, true).then(loadImage),
   ])
-  const padding = 60
-  const bodyWidth = canvas.width - padding * 2
-  const qrTop = canvas.height - 440
-  const rows = emergencyFields.filter(({ name }) => result.data[name].trim())
-  let fontSize = 40
+  const padding = 40
+  const qrSize = 350
+  const qrLeft = canvas.width - qrSize - padding
+  const bodyWidth = qrLeft - padding * 2
+  const rows = emergencyFields.filter(
+    ({ name }) =>
+      CARD_PRINTED_FIELDS.includes(name) && result.data[name].trim(),
+  )
+  let fontSize = 32
   let layout
   do {
     context.font = `${fontSize}px Arial`
@@ -44,53 +49,55 @@ export async function exportEmergencyCard(result) {
       lines: wrapCanvasText(context, result.data[name], bodyWidth),
     }))
     const height = layout.reduce(
-      (sum, row) => sum + 34 + row.lines.length * (fontSize + 8) + 16,
+      (sum, row) => sum + 24 + row.lines.length * (fontSize + 5) + 14,
       0,
     )
-    if (height <= qrTop - 215) break
+    if (height <= canvas.height - 200) break
     fontSize--
   } while (fontSize >= 18)
   if (fontSize < 18) throw new Error('Card capacity exceeded')
   context.fillStyle = '#ffffff'
   context.fillRect(0, 0, canvas.width, canvas.height)
   context.fillStyle = '#000000'
-  context.fillRect(0, 0, canvas.width, 160)
-  context.drawImage(logo, padding, 15, 130, 130)
+  context.fillRect(0, 0, canvas.width, 110)
+  context.drawImage(logo, padding, 10, 90, 90)
   context.fillStyle = '#ffffff'
-  context.font = 'bold 42px Arial'
-  context.fillText(texts.card.title, 220, 75)
-  context.font = 'italic 24px Arial'
-  context.fillText(texts.header.motto, 220, 115)
-  let y = 205
+  context.font = 'bold 32px Arial'
+  context.fillText(texts.card.title, 155, 50)
+  context.font = 'italic 21px Arial'
+  context.fillText(texts.header.motto, 155, 82)
+  let y = 155
   for (const row of layout) {
     context.fillStyle = '#E5295D'
-    context.font = 'bold 28px Arial'
+    context.font = 'bold 20px Arial'
     context.fillText(row.label, padding, y)
-    y += 34
+    y += 24
     context.fillStyle = '#000000'
     context.font = `${fontSize}px Arial`
     for (const line of row.lines) {
       context.fillText(line, padding, y)
-      y += fontSize + 8
+      y += fontSize + 5
     }
-    y += 16
+    y += 14
   }
-  context.fillStyle = '#E5295D'
-  context.fillRect(padding, qrTop - 10, bodyWidth, 3)
-  context.drawImage(qr, padding, qrTop + 15, 360, 360)
+  context.imageSmoothingEnabled = false
+  context.drawImage(
+    qr,
+    qrLeft + (qrSize - qr.width) / 2,
+    135 + (qrSize - qr.height) / 2,
+  )
   context.fillStyle = '#000000'
-  context.font = 'bold 28px Arial'
-  context.fillText(texts.qrResult.offlineTitle, 465, qrTop + 110)
-  context.font = '24px Arial'
-  const lines = wrapCanvasText(
-    context,
-    texts.card.scanHint,
-    canvas.width - 465 - padding,
-  )
+  context.font = 'bold 21px Arial'
+  context.fillText(texts.qrResult.offlineTitle, qrLeft + 20, 505)
+  context.font = '18px Arial'
+  const lines = wrapCanvasText(context, texts.card.scanHint, qrSize - 20)
   lines.forEach((line, index) =>
-    context.fillText(line, 465, qrTop + 160 + index * 32),
+    context.fillText(line, qrLeft + 20, 535 + index * 22),
   )
-  context.font = '20px Arial'
-  context.fillText(texts.card.footer, padding, canvas.height - 30)
+  context.fillStyle = '#E5295D'
+  context.fillRect(padding, canvas.height - 48, canvas.width - padding * 2, 2)
+  context.fillStyle = '#000000'
+  context.font = '16px Arial'
+  context.fillText(texts.card.footer, padding, canvas.height - 20)
   return withPngResolution(canvas.toDataURL('image/png'), PRINT_DPI)
 }

@@ -1,4 +1,4 @@
-@import 'tailwindcss';
+@import 'tailwindcss' source('./');
 @theme {
   --color-pink: #e5295d;
   --color-cream: #f7f7f7;
