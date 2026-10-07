@@ -31,6 +31,9 @@ export function EmergencyForm({
           </p>
         </div>
       </div>
+      <p className="mb-4 text-xs leading-5 text-muted">
+        {texts.emergencyForm.inputHint}
+      </p>
       <div className="grid gap-x-5 gap-y-4 sm:grid-cols-2">
         {emergencyFields.map((field) => {
           const Component = field.expandable ? MedicalField : EmergencyField

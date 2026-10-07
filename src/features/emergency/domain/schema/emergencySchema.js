@@ -1,3 +1,4 @@
+import { stripDiacritics } from '@/shared/stripDiacritics'
 import texts from '@/locales/es.json'
 import { z } from 'zod'
 import {
@@ -32,6 +33,8 @@ export const formSchema = z.object(
             value <= localToday()
           )
         }, texts.validation.birthDate)
+      if (type === 'text' || type === 'textarea')
+        rule = rule.transform(stripDiacritics)
       return [name, rule]
     }),
   ),

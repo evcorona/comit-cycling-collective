@@ -11,38 +11,39 @@
   },
   "privacyNotice": {
     "title": "Tu privacidad va primero",
-    "description": "No guardamos ni enviamos tu informacion. El QR se genera en tu navegador y tus datos se borran al recargar o cerrar la pagina.",
-    "warningTitle": "Compartelo con cuidado:",
-    "warning": "cualquiera que escanee tu QR podra leer la informacion que incluyas. La imagen descargada conserva esos datos."
+    "description": "No guardamos ni enviamos tu información. El QR se genera en tu navegador y tus datos se borran al recargar o cerrar la página.",
+    "warningTitle": "Compártelo con cuidado:",
+    "warning": "cualquiera que escanee tu QR podrá leer la información que incluyas. La imagen descargada conserva esos datos."
   },
   "qrResult": {
-    "scanHint": "Escanealo para comprobar tus datos antes de salir.",
+    "scanHint": "Escanéalo para comprobar tus datos antes de salir.",
     "review": "Revisar los datos incluidos",
-    "emptyTitle": "Tu QR aparecera aqui.",
-    "emptyDescription": "Genera tu codigo y descargalo para llevarlo contigo.",
+    "emptyTitle": "Tu QR aparecerá aquí.",
+    "emptyDescription": "Genera tu código y descárgalo para llevarlo contigo.",
     "format": "Descarga en formato PNG",
     "offlineTitle": "Consulta sin internet",
-    "offlineDescription": "Los datos estan dentro del QR. Puedes leerlos con un lector QR sin conexion a internet.",
+    "offlineDescription": "Los datos están dentro del QR. Puedes leerlos con un lector QR sin conexión a internet.",
     "regionLabel": "Resultado del QR",
-    "imageAlt": "Codigo QR con tus datos de emergencia",
+    "imageAlt": "Código QR con tus datos de emergencia",
     "ready": "Listo para llevar",
     "preview": "Vista previa"
   },
   "emergencyForm": {
     "title": "Datos de emergencia",
-    "requiredHint": "Nombre y primer contacto con telefono son obligatorios. El resto es opcional.",
-    "medicalHint": "Cuanta mas informacion relevante y actualizada compartas, mejor podra un paramedico conocer tu situacion en una emergencia. Incluye alergias, condiciones medicas y medicamentos si los conoces. Los campos vacios no apareceran en tu QR.",
+    "requiredHint": "Nombre y primer contacto con teléfono son obligatorios. El resto es opcional.",
+    "medicalHint": "Cuanta más información relevante y actualizada compartas, mejor podrá un paramédico conocer tu situación en una emergencia. Incluye alergias, condiciones médicas y medicamentos si los conoces. Los campos vacíos no aparecerán en tu QR.",
     "clear": "Limpiar",
     "generating": "Generando…",
-    "generate": "Generar mi QR"
+    "generate": "Generar mi QR",
+    "inputHint": "Escribe sin acentos. Si los introduces o pegas, se convierten automáticamente para facilitar la lectura del QR."
   },
   "emergencyPage": {
-    "description": "Completa tus datos, genera tu QR y llevalo en cada rodada."
+    "description": "Completa tus datos, genera tu QR y llévalo en cada rodada."
   },
   "fields": {
     "name": {
       "label": "Nombre completo",
-      "placeholder": "Como aparece en tu identificacion"
+      "placeholder": "Escribe tu nombre completo"
     },
     "birthDate": {
       "label": "Fecha de nacimiento",
@@ -57,24 +58,24 @@
       "placeholder": "Nombre de la persona a contactar"
     },
     "phone": {
-      "label": "Telefono de emergencia 1",
-      "placeholder": "10 digitos, ej. 55 1234 5678"
+      "label": "Teléfono de emergencia 1",
+      "placeholder": "10 dígitos, ej. 55 1234 5678"
     },
     "contact2": {
       "label": "Contacto de emergencia 2",
       "placeholder": "Nombre de otro contacto"
     },
     "phone2": {
-      "label": "Telefono de emergencia 2",
-      "placeholder": "10 digitos, ej. 55 1234 5678"
+      "label": "Teléfono de emergencia 2",
+      "placeholder": "10 dígitos, ej. 55 1234 5678"
     },
     "allergies": {
       "label": "Alergias",
       "placeholder": "Medicamentos, alimentos u otras alergias"
     },
     "conditions": {
-      "label": "Condiciones medicas",
-      "placeholder": "Informacion relevante en una emergencia"
+      "label": "Condiciones médicas",
+      "placeholder": "Información relevante en una emergencia"
     },
     "medications": {
       "label": "Medicamentos",
@@ -82,49 +83,49 @@
     },
     "notes": {
       "label": "Notas",
-      "placeholder": "Otros datos utiles en una emergencia"
+      "placeholder": "Otros datos útiles en una emergencia"
     }
   },
   "common": {
     "optional": "Opcional",
-    "select": "Selecciona una opcion",
+    "select": "Selecciona una opción",
     "requiredMarker": "*",
     "qrTitle": "Tu QR de emergencia",
     "period": ".",
-    "bloodTypes": ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-", "No lo se"]
+    "bloodTypes": ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-", "No lo sé"]
   },
   "validation": {
     "tooLong": "Reduce la cantidad de texto.",
     "required": "Completa {field}.",
-    "numeric": "Ingresa solo valores numericos.",
-    "bloodType": "Selecciona un tipo de sangre valido.",
-    "birthDate": "Ingresa una fecha de nacimiento valida que no sea futura."
+    "numeric": "Ingresa solo valores numéricos.",
+    "bloodType": "Selecciona un tipo de sangre válido.",
+    "birthDate": "Ingresa una fecha de nacimiento válida que no sea futura."
   },
   "qr": {
-    "heading": "INFORMACION DE EMERGENCIA",
-    "generationError": "No pudimos crear el QR. Reduce la cantidad de texto e intentalo de nuevo.",
-    "exportError": "No pudimos exportar el QR. Intenta con un tamano mayor."
+    "heading": "INFORMACIÓN DE EMERGENCIA",
+    "generationError": "No pudimos crear el QR. Reduce la cantidad de texto e inténtalo de nuevo.",
+    "exportError": "No pudimos exportar el QR. Intenta con un tamaño mayor."
   },
   "medical": {
     "allergies": "Agregar alergias",
-    "conditions": "Agregar condiciones medicas",
+    "conditions": "Agregar condiciones médicas",
     "medications": "Agregar medicamentos"
   },
   "export": {
     "download": "Descargar QR en PNG",
-    "size": "Tamano de impresion",
+    "size": "Tamaño de impresión",
     "custom": "Personalizado",
     "customLabel": "Lado del QR (cm)",
     "confirm": "Descargar",
     "busy": "Exportando…",
-    "description": "PNG a 300 ppp. Imprime al 100% de escala para conservar el tamano.",
-    "rangeError": "Elige un tamano entre 2 y 30 cm.",
+    "description": "PNG a 300 ppp. Imprime al 100% de escala para conservar el tamaño.",
+    "rangeError": "Elige un tamaño entre 2 y 30 cm.",
     "preset": "{size} cm",
     "done": "Descarga iniciada",
     "unit": "cm"
   },
   "meta": {
     "title": "Comit · Tu QR de emergencia",
-    "description": "Crea tu QR de emergencia para rodar con tranquilidad. Tus datos no se guardan ni se envian."
+    "description": "Crea tu QR de emergencia para rodar con tranquilidad. Tus datos no se guardan ni se envían."
   }
 }

@@ -1,22 +1,14 @@
 import clsx from 'clsx'
 import texts from '@/locales/es.json'
 import { Controller } from 'react-hook-form'
-import { IMaskInput } from 'react-imask'
+import { MaskedControl } from '@/features/emergency/presentation/MaskedControl'
 import { bloodTypes } from '@/features/emergency/domain/constants/fields'
 import { localToday } from '@/shared/date'
 export function EmergencyField({ field, register, control, error, onChange }) {
-  const {
-    name: key,
-    label,
-    placeholder,
-    required,
-    type,
-    fullWidth,
-    maxLength,
-  } = field
+  const { name: key, label, placeholder, required, type, fullWidth } = field
   const common = {
     id: key,
-    ...(type === 'tel' || type === 'number' ? {} : register(key, { onChange })),
+    ...(['select', 'date'].includes(type) ? register(key, { onChange }) : {}),
     required,
     'aria-invalid': !!error,
     'aria-describedby':
@@ -53,58 +45,36 @@ export function EmergencyField({ field, register, control, error, onChange }) {
           {placeholder}
         </p>
       )}
-      {type === 'tel' || type === 'number' ? (
+      {!['select', 'date'].includes(type) ? (
         <Controller
           name={key}
           control={control}
           render={({ field: controlled }) => (
-            <IMaskInput
-              {...common}
-              name={controlled.name}
-              inputRef={controlled.ref}
-              onBlur={controlled.onBlur}
-              value={controlled.value}
-              mask={/^\d*$/}
-              type={type === 'tel' ? 'tel' : 'text'}
-              inputMode="numeric"
-              maxLength={maxLength}
-              autoComplete="off"
-              placeholder={placeholder}
-              onAccept={(value) => {
-                if (value !== controlled.value) {
-                  controlled.onChange(value)
-                  onChange()
-                }
-              }}
+            <MaskedControl
+              field={field}
+              controlled={controlled}
+              inputProps={common}
+              onChange={onChange}
             />
           )}
         />
       ) : type === 'select' ? (
         <select {...common}>
           <option value="">{texts.common.select}</option>
-          {bloodTypes.map((value) => (
+          {bloodTypes.map((value, index) => (
             <option
               key={value}
               value={value}
             >
-              {value}
+              {texts.common.bloodTypes[index]}
             </option>
           ))}
         </select>
-      ) : type === 'textarea' ? (
-        <textarea
-          {...common}
-          maxLength={maxLength}
-          rows={2}
-          autoFocus={field.expandable}
-          placeholder={field.expandable ? undefined : placeholder}
-        />
       ) : (
         <input
           {...common}
           type={type}
           max={type === 'date' ? localToday() : undefined}
-          maxLength={maxLength}
           autoComplete="off"
           placeholder={placeholder}
         />

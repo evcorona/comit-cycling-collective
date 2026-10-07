@@ -1,3 +1,4 @@
+import { stripDiacritics } from '@/shared/stripDiacritics'
 import texts from '@/locales/es.json'
 export const emergencyFields = [
   {
@@ -106,4 +107,4 @@ export const emergencyFields = [
 export const defaultValues = Object.fromEntries(
   emergencyFields.map(({ name }) => [name, '']),
 )
-export const bloodTypes = texts.common.bloodTypes
+export const bloodTypes = texts.common.bloodTypes.map(stripDiacritics)
