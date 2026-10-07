@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import texts from '@/locales/es.json'
 import { qrLabelSvg } from '@/features/emergency/infrastructure/qrLabelSvg'
+import { qrLabelLayout } from '@/features/emergency/domain/qrLabelLayout'
 import { QR_LABEL } from '@/features/emergency/domain/constants/qrLabel'
 
 export function QrLabelPreview({ qr, size }) {
+  const layout = qrLabelLayout(size, qr.totalModules)
   const [image, setImage] = useState(null)
   const [error, setError] = useState(false)
   useEffect(() => {
@@ -36,7 +38,7 @@ export function QrLabelPreview({ qr, size }) {
           data-printable={qr.canDownload}
           src={image}
           alt={texts.export.previewAlt}
-          style={{ width: `${size}cm`, height: `${size}cm` }}
+          style={{ width: `${layout.sizeCm}cm`, height: `${layout.sizeCm}cm` }}
         />
       ) : (
         <p

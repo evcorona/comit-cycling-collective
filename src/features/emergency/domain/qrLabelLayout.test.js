@@ -15,7 +15,12 @@ describe('complete emergency label sizing', () => {
     (size) => {
       const model = createPrintableQr('ABC123')
       const layout = qrLabelLayout(size, model.totalModules)
-      expect(layout.size).toBe(cmToPrintPixels(size))
+      expect(layout.qrSlotPixels).toBe(cmToPrintPixels(size))
+      expect(layout.size).toBeGreaterThan(layout.qrSlotPixels)
+      expect(layout.qrX).toBe(layout.qrY)
+      expect(
+        Math.abs(layout.size - layout.qrPixels - 2 * layout.qrX),
+      ).toBeLessThanOrEqual(1)
       expect(layout.qrPixels % model.totalModules).toBe(0)
       expect(layout.qrPixels / model.totalModules).toBeGreaterThanOrEqual(
         getMinimumQrModulePixels(),
@@ -26,11 +31,11 @@ describe('complete emergency label sizing', () => {
       expect(layout.qrY + layout.qrPixels).toBeLessThan(layout.size)
     },
   )
-  it('rejects a dense QR that fit at 3cm before adding branding', () => {
+  it('restores the original QR capacity without subtracting branding space', () => {
     const value = 'A'.repeat(360)
     const model = createPrintableQr(value)
     expect(getQrPrintAnalysis(value, 3, model.totalModules).canPrint).toBe(true)
-    expect(analyzeQrLabel(value, 3, model.totalModules).canDownload).toBe(false)
+    expect(analyzeQrLabel(value, 3, model.totalModules).canDownload).toBe(true)
     expect(analyzeQrLabel(value, 4, model.totalModules).canDownload).toBe(true)
   })
   it('admits 300 alphanumeric characters at 3cm with compact branding', () => {

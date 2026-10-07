@@ -124,7 +124,8 @@
   },
   "export": {
     "download": "PNG",
-    "size": "Tamaño de la etiqueta",
+    "size": "Tamaño del QR",
+    "labelSizeHint": "El logo y el borde ocupan espacio adicional al tamaño del QR.",
     "sizeHint": "Para facilitar la lectura, el QR solo incluye la información adecuada para el tamaño elegido.",
     "custom": "Otro tamaño",
     "customLabel": "Lado del QR (cm)",

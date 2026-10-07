@@ -152,18 +152,15 @@ guía, incluso un QR pequeño puede necesitar más de 1 cm aunque cumpla el
 presupuesto de bytes. Por encima del rango soportado, se pide resumir el texto;
 no se recorta automáticamente.
 
-PNG y SVG exportan la misma etiqueta cuadrada de 3–6 cm, incluido el logo
-`public/comit_words.png` centrado arriba, QR sin leyenda y borde punteado
-redondeado para recortar. El tamaño mide toda la etiqueta. El cálculo de
-capacidad conserva la guía por modo y comprueba además el espacio real del QR
-tras reservar logo y márgenes. El margen exterior es de 0.05 cm; el logo y la
-leyenda ocupan una franja compacta para priorizar el área del QR. Los módulos se
-ajustan a píxeles enteros con la guía conservadora de 300 ppp; el logo queda
-fuera de la zona de lectura. La vista previa usa el mismo SVG que se descarga y
-rasteriza a PNG. El logo queda incrustado en el SVG para que funcione sin
-archivos externos. El PNG mantiene metadatos pHYs a 300 ppp. Toastify JS muestra
-una confirmación temporal al iniciar la descarga de QR o tarjeta, sin mensajes
-fijos en la vista previa.
+PNG y SVG exportan la misma etiqueta con logo `public/comit_words.png`, QR sin
+leyenda y borde punteado redondeado. Los 3–6 cm elegidos corresponden al QR; el
+logo y el borde amplían la imagen exportada. La capacidad vuelve a usar la
+recomendación y matriz real del QR a su tamaño original, sin restar espacio por
+el logo. Se reservan franjas simétricas para centrar el QR horizontal y
+verticalmente dentro del borde. Los módulos se rasterizan en píxeles enteros con
+el mismo margen blanco de lectura. La vista previa usa el mismo SVG que se
+descarga y rasteriza a PNG. El logo queda incrustado en el SVG; el PNG mantiene
+metadatos pHYs a 300 ppp. Toastify JS confirma la descarga de QR o tarjeta.
 
 La vista en pantalla es una previsualización adaptable de hasta 320 px para la
 etiqueta. La clase `qr-print` mantiene el tamaño físico seleccionado con

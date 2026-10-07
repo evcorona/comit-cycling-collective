@@ -33,7 +33,7 @@ export async function qrLabelSvg(qr, sizeCm) {
     .replace(/width="[^"]*"/, `width="${layout.qrPixels}"`)
     .replace(/height="[^"]*"/, `height="${layout.qrPixels}"`)
     .replace('<svg ', `<svg x="${layout.qrX}" y="${layout.qrY}" `)
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="${sizeCm}cm" height="${sizeCm}cm" viewBox="0 0 ${layout.size} ${layout.size}">
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${layout.sizeCm}cm" height="${layout.sizeCm}cm" viewBox="0 0 ${layout.size} ${layout.size}">
 <rect width="100%" height="100%" fill="white"/>
 <image href="${logo}" x="${layout.logoX}" y="${layout.logoY}" width="${layout.logoWidth}" height="${layout.logoHeight}"/>
 ${qrSvg}
