@@ -16,8 +16,10 @@ export function formatQrData(data) {
       lines.push(texts.qr.noMedicalData)
     return {
       id,
-      title: stripDiacritics(texts.qr.titles[title]),
-      text: stripDiacritics([...lines, texts.qr.titles[title]].join('\n')),
+      title: stripDiacritics(texts.qr.titles[title]).toUpperCase(),
+      text: stripDiacritics(
+        [...lines, texts.qr.titles[title]].join('\n'),
+      ).toUpperCase(),
     }
   })
 }

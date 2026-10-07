@@ -2,14 +2,17 @@ import { SecondaryContact } from '@/features/emergency/presentation/SecondaryCon
 import { MedicalField } from '@/features/emergency/presentation/MedicalField'
 import texts from '@/locales/es.json'
 import { QrCode, RotateCcw } from 'lucide-react'
-import { emergencyFields } from '@/features/emergency/domain/constants/fields'
+import {
+  emergencyFields,
+  medicalFieldNames,
+} from '@/features/emergency/domain/constants/fields'
 import { EmergencyField } from '@/features/emergency/presentation/EmergencyField'
 const groups = [
   { title: 'personal', names: ['name', 'birthDate', 'bloodType'] },
   { title: 'contact', names: ['contact', 'phone'] },
   {
     title: 'medical',
-    names: ['allergies', 'conditions', 'medications', 'notes'],
+    names: medicalFieldNames,
   },
 ]
 export function EmergencyForm({

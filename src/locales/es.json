@@ -40,7 +40,7 @@
     "clear": "Limpiar",
     "generating": "Generando…",
     "generate": "Crear QR",
-    "inputHint": "Los acentos se ajustan automáticamente.",
+    "inputHint": "Los acentos y símbolos no compatibles se ajustan automáticamente.",
     "addContact": "Agregar otro contacto",
     "counter": "{count}/{limit} caracteres"
   },
@@ -80,21 +80,9 @@
       "placeholder": "55-1234-5678",
       "shortLabel": "Teléfono del otro contacto"
     },
-    "allergies": {
-      "label": "Alergias",
-      "placeholder": "Medicamentos, alimentos u otras alergias"
-    },
     "conditions": {
       "label": "Condiciones médicas",
-      "placeholder": "Información relevante en una emergencia"
-    },
-    "medications": {
-      "label": "Medicamentos",
-      "placeholder": "Nombre y dosis, si aplica"
-    },
-    "notes": {
-      "label": "Notas",
-      "placeholder": "Otros datos útiles en una emergencia"
+      "placeholder": "Incluye alergias, enfermedades y medicamentos con dosis, si aplica."
     }
   },
   "common": {
@@ -111,7 +99,8 @@
     "numeric": "Ingresa solo valores numéricos.",
     "bloodType": "Selecciona un tipo de sangre válido.",
     "birthDate": "Ingresa una fecha de nacimiento válida que no sea futura.",
-    "phoneLength": "Ingresa un teléfono de 10 dígitos."
+    "phoneLength": "Ingresa un teléfono de 10 dígitos.",
+    "unsupportedCharacters": "Usa texto sin acentos y evita flechas, viñetas y marcas."
   },
   "qr": {
     "heading": "INFORMACIÓN DE EMERGENCIA",
@@ -129,18 +118,12 @@
       "phone": "Tel 1",
       "contact2": "Contacto 2",
       "phone2": "Tel 2",
-      "allergies": "Alergias",
-      "conditions": "Condiciones",
-      "medications": "Medicamentos",
-      "notes": "Notas"
+      "conditions": "Condiciones"
     },
     "noMedicalData": "Sin datos medicos registrados"
   },
   "medical": {
-    "allergies": "Agregar alergias",
-    "conditions": "Agregar condiciones médicas",
-    "medications": "Agregar medicamentos",
-    "notes": "Agregar notas"
+    "conditions": "Agregar condiciones médicas"
   },
   "export": {
     "download": "Descargar QR",

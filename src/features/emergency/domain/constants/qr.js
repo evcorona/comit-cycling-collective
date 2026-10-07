@@ -1,3 +1,4 @@
+import { medicalFieldNames } from '@/features/emergency/domain/constants/fields'
 export const QR_GROUPS = [
   {
     id: 'identificacion',
@@ -15,7 +16,7 @@ export const QR_GROUPS = [
   {
     id: 'info-medica',
     title: 'medical',
-    fields: ['name', 'allergies', 'conditions', 'medications', 'notes'],
+    fields: ['name', ...medicalFieldNames],
   },
 ]
 // A conservative print guideline, including the four-module quiet zone.

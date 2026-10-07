@@ -3,7 +3,8 @@
 Aplicacion en espanol para generar dos QR de texto y una tarjeta plegable con
 datos de emergencia. React, Vite y Tailwind CSS. Nombre y primer contacto de
 emergencia con telefono obligatorios. Segundo contacto, fecha de nacimiento,
-tipo de sangre, alergias, condiciones medicas, medicamentos y notas opcionales.
+tipo de sangre y condiciones medicas opcionales. El campo de condiciones permite
+incluir alergias, enfermedades y medicamentos.
 
 ## Desarrollo
 
@@ -74,29 +75,32 @@ Vite tambien utiliza este catalogo para el titulo y la descripcion del
 documento. Las clases condicionales de Tailwind se componen con `clsx` y nombres
 completos para que el compilador pueda detectarlas.
 
-Alergias, condiciones medicas y medicamentos se muestran al pulsar sus botones.
-Las ayudas se presentan como subtitulos. Limpiar elimina los valores y vuelve a
-cerrar estos campos.
+El campo de condiciones medicas se muestra al pulsar su boton y permite incluir
+alergias, enfermedades y medicamentos. Las ayudas se presentan como subtitulos.
+Limpiar elimina los valores y vuelve a cerrar estos campos.
 
 ## QR para el casco
 
 Se generan dos QR de texto directo, sin enlaces ni almacenamiento:
 
 - `Identificacion`: nombre, nacimiento, sangre y contactos.
-- `Info medica`: nombre, alergias, condiciones, medicamentos y notas. Si no se
-  proporcionan datos médicos, lo indica explícitamente, sin asumir que no hay
-  alergias o enfermedades.
+- `Info medica`: nombre y condiciones médicas (incluidas alergias y
+  medicamentos). Si no se proporcionan datos médicos, lo indica explícitamente,
+  sin asumir que no hay alergias o enfermedades.
 
-Cada contenido termina con su identificador, sin acentos. La imagen descargada
-incluye la misma etiqueta debajo, fuera del QR y su margen blanco. Ambos son
-necesarios para consultar todos los datos; el nombre se repite para
-relacionarlos. Cada lector decide si convierte los teléfonos en enlaces de
-llamada.
+Cada contenido termina con su identificador. Todo el texto y las etiquetas de
+los QR se exportan en mayúsculas y sin acentos. La imagen descargada incluye la
+misma etiqueta debajo, fuera del QR y su margen blanco. Ambos son necesarios
+para consultar todos los datos; el nombre se repite para relacionarlos. Cada
+lector decide si convierte los teléfonos en enlaces de llamada.
 
-Los campos médicos tienen límites compartidos por la máscara y Zod: alergias y
-condiciones, 100 caracteres cada uno; medicamentos, 120; notas, 80. Los
-contadores muestran el espacio utilizado. Los límites no garantizan por sí solos
-la lectura física: la densidad se calcula con el contenido completo de cada QR.
+La información médica se concentra en `conditions`, con un límite de 100
+caracteres compartido por la máscara y Zod y un contador visible. No hay campos
+separados de alergias, medicamentos ni notas. La máscara convierte los acentos
+(incluida ñ) a letras simples y elimina →, •, ✓ y —. El esquema rechaza esos
+símbolos, ñ, las vocales acentuadas, sus mayúsculas y marcas combinadas si se
+intenta omitir la máscara. Los límites no garantizan por sí solos la lectura
+física: la densidad se calcula con el contenido completo de cada QR.
 
 ## Exportación para impresión
 
@@ -123,11 +127,12 @@ está girado 180° para quedar orientado al plegar por la línea central. Imprim
 al tamaño original, recortar el borde y doblar antes de enmicar.
 
 El frente muestra nombre, nacimiento, sangre y ambos contactos, cuando existen.
-El reverso contiene nombre y todos los campos médicos proporcionados. Se ajustan
-las líneas y la tipografía sin recortar datos; si el contenido no cabe con la
-tipografía mínima, se solicita resumirlo. Ambas caras llevan el logo y
-`Comit Cycling Collective`. Las etiquetas conservan los acentos. La vista previa
-y la descarga comparten el mismo PNG, generado en memoria con Canvas.
+El reverso contiene nombre y el campo de condiciones médicas, con alergias y
+medicamentos cuando se proporcionan. Se ajustan las líneas y la tipografía sin
+recortar datos; si el contenido no cabe con la tipografía mínima, se solicita
+resumirlo. Ambas caras llevan el logo y `Comit Cycling Collective`. Las
+etiquetas conservan los acentos. La vista previa y la descarga comparten el
+mismo PNG, generado en memoria con Canvas.
 
 ## Teléfonos
 

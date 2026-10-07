@@ -1,6 +1,7 @@
 import { PHONE_MASK } from '@/features/emergency/domain/constants/phone'
 import { IMaskInput, IMaskMixin } from 'react-imask'
-import { stripDiacritics } from '@/shared/stripDiacritics'
+import { sanitizeEmergencyText } from '@/features/emergency/domain/sanitizeEmergencyText'
+import { createTextMask } from '@/features/emergency/domain/constants/input'
 
 const MaskedTextarea = IMaskMixin(({ inputRef, ...props }) => (
   <textarea
@@ -25,10 +26,10 @@ export function MaskedControl({ field, controlled, inputProps, onChange }) {
           ? PHONE_MASK
           : isNumeric
             ? /^\d*$/
-            : new RegExp(`^[^\\u0300-\\u036f]{0,${field.maxLength}}$`)
+            : createTextMask(field.maxLength)
       }
       unmask={field.type === 'tel'}
-      prepare={stripDiacritics}
+      prepare={sanitizeEmergencyText}
       type={
         isMultiline ? undefined : field.type === 'number' ? 'text' : field.type
       }

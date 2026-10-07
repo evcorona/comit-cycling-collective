@@ -1,3 +1,4 @@
+import { medicalFieldNames } from '@/features/emergency/domain/constants/fields'
 export const CARD_WIDTH_CM = 8.56
 export const CARD_HEIGHT_CM = 5.4
 export const CARD_FRONT_ROWS = [
@@ -11,9 +12,7 @@ export const CARD_FRONT_ROWS = [
 ]
 export const CARD_BACK_ROWS = [
   [{ label: 'name', fields: ['name'] }],
-  ...['allergies', 'conditions', 'medications', 'notes'].map((name) => [
-    { label: name, fields: [name] },
-  ]),
+  ...medicalFieldNames.map((name) => [{ label: name, fields: [name] }]),
 ]
 export const CARD_STYLE = {
   padding: 40,

@@ -12,5 +12,5 @@ export function formatEmergencyData(data) {
             `${label}: ${type === 'tel' ? data[name].replace(/\D/g, '') : data[name].trim()}`,
         ),
     ].join('\n'),
-  )
+  ).toUpperCase()
 }

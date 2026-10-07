@@ -1,3 +1,4 @@
+import { medicalFieldNames } from '@/features/emergency/domain/constants/fields'
 import texts from '@/locales/es.json'
 import {
   CARD_WIDTH_CM,
@@ -82,9 +83,7 @@ export async function exportEmergencyCard(result) {
     ...common,
     title: texts.card.medicalTitle,
     layout: back,
-    noMedicalData: !['allergies', 'conditions', 'medications', 'notes'].some(
-      (name) => result.data[name]?.trim(),
-    ),
+    noMedicalData: !medicalFieldNames.some((name) => result.data[name]?.trim()),
   })
   context.restore()
   context.strokeStyle = '#E5295D'

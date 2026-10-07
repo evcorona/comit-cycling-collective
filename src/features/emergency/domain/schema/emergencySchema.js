@@ -1,4 +1,5 @@
 import { PHONE_DIGITS } from '@/features/emergency/domain/constants/phone'
+import { ALLOWED_TEXT_PATTERN } from '@/features/emergency/domain/constants/input'
 import { stripDiacritics } from '@/shared/stripDiacritics'
 import texts from '@/locales/es.json'
 import { z } from 'zod'
@@ -40,7 +41,9 @@ export const formSchema = z.object(
           )
         }, texts.validation.birthDate)
       if (type === 'text' || type === 'textarea')
-        rule = rule.transform(stripDiacritics)
+        rule = rule
+          .regex(ALLOWED_TEXT_PATTERN, texts.validation.unsupportedCharacters)
+          .transform(stripDiacritics)
       return [name, rule]
     }),
   ),

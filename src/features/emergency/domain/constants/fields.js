@@ -65,18 +65,10 @@ export const emergencyFields = [
     fullWidth: false,
     maxLength: PHONE_DIGITS,
   },
-  {
-    name: 'allergies',
-    expandable: true,
-    label: texts.fields.allergies.label,
-    placeholder: texts.fields.allergies.placeholder,
-    required: false,
-    type: 'textarea',
-    fullWidth: true,
-    maxLength: 100,
-  },
+
   {
     name: 'conditions',
+    group: 'medical',
     expandable: true,
     label: texts.fields.conditions.label,
     placeholder: texts.fields.conditions.placeholder,
@@ -85,28 +77,12 @@ export const emergencyFields = [
     fullWidth: true,
     maxLength: 100,
   },
-  {
-    name: 'medications',
-    expandable: true,
-    label: texts.fields.medications.label,
-    placeholder: texts.fields.medications.placeholder,
-    required: false,
-    type: 'textarea',
-    fullWidth: true,
-    maxLength: 120,
-  },
-  {
-    name: 'notes',
-    expandable: true,
-    label: texts.fields.notes.label,
-    placeholder: texts.fields.notes.placeholder,
-    required: false,
-    type: 'textarea',
-    fullWidth: true,
-    maxLength: 80,
-  },
 ]
 export const defaultValues = Object.fromEntries(
   emergencyFields.map(({ name }) => [name, '']),
 )
 export const bloodTypes = texts.common.bloodTypes.map(stripDiacritics)
+
+export const medicalFieldNames = emergencyFields
+  .filter(({ group }) => group === 'medical')
+  .map(({ name }) => name)
