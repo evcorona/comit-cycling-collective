@@ -137,19 +137,20 @@ recomendación del modo detectado y su matriz cabe. No se salta una prioridad
 para incluir la siguiente. La vista previa y las descargas usan el mismo
 contenido seleccionado. La tarjeta conserva todos los datos. Si los datos
 básicos no cumplen la recomendación o no caben, se bloquea la descarga y se pide
-resumir; no se recortan automáticamente. La página no muestra detalles técnicos
-ni una revisión duplicada de los datos: solo un aviso sobre el contenido
-incluido y omitido. Las descargas se llaman Imagen (PNG) y Vector (SVG). El
-componente QR genérico conserva su API de 1 a 6 cm y sus diagnósticos opcionales
-para otros usos. El contenido se clasifica como `optimal`, `warning` u
-`over-limit` con los presupuestos del modo detectado; el mínimo físico se
-comprueba además con la matriz real y una guía conservadora de 0.4 mm por
-módulo, redondeada a píxeles enteros de 300 ppp. Los tamaños insuficientes se
-bloquean en la interfaz y ambos exportadores por versión y densidad reales. Un
-presupuesto M excedido no bloquea por sí solo una matriz válida, por ejemplo al
-usar un nivel de corrección diferente. Por esa guía, incluso un QR pequeño puede
-necesitar más de 1 cm aunque cumpla el presupuesto de bytes. Por encima del
-rango soportado, se pide resumir el texto; no se recorta automáticamente.
+resumir; no se recortan automáticamente. La página muestra siempre los datos
+incluidos en el QR, sin detalles técnicos, junto con una explicación breve y la
+recomendación de resumir o aumentar el tamaño cuando se omiten campos. Las
+descargas se llaman PNG y SVG. El componente QR genérico conserva su API de 1 a
+6 cm y sus diagnósticos opcionales para otros usos. El contenido se clasifica
+como `optimal`, `warning` u `over-limit` con los presupuestos del modo
+detectado; el mínimo físico se comprueba además con la matriz real y una guía
+conservadora de 0.4 mm por módulo, redondeada a píxeles enteros de 300 ppp. Los
+tamaños insuficientes se bloquean en la interfaz y ambos exportadores por
+versión y densidad reales. Un presupuesto M excedido no bloquea por sí solo una
+matriz válida, por ejemplo al usar un nivel de corrección diferente. Por esa
+guía, incluso un QR pequeño puede necesitar más de 1 cm aunque cumpla el
+presupuesto de bytes. Por encima del rango soportado, se pide resumir el texto;
+no se recorta automáticamente.
 
 SVG conserva el vector original de `qrcode.react`, con ancho y alto en cm, sin
 etiqueta externa. PNG se rasteriza desde ese mismo SVG, usando módulos de

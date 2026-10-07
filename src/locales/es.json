@@ -125,7 +125,7 @@
   "export": {
     "download": "PNG",
     "size": "Tamaño del QR",
-    "sizeHint": "Para facilitar la lectura, el QR incluye la información adecuada para el tamaño elegido.",
+    "sizeHint": "Para facilitar la lectura, el QR solo incluye la información adecuada para el tamaño elegido.",
     "custom": "Otro tamaño",
     "customLabel": "Lado del QR (cm)",
     "confirm": "Descargar",
@@ -141,6 +141,7 @@
     "recommended": "Tamaño recomendado: {size} cm.",
     "downloadSvg": "SVG",
     "downloadFile": "Descargar {format}",
+    "qrDataTitle": "Datos incluidos en tu QR",
     "allIncluded": "Tu QR incluye todos tus datos.",
     "onlyBasic": "Tu QR incluye solo los datos básicos.",
     "basicAndMedical": "Tu QR incluye los datos básicos y la información médica.",

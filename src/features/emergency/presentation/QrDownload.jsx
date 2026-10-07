@@ -42,32 +42,17 @@ export function QrDownload({ qrBySize }) {
         role="status"
         aria-live="polite"
       >
+        <p>{texts.export.sizeHint}</p>
         {!qr.canDownload ? (
           <p className="font-semibold text-pink">{texts.export.basicTooLong}</p>
-        ) : qr.omitted.length === 0 ? (
-          <p>{texts.export.allIncluded}</p>
         ) : (
-          <>
-            <p>
-              {qr.included.length === 0
-                ? texts.export.onlyBasic
-                : texts.export.basicAndMedical}
-            </p>
-            <p>
-              {texts.export.omittedFields.replace(
-                '{fields}',
-                qr.omitted
-                  .map((field) => texts.fields[field].label.toLowerCase())
-                  .join(', '),
-              )}
-            </p>
+          qr.omitted.length > 0 && (
             <p className="font-semibold">
               {size === 6
                 ? texts.export.resumeOnly
                 : texts.export.increaseOrResume}
             </p>
-            <p className="text-xs text-muted">{texts.export.cardComplete}</p>
-          </>
+          )
         )}
       </div>
       <fieldset
@@ -107,9 +92,6 @@ export function QrDownload({ qrBySize }) {
           <span>{texts.export.minSize}</span>
           <span>{texts.export.maxSize}</span>
         </div>
-        <p className="mt-3 text-xs leading-5 text-muted">
-          {texts.export.sizeHint}
-        </p>
         <p className="mt-1 text-xs leading-5 text-muted">
           {texts.export.description}
         </p>
@@ -141,6 +123,20 @@ export function QrDownload({ qrBySize }) {
           ))}
         </div>
       </fieldset>
+      <section
+        className="qr-controls min-w-0 border-t border-black/10 pt-4"
+        aria-labelledby="qr-data-title"
+      >
+        <h3
+          id="qr-data-title"
+          className="text-sm font-semibold"
+        >
+          {texts.export.qrDataTitle}
+        </h3>
+        <pre className="mt-2 whitespace-pre-wrap break-words rounded-xl bg-cream p-3 font-sans text-sm leading-6 [overflow-wrap:anywhere]">
+          {qr.text}
+        </pre>
+      </section>
       {downloaded && (
         <p
           role="status"
