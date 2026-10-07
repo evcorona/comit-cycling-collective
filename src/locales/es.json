@@ -12,34 +12,37 @@
   "privacyNotice": {
     "title": "Tu información no se guarda",
     "description": "Se borra al cerrar o recargar esta página.",
-    "warningTitle": "Cuida tu QR:",
-    "warning": "quien lo escanee podrá leer tus datos."
+    "warningTitle": "Cuida tus datos:",
+    "warning": "quien vea la tarjeta o escanee un QR podrá leerlos."
   },
   "qrResult": {
     "scanHint": "Comprueba que se lea antes de salir.",
     "review": "Revisar mis datos",
-    "emptyTitle": "Tu QR aparecerá aquí.",
-    "emptyDescription": "Tu QR aparecerá al completar el formulario.",
+    "emptyTitle": "Tus QR aparecerán aquí.",
+    "emptyDescription": "Tus QR aparecerán al completar el formulario.",
     "format": "Descarga en formato PNG",
     "offlineTitle": "Consulta sin internet",
     "offlineDescription": "Los datos están dentro del QR. Puedes leerlos con un lector QR sin conexión a internet.",
-    "regionLabel": "Resultado del QR",
-    "imageAlt": "Código QR con tus datos de emergencia",
+    "regionLabel": "Datos para llevar",
+    "imageAlt": "Código QR: {title}",
     "ready": "Listo para llevar",
     "preview": "Vista previa",
     "downloadType": "Qué quieres descargar",
-    "qrOption": "Solo QR",
-    "cardOption": "Tarjeta"
+    "qrOption": "Dos QR",
+    "cardOption": "Tarjeta",
+    "selectQr": "Elige el QR",
+    "pairHint": "Lleva ambos QR: contactos e información médica."
   },
   "emergencyForm": {
     "title": "Datos de emergencia",
     "requiredHint": "* Obligatorio. Los demás campos son opcionales.",
-    "medicalHint": "Estos datos pueden ayudar a un paramédico.",
+    "medicalHint": "Escribe datos breves y relevantes para un paramédico.",
     "clear": "Limpiar",
     "generating": "Generando…",
     "generate": "Crear QR",
     "inputHint": "Los acentos se ajustan automáticamente.",
-    "addContact": "Agregar otro contacto"
+    "addContact": "Agregar otro contacto",
+    "counter": "{count}/{limit} caracteres"
   },
   "emergencyPage": {
     "description": "Crea tu QR o tarjeta para llevar en cada rodada."
@@ -113,7 +116,25 @@
   "qr": {
     "heading": "INFORMACIÓN DE EMERGENCIA",
     "generationError": "No pudimos crear el QR. Reduce la cantidad de texto e inténtalo de nuevo.",
-    "exportError": "No se pudo descargar. Prueba con un tamaño mayor."
+    "exportError": "No se pudo descargar. Prueba con un tamaño mayor.",
+    "titles": {
+      "identification": "Identificacion",
+      "medical": "Info medica"
+    },
+    "fields": {
+      "name": "Nombre",
+      "birthDate": "Nacimiento",
+      "bloodType": "Sangre",
+      "contact": "Contacto 1",
+      "phone": "Tel 1",
+      "contact2": "Contacto 2",
+      "phone2": "Tel 2",
+      "allergies": "Alergias",
+      "conditions": "Condiciones",
+      "medications": "Medicamentos",
+      "notes": "Notas"
+    },
+    "noMedicalData": "Sin datos medicos registrados"
   },
   "medical": {
     "allergies": "Agregar alergias",
@@ -128,14 +149,16 @@
     "customLabel": "Lado del QR (cm)",
     "confirm": "Descargar",
     "busy": "Preparando…",
-    "description": "Para imprimir, usa el tamaño original.",
-    "rangeError": "Elige entre 1 y 30 cm.",
+    "description": "Para el casco, usa 3 cm cuando sea posible. Imprime al tamaño original y comprueba la lectura.",
+    "rangeError": "Elige entre 2 y 30 cm.",
     "preset": "{size} cm",
     "done": "Descarga iniciada. Revisa tus archivos.",
     "unit": "cm",
-    "minSize": "1 cm",
+    "minSize": "2 cm",
     "maxSize": "5 cm",
-    "smallHint": "Para leerlo con facilidad, recomendamos 2 cm o más."
+    "smallHint": "Este QR necesita al menos {size} cm. Aumenta el tamaño o resume los datos.",
+    "recommended": "Tamaño recomendado: {size} cm.",
+    "labelHint": "La etiqueta se imprime debajo; la medida corresponde solo al QR."
   },
   "meta": {
     "title": "Comit · Tu QR de emergencia",
@@ -143,13 +166,17 @@
   },
   "card": {
     "title": "Tarjeta de emergencia",
-    "description": "Datos principales y QR con toda tu información.",
-    "size": "Para cartera · 8.56 × 5.4 cm",
+    "description": "Toda tu información escrita, sin QR, en una sola imagen plegable.",
+    "size": "Imagen: 8.56 × 10.8 cm · Doblada: 8.56 × 5.4 cm",
     "download": "Descargar tarjeta",
     "error": "No pudimos crear la tarjeta. Vuelve a intentarlo o reduce la cantidad de texto.",
-    "scanHint": "Escanea para ver todos los datos médicos y las notas.",
     "footer": "Comit Cycling Collective",
-    "printHint": "Imprime en tamaño original."
+    "printHint": "Imprime al tamaño original, recorta el borde y dobla por la línea central antes de enmicar.",
+    "medicalTitle": "Información médica",
+    "noMedicalData": "Sin información médica registrada.",
+    "fold": "Dobla por la línea",
+    "imageAlt": "Vista previa de la tarjeta plegable, frente y reverso",
+    "retry": "Volver a intentar"
   },
   "sections": {
     "personal": "Tus datos",

@@ -8,6 +8,8 @@ import texts from '@/locales/es.json'
 export function QrResult({ result }) {
   const headingRef = useRef(null)
   const [downloadType, setDownloadType] = useState('qr')
+  const [qrIndex, setQrIndex] = useState(0)
+  const qr = result?.qrs[qrIndex]
   useEffect(() => {
     if (result && window.innerWidth < 1024) {
       headingRef.current?.focus({ preventScroll: true })
@@ -36,17 +38,14 @@ export function QrResult({ result }) {
       </h2>
       {result ? (
         <>
-          <img
-            src={result.image}
-            alt={texts.qrResult.imageAlt}
-            className="mx-auto my-3 aspect-square w-52 max-w-full"
-          />
           <p className="break-words text-center font-semibold">
             {result.data.name}
           </p>
-          <p className="mt-1 text-center text-xs leading-5 text-muted">
-            {texts.qrResult.scanHint}
-          </p>
+          {downloadType === 'qr' && (
+            <p className="mt-1 text-center text-xs leading-5 text-muted">
+              {texts.qrResult.scanHint}
+            </p>
+          )}
           <div
             className="my-5 grid grid-cols-2 gap-2"
             role="group"
@@ -74,17 +73,48 @@ export function QrResult({ result }) {
             ))}
           </div>
           <div hidden={downloadType !== 'qr'}>
+            <p className="mb-3 text-xs leading-5 text-muted">
+              {texts.qrResult.pairHint}
+            </p>
+            <div
+              className="grid grid-cols-2 gap-2"
+              role="group"
+              aria-label={texts.qrResult.selectQr}
+            >
+              {result.qrs.map((item, index) => (
+                <button
+                  key={item.id}
+                  type="button"
+                  aria-pressed={qrIndex === index}
+                  onClick={() => setQrIndex(index)}
+                  className={clsx(
+                    'min-h-11 rounded-lg border px-2 py-2 text-sm font-semibold',
+                    qrIndex === index
+                      ? 'border-pink bg-pink/5'
+                      : 'border-black/15 text-muted',
+                  )}
+                >
+                  {item.title}
+                </button>
+              ))}
+            </div>
+            <img
+              src={qr.image}
+              alt={texts.qrResult.imageAlt.replace('{title}', qr.title)}
+              className="mx-auto mt-3 aspect-square w-52 max-w-full"
+            />
+            <p className="mb-4 text-center text-sm font-semibold">{qr.title}</p>
             <QrDownload
-              key={result.image}
-              text={result.text}
+              key={`${qr.id}-${qr.image}`}
+              qr={qr}
             />
           </div>
-          <div hidden={downloadType !== 'card'}>
+          {downloadType === 'card' && (
             <CardDownload
-              key={result.image}
+              key={result.text}
               result={result}
             />
-          </div>
+          )}
           <details className="mt-5 border-t border-black/10 pt-3">
             <summary className="flex min-h-11 cursor-pointer items-center text-sm font-semibold">
               {texts.qrResult.review}

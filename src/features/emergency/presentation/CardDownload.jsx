@@ -1,55 +1,76 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Check, CreditCard, Download } from 'lucide-react'
 import texts from '@/locales/es.json'
 import { exportEmergencyCard } from '@/features/emergency/infrastructure/exportEmergencyCard'
 import { downloadImage } from '@/shared/downloadImage'
 
 export function CardDownload({ result }) {
-  const [isExporting, setIsExporting] = useState(false)
+  const [image, setImage] = useState(null)
   const [error, setError] = useState('')
   const [downloaded, setDownloaded] = useState(false)
-  async function download() {
-    setIsExporting(true)
-    setError('')
-    try {
-      const blob = await exportEmergencyCard(result)
-      downloadImage(blob, 'comit-tarjeta-emergencia.png')
-      setDownloaded(true)
-    } catch {
-      setError(texts.card.error)
-    } finally {
-      setIsExporting(false)
+  const [attempt, setAttempt] = useState(0)
+  useEffect(() => {
+    let cancelled = false
+    let url
+    exportEmergencyCard(result)
+      .then((blob) => {
+        if (cancelled) return
+        url = URL.createObjectURL(blob)
+        setImage({ blob, url })
+      })
+      .catch(() => {
+        if (!cancelled) setError(texts.card.error)
+      })
+    return () => {
+      cancelled = true
+      if (url) URL.revokeObjectURL(url)
     }
+  }, [result, attempt])
+  function download() {
+    if (!image) {
+      setError('')
+      setAttempt((value) => value + 1)
+      return
+    }
+    downloadImage(image.blob, 'comit-tarjeta-plegable.png')
+    setDownloaded(true)
   }
   return (
     <div className="space-y-3 text-left">
-      <h4 className="flex items-center gap-2 text-sm font-bold">
+      <h3 className="flex items-center gap-2 text-sm font-bold">
         <CreditCard
           size={18}
           className="text-pink"
         />
         {texts.card.title}
-      </h4>
-      <p className="mt-2 text-xs leading-5 text-muted">
-        {texts.card.description}
-      </p>
-      <p className="mt-2 text-xs font-semibold">{texts.card.size}</p>
+      </h3>
+      <p className="text-xs leading-5 text-muted">{texts.card.description}</p>
+      <p className="text-xs font-semibold">{texts.card.size}</p>
+      {image && (
+        <img
+          src={image.url}
+          alt={texts.card.imageAlt}
+          className="mx-auto w-full max-w-80 border border-black/10"
+        />
+      )}
       <button
         type="button"
         onClick={download}
-        disabled={isExporting}
-        className="mt-3 flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-black px-4 py-3 text-sm font-semibold text-white hover:bg-black/80"
+        disabled={!image && !error}
+        className="flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-black px-4 py-3 text-sm font-semibold text-white hover:bg-black/80 disabled:opacity-50"
       >
         <Download size={16} />
-        {isExporting ? texts.export.busy : texts.card.download}
+        {error
+          ? texts.card.retry
+          : !image
+            ? texts.export.busy
+            : texts.card.download}
       </button>
-      <p className="mt-2 text-xs leading-5 text-muted">
-        {texts.card.printHint}
-      </p>
+      <p className="text-xs leading-5 text-muted">{texts.card.printHint}</p>
       {error && (
         <p
           role="alert"
-          className="mt-2 text-xs text-pink"
+          className="text-xs text-pink"
         >
           {error}
         </p>
@@ -57,7 +78,7 @@ export function CardDownload({ result }) {
       {downloaded && (
         <p
           role="status"
-          className="mt-2 flex items-center gap-1 text-xs text-muted"
+          className="flex items-center gap-1 text-xs text-muted"
         >
           <Check size={13} />
           {texts.export.done}

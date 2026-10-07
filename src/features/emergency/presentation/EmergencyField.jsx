@@ -1,18 +1,23 @@
 import clsx from 'clsx'
 import texts from '@/locales/es.json'
-import { Controller } from 'react-hook-form'
+import { Controller, useWatch } from 'react-hook-form'
 import { MaskedControl } from '@/features/emergency/presentation/MaskedControl'
 import { bloodTypes } from '@/features/emergency/domain/constants/fields'
 import { localToday } from '@/shared/date'
 export function EmergencyField({ field, register, control, error, onChange }) {
   const { name: key, label, placeholder, required, type, fullWidth } = field
+  const value = useWatch({ control, name: key }) || ''
   const common = {
     id: key,
     ...(['select', 'date'].includes(type) ? register(key, { onChange }) : {}),
     required,
     'aria-invalid': !!error,
     'aria-describedby':
-      [field.expandable && `${key}-hint`, error && `${key}-error`]
+      [
+        field.expandable && `${key}-hint`,
+        field.expandable && `${key}-counter`,
+        error && `${key}-error`,
+      ]
         .filter(Boolean)
         .join(' ') || undefined,
   }
@@ -77,6 +82,16 @@ export function EmergencyField({ field, register, control, error, onChange }) {
       {key === 'name' && (
         <p className="mt-1.5 text-xs text-muted">
           {texts.emergencyForm.inputHint}
+        </p>
+      )}
+      {field.expandable && (
+        <p
+          id={`${key}-counter`}
+          className="mt-1.5 text-right text-xs tabular-nums text-muted"
+        >
+          {texts.emergencyForm.counter
+            .replace('{count}', value.length)
+            .replace('{limit}', field.maxLength)}
         </p>
       )}
       {error && (

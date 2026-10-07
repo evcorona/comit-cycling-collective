@@ -1,9 +1,9 @@
 # Comit · QR de emergencia
 
-Aplicacion en espanol para generar un QR de texto con datos de emergencia.
-React, Vite y Tailwind CSS. Nombre y primer contacto de emergencia con telefono
-obligatorios. Segundo contacto, fecha de nacimiento, tipo de sangre, alergias,
-condiciones medicas, medicamentos y notas opcionales.
+Aplicacion en espanol para generar dos QR de texto y una tarjeta plegable con
+datos de emergencia. React, Vite y Tailwind CSS. Nombre y primer contacto de
+emergencia con telefono obligatorios. Segundo contacto, fecha de nacimiento,
+tipo de sangre, alergias, condiciones medicas, medicamentos y notas opcionales.
 
 ## Desarrollo
 
@@ -78,36 +78,59 @@ Alergias, condiciones medicas y medicamentos se muestran al pulsar sus botones.
 Las ayudas se presentan como subtitulos. Limpiar elimina los valores y vuelve a
 cerrar estos campos.
 
-## Exportacion para impresion
+## QR para el casco
 
-El boton de descarga permite ajustar el lado del QR de 1 a 5 cm con un
-deslizador, o elegir un tamaño personalizado de 1 a 30 cm. El PNG se genera
-directamente del texto QR, a 300 ppp y con metadatos PNG pHYs. El tamano en
-pixeles se calcula como `redondear(cm / 2.54 * 300)`. Para conservar la medida
-fisica, imprimir al 100% de escala, sin ajustar a pagina. Comprueba siempre la
-lectura del QR ya impreso, especialmente si hay muchos datos en una imagen
-pequena.
+Se generan dos QR de texto directo, sin enlaces ni almacenamiento:
 
-## Tarjeta de emergencia
+- `Identificacion`: nombre, nacimiento, sangre y contactos.
+- `Info medica`: nombre, alergias, condiciones, medicamentos y notas. Si no se
+  proporcionan datos médicos, lo indica explícitamente, sin asumir que no hay
+  alergias o enfermedades.
 
-La sección de resultados ofrece una tarjeta PNG de 8.56 × 5.4 cm, equivalente a
-una tarjeta de crédito, a 300 ppp. Incluye el logo de Comit, nombre, tipo de
-sangre y ambos contactos en texto, cuando se proporciona el segundo. Cada
-contacto agrupa su nombre y teléfono con espacio entre etiquetas y valores. El
-QR conserva todos los datos completos, incluidos contactos adicionales, datos
-médicos y notas. El texto impreso ajusta su tamaño y se distribuye sin recortes.
-Se genera localmente con Canvas, sin almacenar ni enviar información. Las
-etiquetas impresas conservan los acentos; el QR permanece sin acentos. Imprimir
-al 100% de escala, sin ajustar a página.
+Cada contenido termina con su identificador, sin acentos. La imagen descargada
+incluye la misma etiqueta debajo, fuera del QR y su margen blanco. Ambos son
+necesarios para consultar todos los datos; el nombre se repite para
+relacionarlos. Cada lector decide si convierte los teléfonos en enlaces de
+llamada.
 
-## Teléfonos y formato del QR
+Los campos médicos tienen límites compartidos por la máscara y Zod: alergias y
+condiciones, 100 caracteres cada uno; medicamentos, 120; notas, 80. Los
+contadores muestran el espacio utilizado. Los límites no garantizan por sí solos
+la lectura física: la densidad se calcula con el contenido completo de cada QR.
+
+## Exportación para impresión
+
+El deslizador permite elegir de 2 a 5 cm; el tamaño personalizado, de 2 a 30 cm.
+El valor inicial es 3 cm o la recomendación mayor que requieran los datos. El
+mínimo se calcula a partir de los módulos, incluido el margen blanco de cuatro
+módulos por lado, con una guía conservadora de 0.4 mm por módulo. Se redondea a
+píxeles enteros a 300 ppp. Los tamaños insuficientes se bloquean tanto en la
+interfaz como en el exportador. La recomendación se redondea hacia arriba a
+incrementos de 0.5 cm.
+
+El PNG incluye metadatos pHYs de 300 ppp. El lado del área QR es
+`redondear(cm / 2.54 * 300)` píxeles; la etiqueta añade 0.35 cm debajo. El QR se
+centra sin interpolación ni pérdida de su margen blanco. Para conservar las
+medidas, imprimir al 100%, sin ajustar a página. La densidad es una guía; hay
+que comprobar la lectura impresa con distintos teléfonos y en la superficie del
+casco antes de usarla.
+
+## Tarjeta de emergencia plegable
+
+Una sola imagen PNG de aproximadamente 8.56 × 10.8 cm, a 300 ppp, contiene ambas
+caras sin QR. Cada mitad mide 8.56 × 5.4 cm (1011 × 638 píxeles). El reverso
+está girado 180° para quedar orientado al plegar por la línea central. Imprimir
+al tamaño original, recortar el borde y doblar antes de enmicar.
+
+El frente muestra nombre, nacimiento, sangre y ambos contactos, cuando existen.
+El reverso contiene nombre y todos los campos médicos proporcionados. Se ajustan
+las líneas y la tipografía sin recortar datos; si el contenido no cabe con la
+tipografía mínima, se solicita resumirlo. Ambas caras llevan el logo y
+`Comit Cycling Collective`. Las etiquetas conservan los acentos. La vista previa
+y la descarga comparten el mismo PNG, generado en memoria con Canvas.
+
+## Teléfonos
 
 Los teléfonos se capturan con máscara `00-0000-0000`. React Hook Form conserva
 solo los 10 dígitos, y Zod rechaza números incompletos. Los guiones no se
-incluyen en el contenido del QR.
-
-El QR utiliza únicamente texto directo, sin enlaces ni formatos de contacto.
-Así, la información médica y los contactos se leen juntos en los lectores QR
-compatibles con texto, sin conexión y sin guardar contactos. No se garantiza que
-cada lector convierta los teléfonos en enlaces de llamada. Las descargas de QR y
-tarjeta contienen la misma información.
+incluyen en el contenido de los QR.

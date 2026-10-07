@@ -9,23 +9,29 @@ import {
 import { exportQr } from '@/features/emergency/infrastructure/exportQr'
 import { downloadImage } from '@/shared/downloadImage'
 
-export function QrDownload({ text }) {
-  const [size, setSize] = useState('3')
-  const [customSize, setCustomSize] = useState('5')
-  const [isCustom, setIsCustom] = useState(false)
+export function QrDownload({ qr }) {
+  const minimumCm = Math.max(MIN_EXPORT_CM, qr.minimumCm)
+  const [size, setSize] = useState(String(Math.min(5, qr.recommendedCm)))
+  const [customSize, setCustomSize] = useState(String(qr.recommendedCm))
+  const [isCustom, setIsCustom] = useState(qr.recommendedCm > 5)
   const [isExporting, setIsExporting] = useState(false)
   const [error, setError] = useState('')
   const [downloaded, setDownloaded] = useState(false)
+  const cm = Number(isCustom ? customSize : size)
+  const isTooSmall = Number.isFinite(cm) && cm < minimumCm
   async function download() {
-    const cm = Number(isCustom ? customSize : size)
     if (!Number.isFinite(cm) || cm < MIN_EXPORT_CM || cm > MAX_EXPORT_CM) {
       setError(texts.export.rangeError)
+      return
+    }
+    if (isTooSmall) {
+      setError(texts.export.smallHint.replace('{size}', minimumCm))
       return
     }
     setIsExporting(true)
     setError('')
     try {
-      downloadImage(await exportQr(text, cm), `comit-qr-emergencia-${cm}cm.png`)
+      downloadImage(await exportQr(qr, cm), `comit-${qr.id}-${cm}cm.png`)
       setDownloaded(true)
     } catch {
       setError(texts.qr.exportError)
@@ -44,7 +50,7 @@ export function QrDownload({ text }) {
             {texts.export.size}
           </label>
           <output
-            htmlFor="qr-size"
+            htmlFor={isCustom ? 'custom-export-size' : 'qr-size'}
             className="font-bold tabular-nums"
           >
             {isCustom ? customSize || '—' : size} {texts.export.unit}
@@ -62,8 +68,12 @@ export function QrDownload({ text }) {
             thousandsSeparator=""
             min={0}
             value={customSize}
-            aria-invalid={!!error}
-            aria-describedby={error ? 'export-error' : undefined}
+            aria-invalid={!!error || isTooSmall}
+            aria-describedby={
+              [error && 'export-error', isTooSmall && 'export-size-hint']
+                .filter(Boolean)
+                .join(' ') || undefined
+            }
             className="mt-3"
             onAccept={(value) => {
               setCustomSize(value)
@@ -76,12 +86,13 @@ export function QrDownload({ text }) {
             <input
               id="qr-size"
               type="range"
-              min="1"
+              min="2"
               max="5"
               step="0.5"
               value={size}
               className="size-slider mt-2"
               aria-valuetext={texts.export.preset.replace('{size}', size)}
+              aria-describedby={isTooSmall ? 'export-size-hint' : undefined}
               onChange={(event) => {
                 setSize(event.target.value)
                 setError('')
@@ -110,9 +121,19 @@ export function QrDownload({ text }) {
         <p className="text-xs leading-5 text-muted">
           {texts.export.description}
         </p>
-        {Number(isCustom ? customSize : size) < 2 && (
-          <p className="mt-2 text-xs leading-5 text-muted">
-            {texts.export.smallHint}
+        <p className="text-xs leading-5 text-muted">
+          {texts.export.recommended.replace('{size}', qr.recommendedCm)}
+        </p>
+        <p className="mt-1 text-xs leading-5 text-muted">
+          {texts.export.labelHint}
+        </p>
+        {isTooSmall && (
+          <p
+            id="export-size-hint"
+            role="status"
+            className="mt-2 text-xs leading-5 text-pink"
+          >
+            {texts.export.smallHint.replace('{size}', minimumCm)}
           </p>
         )}
         {error && (
@@ -126,9 +147,9 @@ export function QrDownload({ text }) {
         )}
         <button
           type="button"
-          disabled={isExporting}
+          disabled={isExporting || isTooSmall}
           onClick={download}
-          className="primary mt-4 flex min-h-12 w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-bold"
+          className="primary mt-4 flex min-h-12 w-full items-center justify-center gap-2 rounded-xl disabled:opacity-50 px-4 py-3 text-sm font-bold"
         >
           <Download size={18} />
           {isExporting ? texts.export.busy : texts.export.download}

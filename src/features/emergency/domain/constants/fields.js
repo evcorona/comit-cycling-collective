@@ -73,7 +73,7 @@ export const emergencyFields = [
     required: false,
     type: 'textarea',
     fullWidth: true,
-    maxLength: 200,
+    maxLength: 100,
   },
   {
     name: 'conditions',
@@ -83,7 +83,7 @@ export const emergencyFields = [
     required: false,
     type: 'textarea',
     fullWidth: true,
-    maxLength: 200,
+    maxLength: 100,
   },
   {
     name: 'medications',
@@ -93,7 +93,7 @@ export const emergencyFields = [
     required: false,
     type: 'textarea',
     fullWidth: true,
-    maxLength: 200,
+    maxLength: 120,
   },
   {
     name: 'notes',
@@ -103,7 +103,7 @@ export const emergencyFields = [
     required: false,
     type: 'textarea',
     fullWidth: true,
-    maxLength: 200,
+    maxLength: 80,
   },
 ]
 export const defaultValues = Object.fromEntries(

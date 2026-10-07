@@ -25,7 +25,7 @@ export function MaskedControl({ field, controlled, inputProps, onChange }) {
           ? PHONE_MASK
           : isNumeric
             ? /^\d*$/
-            : /^[^\u0300-\u036f]*$/
+            : new RegExp(`^[^\\u0300-\\u036f]{0,${field.maxLength}}$`)
       }
       unmask={field.type === 'tel'}
       prepare={stripDiacritics}
