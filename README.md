@@ -1,4 +1,4 @@
-# Commit · QR de emergencia
+# Comit · QR de emergencia
 
 Aplicación en español para generar un QR de texto con datos de emergencia. React, Vite y Tailwind CSS. Nombre obligatorio; contacto, teléfono, alergias, condiciones médicas y medicamentos opcionales.
 
