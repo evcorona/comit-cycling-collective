@@ -1,4 +1,4 @@
-import { ShieldCheck } from "lucide-react";
+import { ShieldCheck } from 'lucide-react'
 export function PrivacyNotice() {
   return (
     <div className="rounded-xl border border-black/10 bg-white p-5">
@@ -15,5 +15,5 @@ export function PrivacyNotice() {
         esos datos.
       </p>
     </div>
-  );
+  )
 }

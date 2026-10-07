@@ -1,6 +1,6 @@
-import { UserRound, Info, QrCode, ArrowRight, RotateCcw } from "lucide-react";
-import { emergencyFields } from "../domain/constants/fields";
-import { EmergencyField } from "./EmergencyField";
+import { UserRound, Info, QrCode, ArrowRight, RotateCcw } from 'lucide-react'
+import { emergencyFields } from '@/features/emergency/domain/constants/fields'
+import { EmergencyField } from '@/features/emergency/presentation/EmergencyField'
 export function EmergencyForm({
   register,
   control,
@@ -42,7 +42,10 @@ export function EmergencyForm({
         ))}
       </div>
       <div className="mt-6 flex gap-2.5 rounded-lg bg-cream p-3 text-xs leading-5 text-muted">
-        <Info size={16} className="mt-0.5 shrink-0 text-black" />
+        <Info
+          size={16}
+          className="mt-0.5 shrink-0 text-black"
+        />
         <p>
           Cuanta mas informacion relevante y actualizada compartas, mejor podra
           un paramedico conocer tu situacion en una emergencia. Incluye
@@ -51,7 +54,10 @@ export function EmergencyForm({
         </p>
       </div>
       {error && (
-        <p role="alert" className="mt-3 text-sm text-pink">
+        <p
+          role="alert"
+          className="mt-3 text-sm text-pink"
+        >
           {error}
         </p>
       )}
@@ -61,8 +67,11 @@ export function EmergencyForm({
           className="primary flex flex-1 items-center justify-center gap-2 rounded-lg px-5 py-3.5 text-sm font-bold"
         >
           <QrCode size={18} />
-          {isSubmitting ? "Generando…" : "Generar mi QR"}
-          <ArrowRight size={17} className="ml-auto" />
+          {isSubmitting ? 'Generando…' : 'Generar mi QR'}
+          <ArrowRight
+            size={17}
+            className="ml-auto"
+          />
         </button>
         <button
           type="button"
@@ -73,5 +82,5 @@ export function EmergencyForm({
         </button>
       </div>
     </form>
-  );
+  )
 }

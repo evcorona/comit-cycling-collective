@@ -1,7 +1,7 @@
-import { Controller } from "react-hook-form";
-import { IMaskInput } from "react-imask";
-import { bloodTypes } from "../domain/constants/fields";
-import { localToday } from "../../../shared/date";
+import { Controller } from 'react-hook-form'
+import { IMaskInput } from 'react-imask'
+import { bloodTypes } from '@/features/emergency/domain/constants/fields'
+import { localToday } from '@/shared/date'
 export function EmergencyField({ field, register, control, error, onChange }) {
   const {
     name: key,
@@ -11,16 +11,19 @@ export function EmergencyField({ field, register, control, error, onChange }) {
     type,
     fullWidth,
     maxLength,
-  } = field;
+  } = field
   const common = {
     id: key,
-    ...(type === "tel" || type === "number" ? {} : register(key, { onChange })),
+    ...(type === 'tel' || type === 'number' ? {} : register(key, { onChange })),
     required,
-    "aria-invalid": !!error,
-    "aria-describedby": error ? `${key}-error` : undefined,
-  };
+    'aria-invalid': !!error,
+    'aria-describedby': error ? `${key}-error` : undefined,
+  }
   return (
-    <div key={key} className={fullWidth ? "sm:col-span-2" : ""}>
+    <div
+      key={key}
+      className={fullWidth ? 'sm:col-span-2' : ''}
+    >
       <label
         htmlFor={key}
         className="mb-2 flex items-center justify-between text-xs font-semibold text-black"
@@ -33,7 +36,7 @@ export function EmergencyField({ field, register, control, error, onChange }) {
           <span className="text-[10px] font-normal text-muted">Opcional</span>
         )}
       </label>
-      {type === "tel" || type === "number" ? (
+      {type === 'tel' || type === 'number' ? (
         <Controller
           name={key}
           control={control}
@@ -45,30 +48,33 @@ export function EmergencyField({ field, register, control, error, onChange }) {
               onBlur={controlled.onBlur}
               value={controlled.value}
               mask={/^\d*$/}
-              type={type === "tel" ? "tel" : "text"}
+              type={type === 'tel' ? 'tel' : 'text'}
               inputMode="numeric"
               maxLength={maxLength}
               autoComplete="off"
               placeholder={placeholder}
               onAccept={(value) => {
                 if (value !== controlled.value) {
-                  controlled.onChange(value);
-                  onChange();
+                  controlled.onChange(value)
+                  onChange()
                 }
               }}
             />
           )}
         />
-      ) : type === "select" ? (
+      ) : type === 'select' ? (
         <select {...common}>
           <option value="">Selecciona una opcion</option>
           {bloodTypes.map((value) => (
-            <option key={value} value={value}>
+            <option
+              key={value}
+              value={value}
+            >
               {value}
             </option>
           ))}
         </select>
-      ) : type === "textarea" ? (
+      ) : type === 'textarea' ? (
         <textarea
           {...common}
           maxLength={maxLength}
@@ -79,7 +85,7 @@ export function EmergencyField({ field, register, control, error, onChange }) {
         <input
           {...common}
           type={type}
-          max={type === "date" ? localToday() : undefined}
+          max={type === 'date' ? localToday() : undefined}
           maxLength={maxLength}
           autoComplete="off"
           placeholder={placeholder}
@@ -95,5 +101,5 @@ export function EmergencyField({ field, register, control, error, onChange }) {
         </p>
       )}
     </div>
-  );
+  )
 }

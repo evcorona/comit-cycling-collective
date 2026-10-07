@@ -8,5 +8,5 @@ export function Footer() {
         <span>Nobody Rides Alone.</span>
       </div>
     </footer>
-  );
+  )
 }

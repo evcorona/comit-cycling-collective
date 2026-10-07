@@ -1,6 +1,6 @@
-import { Header } from "./components/Header";
-import { Footer } from "./components/Footer";
-import { EmergencyPage } from "./features/emergency/presentation/EmergencyPage";
+import { Header } from '@/components/Header'
+import { Footer } from '@/components/Footer'
+import { EmergencyPage } from '@/features/emergency/presentation/EmergencyPage'
 export default function App() {
   return (
     <>
@@ -8,5 +8,5 @@ export default function App() {
       <EmergencyPage />
       <Footer />
     </>
-  );
+  )
 }

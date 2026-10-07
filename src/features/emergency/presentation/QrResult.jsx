@@ -1,4 +1,4 @@
-import { QrCode, Download, Check, WifiOff } from "lucide-react";
+import { QrCode, Download, Check, WifiOff } from 'lucide-react'
 export function QrResult({ result, download, downloaded }) {
   return (
     <section
@@ -9,9 +9,9 @@ export function QrResult({ result, download, downloaded }) {
       <div className="flex items-center justify-between border-b border-stone-100 px-6 py-5">
         <h3 className="font-bold text-black">Tu QR de emergencia</h3>
         <span
-          className={`rounded-full px-2.5 py-1 text-[10px] font-semibold ${result ? "bg-pink/10 text-black" : "bg-cream text-muted"}`}
+          className={`rounded-full px-2.5 py-1 text-[10px] font-semibold ${result ? 'bg-pink/10 text-black' : 'bg-cream text-muted'}`}
         >
-          {result ? "Listo para llevar" : "Vista previa"}
+          {result ? 'Listo para llevar' : 'Vista previa'}
         </span>
       </div>
       <div className="px-6 py-7 text-center">
@@ -38,7 +38,7 @@ export function QrResult({ result, download, downloaded }) {
                   <Check size={13} /> Descarga iniciada
                 </>
               ) : (
-                "Imagen de alta resolucion · 1200 × 1200 px"
+                'Imagen de alta resolucion · 1200 × 1200 px'
               )}
             </p>
             <details className="mt-5 text-left">
@@ -53,7 +53,11 @@ export function QrResult({ result, download, downloaded }) {
         ) : (
           <>
             <div className="qr-placeholder mx-auto flex h-48 w-48 items-center justify-center rounded-xl border border-dashed border-stone-300 bg-cream">
-              <QrCode size={110} strokeWidth={1} className="text-stone-300" />
+              <QrCode
+                size={110}
+                strokeWidth={1}
+                className="text-stone-300"
+              />
             </div>
             <h4 className="mt-6 text-sm font-semibold text-black">
               Tu QR aparecera aqui.
@@ -77,5 +81,5 @@ export function QrResult({ result, download, downloaded }) {
         </div>
       </div>
     </section>
-  );
+  )
 }

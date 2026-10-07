@@ -1,9 +1,9 @@
-import { useEmergencyForm } from "./useEmergencyForm";
-import { EmergencyForm } from "./EmergencyForm";
-import { QrResult } from "./QrResult";
-import { PrivacyNotice } from "./PrivacyNotice";
+import { useEmergencyForm } from '@/features/emergency/presentation/useEmergencyForm'
+import { EmergencyForm } from '@/features/emergency/presentation/EmergencyForm'
+import { QrResult } from '@/features/emergency/presentation/QrResult'
+import { PrivacyNotice } from '@/features/emergency/presentation/PrivacyNotice'
 export function EmergencyPage() {
-  const form = useEmergencyForm();
+  const form = useEmergencyForm()
   return (
     <main>
       <section
@@ -31,5 +31,5 @@ export function EmergencyPage() {
         </div>
       </section>
     </main>
-  );
+  )
 }
