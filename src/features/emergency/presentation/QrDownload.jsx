@@ -134,7 +134,7 @@ export function QrDownload({ qrBySize }) {
         </div>
       </fieldset>
       <details className="qr-controls min-w-0 border-t border-black/10 pt-3">
-        <summary className="min-h-11 cursor-pointer py-3 text-sm font-semibold">
+        <summary className="flex min-h-11 w-full cursor-pointer items-center justify-between gap-3 py-3 text-sm font-semibold">
           {texts.export.qrDataTitle}
         </summary>
         <pre className="mt-2 whitespace-pre-wrap break-words rounded-xl bg-cream p-3 font-sans text-sm leading-6 [overflow-wrap:anywhere]">
