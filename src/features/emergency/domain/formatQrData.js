@@ -2,7 +2,7 @@ import texts from '@/locales/es.json'
 import { emergencyFields } from '@/features/emergency/domain/constants/fields'
 import { QR_CONTENT_ROWS } from '@/features/emergency/domain/constants/qr'
 import { stripDiacritics } from '@/shared/stripDiacritics'
-export function formatQrData(data) {
+export function formatQrData(data, { includeMedicalNotice = true } = {}) {
   const lines = QR_CONTENT_ROWS.map(({ label, fields }) => {
     const values = fields
       .map((name) => {
@@ -15,7 +15,8 @@ export function formatQrData(data) {
       ? `${texts.qr.fields[label]}: ${values.join(' ')}`
       : null
   }).filter(Boolean)
-  if (!data.conditions?.trim()) lines.push(texts.qr.noMedicalData)
+  if (includeMedicalNotice && !data.conditions?.trim())
+    lines.push(texts.qr.noMedicalData)
   return {
     id: 'emergencia',
     title: texts.qr.titles.emergency,

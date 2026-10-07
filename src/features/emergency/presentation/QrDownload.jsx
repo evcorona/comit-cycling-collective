@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Check, Download } from 'lucide-react'
 import texts from '@/locales/es.json'
-import { QR_PHYSICAL_SIZES } from '@/lib/qr/constants'
 import { getQrPrintAnalysis } from '@/lib/qr/getQrPrintAnalysis'
 import { QRCodeGenerator } from '@/components/qr/QRCodeGenerator'
 import {
@@ -10,10 +9,9 @@ import {
 } from '@/features/emergency/infrastructure/exportQr'
 import { downloadImage } from '@/shared/downloadImage'
 
-export function QrDownload({ qr }) {
-  const [size, setSize] = useState(
-    Math.max(3, qr.recommendedCm ?? QR_PHYSICAL_SIZES.at(-1)),
-  )
+export function QrDownload({ qrBySize }) {
+  const [size, setSize] = useState(3)
+  const qr = qrBySize[size]
   const [isExporting, setIsExporting] = useState(false)
   const [error, setError] = useState('')
   const [downloaded, setDownloaded] = useState(false)
@@ -40,6 +38,35 @@ export function QrDownload({ qr }) {
         showDiagnostics
         title={qr.title}
       />
+      <div className="qr-controls space-y-2 rounded-xl bg-cream p-3 text-sm leading-6">
+        <p>{texts.export.priority}</p>
+        <p
+          role="status"
+          aria-live="polite"
+        >
+          {texts.export.basicIncluded}
+          {qr.included
+            .map((field) => ` ${texts.fields[field].label}.`)
+            .join('')}
+        </p>
+        {qr.omitted.length > 0 && (
+          <p className="font-semibold">
+            {texts.export.omitted.replace(
+              '{fields}',
+              qr.omitted.map((field) => texts.fields[field].label).join(', '),
+            )}
+          </p>
+        )}
+        <p>{texts.export.summarize}</p>
+      </div>
+      <details className="qr-controls border-t border-black/10 pt-3">
+        <summary className="flex min-h-11 cursor-pointer items-center text-sm font-semibold">
+          {texts.export.reviewQr}
+        </summary>
+        <pre className="mt-2 whitespace-pre-wrap break-words rounded-lg bg-cream p-3 font-sans text-sm leading-6">
+          {qr.text}
+        </pre>
+      </details>
       <fieldset
         className="qr-controls"
         disabled={isExporting}
@@ -61,8 +88,8 @@ export function QrDownload({ qr }) {
         <input
           id="qr-size"
           type="range"
-          min={QR_PHYSICAL_SIZES[0]}
-          max={QR_PHYSICAL_SIZES.at(-1)}
+          min={3}
+          max={6}
           step="1"
           value={size}
           className="size-slider mt-2"
