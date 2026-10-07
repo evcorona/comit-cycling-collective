@@ -133,20 +133,14 @@ export function QrDownload({ qrBySize }) {
           ))}
         </div>
       </fieldset>
-      <section
-        className="qr-controls min-w-0 border-t border-black/10 pt-4"
-        aria-labelledby="qr-data-title"
-      >
-        <h3
-          id="qr-data-title"
-          className="text-sm font-semibold"
-        >
+      <details className="qr-controls min-w-0 border-t border-black/10 pt-3">
+        <summary className="min-h-11 cursor-pointer py-3 text-sm font-semibold">
           {texts.export.qrDataTitle}
-        </h3>
+        </summary>
         <pre className="mt-2 whitespace-pre-wrap break-words rounded-xl bg-cream p-3 font-sans text-sm leading-6 [overflow-wrap:anywhere]">
           {qr.text}
         </pre>
-      </section>
+      </details>
       {downloaded && (
         <p
           role="status"
