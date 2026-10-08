@@ -20,20 +20,29 @@ import {
 
 function drawFace(
   context,
-  { width, height, logo, title, layout, noMedicalData },
+  { width, height, logo, layout, logoBox, noMedicalData },
 ) {
   const { padding, bodyTop } = CARD_STYLE
   context.textBaseline = 'top'
   context.fillStyle = '#ffffff'
   context.fillRect(0, 0, width, height)
   context.fillStyle = '#000000'
-  context.fillRect(0, 0, width, 110)
-  context.drawImage(logo, padding, 10, 90, 90)
-  context.fillStyle = '#ffffff'
-  context.font = 'bold 32px Arial'
-  context.fillText(title, 155, 26)
-  context.font = 'italic 21px Arial'
-  context.fillText(texts.header.motto, 155, 70)
+  context.font = 'bold 48px Arial'
+  context.fillText(texts.card.title, padding, 14)
+  context.font = 'bold 34px Arial'
+  context.fillText(texts.header.motto, padding, 66)
+  context.fillStyle = '#E5295D'
+  context.fillRect(padding, 108, width - padding * 2, 2)
+  if (logoBox) {
+    const size = Math.min(logoBox.width, logoBox.height)
+    context.drawImage(
+      logo,
+      logoBox.x + (logoBox.width - size) / 2,
+      logoBox.y + (logoBox.height - size) / 2,
+      size,
+      size,
+    )
+  }
   const end = drawCardLayout(context, layout, padding, bodyTop)
   if (noMedicalData) {
     context.fillStyle = '#000000'
@@ -43,8 +52,10 @@ function drawFace(
   context.fillStyle = '#E5295D'
   context.fillRect(padding, height - 48, width - padding * 2, 2)
   context.fillStyle = '#000000'
-  context.font = '16px Arial'
-  context.fillText(texts.card.footer, padding, height - 32)
+  context.font = 'bold 30px Arial'
+  context.textAlign = 'center'
+  context.fillText(texts.card.footer, width / 2, height - 38)
+  context.textAlign = 'left'
 }
 
 export async function exportEmergencyCard(result) {
@@ -66,13 +77,37 @@ export async function exportEmergencyCard(result) {
     ? Math.ceil(CARD_STYLE.noticeFontSize * CARD_STYLE.lineHeightFactor) +
       CARD_STYLE.rowGap
     : 0
-  const front = createCardLayout(
-    context,
-    result.data,
-    CARD_FRONT_ROWS,
-    bodyWidth,
-    bodyHeight,
-  )
+  let front
+  let logoBox = {
+    x: faceWidth - CARD_STYLE.padding - 260,
+    y: CARD_STYLE.bodyTop,
+    width: 260,
+    height: bodyHeight,
+  }
+  try {
+    front = createCardLayout(
+      context,
+      result.data,
+      CARD_FRONT_ROWS,
+      bodyWidth - logoBox.width - CARD_STYLE.columnGap,
+      bodyHeight,
+    )
+  } catch {
+    // Long names get the full body width instead of shrinking readable type.
+    front = createCardLayout(
+      context,
+      result.data,
+      CARD_FRONT_ROWS,
+      bodyWidth,
+      bodyHeight,
+    )
+    logoBox = {
+      x: faceWidth - CARD_STYLE.padding - 100,
+      y: 4,
+      width: 100,
+      height: 100,
+    }
+  }
   const back = createCardLayout(
     context,
     result.data,
@@ -81,14 +116,13 @@ export async function exportEmergencyCard(result) {
     bodyHeight - noticeSpace,
   )
   const common = { width: faceWidth, height: faceHeight, logo }
-  drawFace(context, { ...common, title: texts.card.title, layout: front })
+  drawFace(context, { ...common, layout: front, logoBox })
   context.save()
   // Rotate the lower face so both sides are upright after folding back-to-back.
   context.translate(faceWidth, canvas.height)
   context.rotate(Math.PI)
   drawFace(context, {
     ...common,
-    title: texts.card.medicalTitle,
     layout: back,
     noMedicalData,
   })

@@ -12,7 +12,7 @@ export function createCardLayout(context, data, rows, width, availableHeight) {
           label:
             label === 'affiliation'
               ? getAffiliationLabels(data.insurer).label
-              : texts.fields[label].label,
+              : (texts.card.labels[label] ?? texts.fields[label].label),
           values: fields
             .map((name) => formatCardValue(name, data[name]))
             .filter(Boolean),
@@ -30,19 +30,28 @@ export function createCardLayout(context, data, rows, width, availableHeight) {
     const layout = populated.map((row) => {
       const cellWidth =
         (width - CARD_STYLE.columnGap * (row.length - 1)) / row.length
-      const cells = row.map(({ label, values }) => ({
-        label,
-        width: cellWidth,
-        lines: values.flatMap((value) =>
-          wrapCanvasText(context, value, cellWidth),
-        ),
-      }))
+      const cells = row.map(({ label, values }) => {
+        context.font = `bold ${CARD_STYLE.labelHeight}px Arial`
+        const labelLines = wrapCanvasText(context, label, cellWidth)
+        context.font = `${fontSize}px Arial`
+        return {
+          labelLines,
+          width: cellWidth,
+          lines: values.flatMap((value) =>
+            wrapCanvasText(context, value, cellWidth),
+          ),
+        }
+      })
       return {
         cells,
-        height:
-          CARD_STYLE.labelHeight +
-          CARD_STYLE.labelGap +
-          Math.max(...cells.map(({ lines }) => lines.length)) * lineHeight,
+        height: Math.max(
+          ...cells.map(
+            ({ labelLines, lines }) =>
+              labelLines.length * CARD_STYLE.labelHeight +
+              CARD_STYLE.labelGap +
+              lines.length * lineHeight,
+          ),
+        ),
       }
     })
     const height =
@@ -50,16 +59,18 @@ export function createCardLayout(context, data, rows, width, availableHeight) {
       Math.max(0, layout.length - 1) * CARD_STYLE.rowGap
     if (height <= availableHeight) return { rows: layout, fontSize, lineHeight }
   }
-  throw new Error('Card capacity exceeded')
+  throw new RangeError('Card capacity exceeded')
 }
 
 export function drawCardLayout(context, layout, x, y) {
   for (const row of layout.rows) {
     let left = x
     for (const cell of row.cells) {
-      context.fillStyle = '#E5295D'
-      context.font = 'bold 18px Arial'
-      context.fillText(cell.label, left, y)
+      context.fillStyle = '#000000'
+      context.font = `bold ${CARD_STYLE.labelHeight}px Arial`
+      cell.labelLines.forEach((line, index) =>
+        context.fillText(line, left, y + index * CARD_STYLE.labelHeight),
+      )
       context.fillStyle = '#000000'
       context.font = `${layout.fontSize}px Arial`
       cell.lines.forEach((line, index) =>
@@ -67,7 +78,7 @@ export function drawCardLayout(context, layout, x, y) {
           line,
           left,
           y +
-            CARD_STYLE.labelHeight +
+            cell.labelLines.length * CARD_STYLE.labelHeight +
             CARD_STYLE.labelGap +
             index * layout.lineHeight,
         ),

@@ -24,8 +24,13 @@ export function CardDownload({ result }) {
         url = URL.createObjectURL(blob)
         setImage({ blob, url })
       })
-      .catch(() => {
-        if (!cancelled) setError(texts.card.error)
+      .catch((error) => {
+        if (!cancelled)
+          setError(
+            error instanceof RangeError
+              ? texts.card.capacityError
+              : texts.card.error,
+          )
       })
     return () => {
       cancelled = true

@@ -182,15 +182,19 @@ orientado al plegar por la línea central. Imprimir al tamaño original, recorta
 el borde y doblar antes de enmicar.
 
 El frente muestra nombre, nacimiento, sangre y contactos. El reverso contiene
-nombre, condiciones médicas, aseguradora, nivel o plan, póliza y notas. El
-seguro es opcional y nunca se incluye en el QR. Sus límites son 30 caracteres
-para aseguradora y 24 para plan y póliza; se aplica la máscara ASCII y Zod. Los
+condiciones médicas, aseguradora, nivel o plan, póliza y notas. El seguro es
+opcional y nunca se incluye en el QR. Sus límites son 30 caracteres para
+aseguradora y 24 para plan y póliza; se aplica la máscara ASCII y Zod. Los
 teléfonos se muestran como 55-1234-5678 en la tarjeta y solo dígitos en el QR.
-Las líneas y tipografía se ajustan sin recortar datos; si el contenido no cabe
-con la tipografía mínima, se solicita resumirlo. Ambas caras llevan el logo y
-`Comit Cycling Collective`. Las etiquetas conservan sus acentos. La vista previa
-muestra la pieza de cerca; la descarga la coloca en una hoja carta, manteniendo
-sus medidas.
+Las caras usan fondo blanco y texto negro, con encabezado, lema y pie en
+negrita. El logo grande ocupa una columna del frente; con nombres largos pasa al
+encabezado para dejar todo el ancho a los datos. Los valores mantienen un mínimo
+de 38 píxeles a 300 ppp (aproximadamente 9 puntos). Las etiquetas también se
+ajustan en varias líneas cuando es necesario. Si el contenido supera el espacio
+disponible, se solicita resumirlo en lugar de reducir la legibilidad. Ambas
+caras llevan el logo y `Comit Cycling Collective`. Las etiquetas conservan sus
+acentos. La vista previa muestra la pieza de cerca; la descarga la coloca en una
+hoja carta, manteniendo sus medidas.
 
 El botón «Descargar plantilla PDF» genera cuatro tarjetas en una sola hoja
 carta, distribuidas en dos columnas y dos filas. Cada pieza conserva sus 8.56 ×

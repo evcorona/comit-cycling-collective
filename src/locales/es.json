@@ -194,7 +194,20 @@
     "noMedicalData": "Sin información médica registrada.",
     "fold": "Dobla por la línea",
     "imageAlt": "Vista previa de la tarjeta plegable, frente y reverso",
-    "retry": "Volver a intentar"
+    "retry": "Volver a intentar",
+    "labels": {
+      "name": "Nombre completo",
+      "birthDate": "Nacimiento",
+      "bloodType": "Sangre",
+      "contact": "Contacto de emergencia 1",
+      "contact2": "Contacto de emergencia 2",
+      "conditions": "Información médica",
+      "insurer": "Institución",
+      "insurancePlan": "Plan",
+      "policy": "Póliza",
+      "notes": "Notas"
+    },
+    "capacityError": "Resume los nombres o la información para mantener la tarjeta legible."
   },
   "sections": {
     "personal": "Tus datos",

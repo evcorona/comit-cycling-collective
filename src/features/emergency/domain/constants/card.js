@@ -11,26 +11,25 @@ export const CARD_FRONT_ROWS = [
   [{ label: 'contact2', fields: ['contact2', 'phone2'] }],
 ]
 export const CARD_BACK_ROWS = [
-  [{ label: 'name', fields: ['name'] }],
   ...medicalFieldNames.map((name) => [{ label: name, fields: [name] }]),
-  [{ label: 'insurer', fields: ['insurer'] }],
   [
+    { label: 'insurer', fields: ['insurer'] },
     { label: 'insurancePlan', fields: ['insurancePlan'] },
     { label: 'policy', fields: ['policy'] },
+    { label: 'affiliation', fields: ['affiliation'] },
   ],
-  [{ label: 'affiliation', fields: ['affiliation'] }],
   [{ label: 'notes', fields: ['notes'] }],
 ]
 export const CARD_STYLE = {
-  padding: 40,
-  bodyTop: 138,
-  bottomSpace: 64,
-  labelHeight: 22,
-  labelGap: 6,
-  rowGap: 10,
+  padding: 36,
+  bodyTop: 120,
+  bottomSpace: 54,
+  labelHeight: 30,
+  labelGap: 4,
+  rowGap: 5,
   columnGap: 24,
-  minFontSize: 18,
-  maxFontSize: 32,
-  noticeFontSize: 24,
-  lineHeightFactor: 1.25,
+  minFontSize: 38,
+  maxFontSize: 40,
+  noticeFontSize: 38,
+  lineHeightFactor: 1.12,
 }
