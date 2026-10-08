@@ -41,7 +41,7 @@
     "addContact": "Agregar otro contacto",
     "counter": "{count}/{limit} caracteres",
     "conciseHint": "Resume tus datos: menos texto facilita encontrar lo importante y mejora la lectura del QR.",
-    "insuranceHint": "Indicar tu seguro o institución de salud ayuda a identificar tu cobertura. Estos datos aparecen solo en la tarjeta.",
+    "insuranceHint": "Indicar tu seguro o institución de salud ayuda a identificar tu cobertura. Su nombre puede aparecer en el QR; los demás datos del seguro aparecen solo en la tarjeta.",
     "notesHint": "Escribe una indicación breve y relevante para una emergencia que no hayas incluido en los otros campos.",
     "addInsurance": "Agregar seguro médico"
   },
@@ -140,7 +140,8 @@
       "contact": "CONTACTO-1",
       "contact2": "CONTACTO-2",
       "conditions": "INFO-MEDICA",
-      "notes": "NOTAS"
+      "notes": "NOTAS",
+      "insurer": "SEGURO"
     },
     "noMedicalData": "Sin datos medicos registrados"
   },

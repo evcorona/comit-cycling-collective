@@ -8,6 +8,7 @@ export function formatQrData(data, { includeMedicalNotice = true } = {}) {
       .map((name) => {
         const value = data[name]?.trim() || ''
         const field = emergencyFields.find((item) => item.name === name)
+        if (name === 'birthDate') return value.split('-')[0]
         return field.type === 'tel' ? value.replace(/\D/g, '') : value
       })
       .filter(Boolean)

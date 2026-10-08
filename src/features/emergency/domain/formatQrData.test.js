@@ -13,17 +13,21 @@ describe('compact emergency QR labels', () => {
     contact2: 'SOFIA',
     phone2: '55-9876-5432',
     conditions: 'ALERGIA: PENICILINA',
+    insurer: 'IMSS',
+    policy: 'SOLO-TARJETA',
+    affiliation: 'AFILIACION-PRIVADA',
     notes: 'AVISAR A MI FAMILIA',
   }
   it('groups each contact on one line and includes all requested headings', () => {
     expect(formatQrData(data).text).toBe(
       [
         'NOMBRE: ANA',
-        'NACIMIENTO: 1990-05-12',
-        'SANGRE: O+',
         'CONTACTO-1: LUIS 5512345678',
-        'CONTACTO-2: SOFIA 5598765432',
+        'SANGRE: O+',
+        'NACIMIENTO: 1990',
         'INFO-MEDICA: ALERGIA: PENICILINA',
+        'SEGURO: IMSS',
+        'CONTACTO-2: SOFIA 5598765432',
         'NOTAS: AVISAR A MI FAMILIA',
         'EMERGENCIA',
       ].join('\n'),

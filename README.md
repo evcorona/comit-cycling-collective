@@ -81,13 +81,14 @@ Limpiar elimina los valores y vuelve a cerrar estos campos.
 
 ## QR de emergencia
 
-Un solo QR contiene nombre, nacimiento, sangre, contactos, condiciones médicas y
-notas. El texto termina con `EMERGENCIA`, está en mayúsculas y no depende de
-URLs, servicios externos ni almacenamiento. Las etiquetas son breves (`NOMBRE`,
-`NACIMIENTO`, `SANGRE`, `CONTACTO-1`, `CONTACTO-2`, `INFO-MEDICA`, `NOTAS`).
-Cada contacto reúne nombre y teléfono en una línea, separados por un espacio. La
-revisión muestra exactamente el texto que se codifica. Si no hay información
-médica, se indica explícitamente.
+Un solo QR puede contener nombre, año de nacimiento, sangre, contactos,
+condiciones médicas, aseguradora o institución y notas. El texto termina con
+`EMERGENCIA`, está en mayúsculas y no depende de URLs, servicios externos ni
+almacenamiento. Las etiquetas son breves (`NOMBRE`, `NACIMIENTO`, `SANGRE`,
+`CONTACTO-1`, `CONTACTO-2`, `INFO-MEDICA`, `SEGURO`, `NOTAS`). Cada contacto
+reúne nombre y teléfono en una línea, separados por un espacio. La revisión
+muestra exactamente el texto que se codifica. Si no hay información médica, se
+indica explícitamente.
 
 El campo de condiciones médicas permite incluir alergias, enfermedades y
 medicamentos y tiene un límite de 100 caracteres. Notas tiene 80 caracteres.
@@ -131,11 +132,14 @@ import { QRCodeGenerator } from '@/components/qr/QRCodeGenerator'
 ## Exportación e impresión
 
 El deslizador de emergencia ofrece tamaños enteros de 3 a 6 cm y parte de 3 cm.
-En todos los tamaños se mantienen los datos básicos y se agrega primero
-información médica y después notas, completas, si el contenido está dentro de la
-recomendación del modo detectado y su matriz cabe. No se salta una prioridad
-para incluir la siguiente. La vista previa y las descargas usan el mismo
-contenido seleccionado. La tarjeta conserva todos los datos. Si los datos
+En todos los tamaños se mantienen nombre y primer contacto con teléfono. Los
+bloques adicionales se agregan completos en este orden: sangre y año de
+nacimiento, información médica, aseguradora o institución, segundo contacto con
+teléfono y notas. Solo se agregan cuando el contenido está dentro de la
+recomendación del modo detectado y su matriz cabe. El nacimiento completo
+permanece en la tarjeta; el QR utiliza únicamente el año. No se salta una
+prioridad para incluir la siguiente. La vista previa y las descargas usan el
+mismo contenido seleccionado. La tarjeta conserva todos los datos. Si los datos
 básicos no cumplen la recomendación o no caben, se bloquea la descarga y se pide
 resumir; no se recortan automáticamente. La página muestra siempre los datos
 incluidos en el QR, sin detalles técnicos, junto con una explicación breve y la
@@ -183,18 +187,19 @@ el borde y doblar antes de enmicar.
 
 El frente muestra nombre, nacimiento, sangre y contactos. El reverso contiene
 condiciones médicas, aseguradora, nivel o plan, póliza y notas. El seguro es
-opcional y nunca se incluye en el QR. Sus límites son 30 caracteres para
-aseguradora y 24 para plan y póliza; se aplica la máscara ASCII y Zod. Los
-teléfonos se muestran como 55-1234-5678 en la tarjeta y solo dígitos en el QR.
-Las caras usan fondo blanco y texto negro, con encabezado, lema y pie en
-negrita. El logo grande ocupa una columna del frente; con nombres largos pasa al
-encabezado para dejar todo el ancho a los datos. Los valores mantienen un mínimo
-de 38 píxeles a 300 ppp (aproximadamente 9 puntos). Las etiquetas también se
-ajustan en varias líneas cuando es necesario. Si el contenido supera el espacio
-disponible, se solicita resumirlo en lugar de reducir la legibilidad. Ambas
-caras llevan el logo y `Comit Cycling Collective`. Las etiquetas conservan sus
-acentos. La vista previa muestra la pieza de cerca; la descarga la coloca en una
-hoja carta, manteniendo sus medidas.
+opcional; su nombre puede incluirse en el QR según su prioridad. El plan, la
+póliza y el número de afiliación se conservan solo en la tarjeta. Sus límites
+son 30 caracteres para aseguradora y 24 para plan y póliza; se aplica la máscara
+ASCII y Zod. Los teléfonos se muestran como 55-1234-5678 en la tarjeta y solo
+dígitos en el QR. Las caras usan fondo blanco y texto negro, con encabezado,
+lema y pie en negrita. El logo grande ocupa una columna del frente; con nombres
+largos pasa al encabezado para dejar todo el ancho a los datos. Los valores
+mantienen un mínimo de 38 píxeles a 300 ppp (aproximadamente 9 puntos). Las
+etiquetas también se ajustan en varias líneas cuando es necesario. Si el
+contenido supera el espacio disponible, se solicita resumirlo en lugar de
+reducir la legibilidad. Ambas caras llevan el logo y `Comit Cycling Collective`.
+Las etiquetas conservan sus acentos. La vista previa muestra la pieza de cerca;
+la descarga la coloca en una hoja carta, manteniendo sus medidas.
 
 El botón «Descargar plantilla PDF» genera cuatro tarjetas en una sola hoja
 carta, distribuidas en dos columnas y dos filas. Cada pieza conserva sus 8.56 ×
@@ -237,7 +242,8 @@ Al elegir una institución pública se ocultan plan y póliza y se limpian sus
 valores. La misma regla se aplica en Zod y antes de generar los resultados para
 evitar que la tarjeta muestre datos ocultos de un seguro anterior. Al volver a
 una aseguradora privada o a una entrada libre, los campos reaparecen vacíos. Los
-datos de seguro siguen apareciendo exclusivamente en la tarjeta.
+datos de plan, póliza y afiliación siguen apareciendo exclusivamente en la
+tarjeta.
 
 Las instituciones públicas muestran un número de afiliación opcional: para IMSS
 se etiqueta «Número de seguro social» y para las demás «Número de afiliación».

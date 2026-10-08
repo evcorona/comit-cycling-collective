@@ -17,11 +17,11 @@ const data = {
   policy: 'ABC-123',
 }
 describe('insurance, card phones and letter-size template', () => {
-  it('preserves insurance in the card data while excluding it from every QR', async () => {
+  it('includes the insurer in QR while keeping plan and policy card-only', async () => {
     const result = await createEmergencyQr(data, createPrintableQr)
     expect(result.data.policy).toBe('ABC-123')
     for (const qr of [result.qr, ...Object.values(result.qrBySize)]) {
-      expect(qr.text).not.toContain('SEGURO TEST')
+      expect(qr.text).toContain('SEGURO: SEGURO TEST')
       expect(qr.text).not.toContain('PLAN TEST')
       expect(qr.text).not.toContain('ABC-123')
       expect(qr.text).toContain('5512345678')
