@@ -1,3 +1,4 @@
+import { InsuranceSection } from '@/features/emergency/presentation/InsuranceSection'
 import { SecondaryContact } from '@/features/emergency/presentation/SecondaryContact'
 import { ExpandableField } from '@/features/emergency/presentation/ExpandableField'
 import texts from '@/locales/es.json'
@@ -19,6 +20,7 @@ const groups = [
 ]
 export function EmergencyForm({
   register,
+  setValue,
   resetVersion,
   control,
   errors,
@@ -60,35 +62,41 @@ export function EmergencyForm({
               </p>
             )}
             {group.title === 'notes' && (
-              <div className="mb-3 rounded-xl bg-cream p-3 text-xs leading-5 text-muted">
-                <p className="font-semibold text-black">
-                  {texts.emergencyForm.notesSuggestionsTitle}
-                </p>
-                <ul className="mt-1 list-disc space-y-1 pl-4">
-                  {texts.emergencyForm.notesSuggestions.map((suggestion) => (
-                    <li key={suggestion}>{suggestion}</li>
-                  ))}
-                </ul>
+              <p className="mb-3 text-xs leading-5 text-muted">
+                {texts.emergencyForm.notesHint}
+              </p>
+            )}
+            {group.title === 'insurance' ? (
+              <InsuranceSection
+                key={resetVersion}
+                control={control}
+                register={register}
+                setValue={setValue}
+                errors={errors}
+                invalidate={invalidate}
+              />
+            ) : (
+              <div className="grid min-w-0 gap-x-4 gap-y-4 sm:grid-cols-2">
+                {group.names.map((name) => {
+                  const field = emergencyFields.find(
+                    (item) => item.name === name,
+                  )
+                  const Component = field.expandable
+                    ? ExpandableField
+                    : EmergencyField
+                  return (
+                    <Component
+                      key={`${name}-${field.expandable ? resetVersion : 0}`}
+                      field={field}
+                      register={register}
+                      control={control}
+                      error={errors[name]}
+                      onChange={invalidate}
+                    />
+                  )
+                })}
               </div>
             )}
-            <div className="grid min-w-0 gap-x-4 gap-y-4 sm:grid-cols-2">
-              {group.names.map((name) => {
-                const field = emergencyFields.find((item) => item.name === name)
-                const Component = field.expandable
-                  ? ExpandableField
-                  : EmergencyField
-                return (
-                  <Component
-                    key={`${name}-${field.expandable ? resetVersion : 0}`}
-                    field={field}
-                    register={register}
-                    control={control}
-                    error={errors[name]}
-                    onChange={invalidate}
-                  />
-                )
-              })}
-            </div>
             {group.title === 'contact' && (
               <div className="mt-3">
                 <SecondaryContact key={resetVersion}>

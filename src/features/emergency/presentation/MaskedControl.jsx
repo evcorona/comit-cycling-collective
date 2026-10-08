@@ -38,7 +38,7 @@ export function MaskedControl({ field, controlled, inputProps, onChange }) {
       autoComplete="off"
       placeholder={field.expandable ? undefined : field.placeholder}
       rows={isMultiline ? 2 : undefined}
-      autoFocus={field.expandable}
+      autoFocus={inputProps.autoFocus ?? field.expandable}
       onAccept={(value) => {
         if (value !== controlled.value) {
           controlled.onChange(value)

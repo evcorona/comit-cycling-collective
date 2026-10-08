@@ -41,12 +41,9 @@
     "addContact": "Agregar otro contacto",
     "counter": "{count}/{limit} caracteres",
     "conciseHint": "Resume tus datos: menos texto facilita encontrar lo importante y mejora la lectura del QR.",
-    "notesSuggestionsTitle": "¿Qué puedes agregar?",
-    "notesSuggestions": [
-      "Idioma o ayuda que necesitas para comunicarte.",
-      "Una indicación breve que no hayas incluido en los otros campos."
-    ],
-    "insuranceHint": "Opcional. Estos datos aparecen solo en la tarjeta."
+    "insuranceHint": "Indicar tu seguro o institución de salud ayuda a identificar tu cobertura. Estos datos aparecen solo en la tarjeta.",
+    "notesHint": "Escribe una indicación breve y relevante para una emergencia que no hayas incluido en los otros campos.",
+    "addInsurance": "Agregar seguro médico"
   },
   "emergencyPage": {
     "description": "Crea tu QR y tarjeta para llevar en cada rodada."
@@ -93,8 +90,8 @@
       "placeholder": "Otros datos útiles para una emergencia."
     },
     "insurer": {
-      "label": "Aseguradora",
-      "placeholder": "Nombre del seguro médico"
+      "label": "Aseguradora o institución",
+      "placeholder": "Nombre de la compañía aseguradora"
     },
     "insurancePlan": {
       "label": "Nivel o plan",
@@ -255,5 +252,106 @@
     "printHint": "Tamaño carta · Imprime al 100 %, sin ajustar. Cada QR incluye los datos que permite su tamaño.",
     "blocked": "Resume los datos básicos para crear la plantilla de todos los tamaños.",
     "error": "No se pudo crear la plantilla. Inténtalo de nuevo."
+  },
+  "healthProviders": {
+    "suggestions": "Aseguradoras e instituciones de salud",
+    "freeEntry": "Busca una sugerencia o escribe el nombre de otra institución o aseguradora.",
+    "noMatches": "Sin sugerencias. Puedes usar el nombre que escribiste.",
+    "types": {
+      "public": "Institución pública",
+      "private": "Aseguradora privada"
+    },
+    "options": [
+      {
+        "value": "IMSS",
+        "label": "IMSS",
+        "type": "public"
+      },
+      {
+        "value": "ISSSTE",
+        "label": "ISSSTE",
+        "type": "public"
+      },
+      {
+        "value": "IMSS BIENESTAR",
+        "label": "IMSS Bienestar",
+        "type": "public"
+      },
+      {
+        "value": "SECRETARIA DE SALUD",
+        "label": "Secretaría de Salud",
+        "type": "public"
+      },
+      {
+        "value": "SERVICIOS ESTATALES DE SALUD",
+        "label": "Servicios estatales de salud",
+        "type": "public"
+      },
+      {
+        "value": "PEMEX",
+        "label": "Servicios médicos de Pemex",
+        "type": "public"
+      },
+      {
+        "value": "SEDENA",
+        "label": "Servicios de salud de Sedena",
+        "type": "public"
+      },
+      {
+        "value": "SEMAR",
+        "label": "Servicios de salud de Semar",
+        "type": "public"
+      },
+      {
+        "value": "GNP",
+        "label": "GNP",
+        "type": "private"
+      },
+      {
+        "value": "AXA",
+        "label": "AXA",
+        "type": "private"
+      },
+      {
+        "value": "METLIFE",
+        "label": "MetLife",
+        "type": "private"
+      },
+      {
+        "value": "MONTERREY",
+        "label": "Monterrey",
+        "type": "private"
+      },
+      {
+        "value": "SEGUROS ATLAS",
+        "label": "Seguros Atlas",
+        "type": "private"
+      },
+      {
+        "value": "MAPFRE",
+        "label": "MAPFRE",
+        "type": "private"
+      },
+      {
+        "value": "BUPA",
+        "label": "Bupa",
+        "type": "private"
+      },
+      {
+        "value": "ALLIANZ",
+        "label": "Allianz",
+        "type": "private"
+      },
+      {
+        "value": "INBURSA",
+        "label": "Inbursa",
+        "type": "private"
+      },
+      {
+        "value": "SEGUROS BANORTE",
+        "label": "Seguros Banorte",
+        "type": "private"
+      }
+    ]
   }
 }

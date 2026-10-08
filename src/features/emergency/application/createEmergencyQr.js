@@ -1,6 +1,8 @@
+import { normalizeInsurance } from '@/features/emergency/domain/normalizeInsurance'
 import { selectEmergencyQr } from '@/features/emergency/application/selectEmergencyQr'
 import { formatQrData } from '@/features/emergency/domain/formatQrData'
 export async function createEmergencyQr(data, encodeQr) {
+  data = normalizeInsurance(data)
   const content = formatQrData(data)
   const qr = { ...content, ...(await encodeQr(content.text)) }
   const qrBySize = {}

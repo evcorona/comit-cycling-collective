@@ -204,6 +204,30 @@ Notas aparece al final del formulario, con ejemplos breves. La ayuda recomienda
 resumir para encontrar lo importante y facilitar la lectura del QR; no promete
 tiempos de atención ni lectura garantizada.
 
+## Autocompletado del seguro
+
+El bloque completo se abre con «Agregar seguro médico». El autocompletado local
+permite selección con teclado o toque y entrada libre. Incluye un listado
+inicial de marcas privadas e instituciones públicas (IMSS, ISSSTE, IMSS
+Bienestar, Secretaría de Salud y servicios estatales, Pemex, Sedena y Semar).
+Los nombres visibles están en `src/locales/es.json`; la clasificación y búsqueda
+viven en `domain/constants/healthProviders.js`. No se envían búsquedas ni datos
+a terceros.
+
+Es una lista de sugerencias mantenida manualmente, no un padrón exhaustivo ni
+una verificación de cobertura. Para revisar su vigencia, consultar CNSF
+(https://www.cnsf.gob.mx/), CONDUSEF (https://www.condusef.gob.mx/), IMSS
+(https://www.imss.gob.mx/), ISSSTE (https://www.gob.mx/issste) e IMSS Bienestar
+(https://www.imssbienestar.gob.mx/). Las consultas oficiales desde el entorno de
+esta implementación devolvieron bloqueo de acceso 403; no se afirma validación
+actualizada de esas fuentes.
+
+Al elegir una institución pública se ocultan plan y póliza y se limpian sus
+valores. La misma regla se aplica en Zod y antes de generar los resultados para
+evitar que la tarjeta muestre datos ocultos de un seguro anterior. Al volver a
+una aseguradora privada o a una entrada libre, los campos reaparecen vacíos. Los
+datos de seguro siguen apareciendo exclusivamente en la tarjeta.
+
 ## Verificación
 
 `pnpm test` ejecuta Vitest con los ejemplos ASCII, acentos, minúsculas, números,

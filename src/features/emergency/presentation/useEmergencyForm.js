@@ -13,6 +13,7 @@ export function useEmergencyForm() {
     handleSubmit,
     reset,
     setFocus,
+    setValue,
     formState: { errors, isSubmitting },
   } = useForm({ defaultValues, resolver: zodResolver(formSchema) })
   const [result, setResult] = useState(null)
@@ -42,6 +43,7 @@ export function useEmergencyForm() {
   return {
     register,
     control,
+    setValue,
     errors,
     isSubmitting,
     result,
