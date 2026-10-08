@@ -4,7 +4,7 @@ import { Download } from 'lucide-react'
 import texts from '@/locales/es.json'
 import { QrLabelPreview } from '@/features/emergency/presentation/QrLabelPreview'
 import {
-  exportQr,
+  exportQrPdf,
   exportQrSvg,
 } from '@/features/emergency/infrastructure/exportQr'
 import { showDownloadToast } from '@/shared/showDownloadToast'
@@ -27,7 +27,7 @@ export function QrDownload({ qrBySize }) {
       const blob =
         format === 'svg'
           ? await exportQrSvg(qr, size)
-          : await exportQr(qr, size)
+          : await exportQrPdf(qr, size)
       downloadImage(blob, `comit-${qr.id}-${size}cm.${format}`)
       showDownloadToast()
     } catch {
@@ -135,7 +135,7 @@ export function QrDownload({ qrBySize }) {
         )}
         <div className="mt-4 grid grid-cols-2 gap-2">
           {[
-            ['png', texts.export.download],
+            ['pdf', texts.export.download],
             ['svg', texts.export.downloadSvg],
           ].map(([format, label]) => (
             <button

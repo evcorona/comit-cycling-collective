@@ -1,4 +1,4 @@
-import { exportImageOnLetter } from '@/shared/exportImageOnLetter'
+import { exportImagePdf } from '@/shared/exportImagePdf'
 import {
   CARD_WIDTH_CM,
   CARD_HEIGHT_CM,
@@ -40,12 +40,12 @@ export function CardDownload({ result }) {
     }
     setIsDownloading(true)
     try {
-      const page = await exportImageOnLetter(
+      const page = await exportImagePdf(
         image.blob,
         CARD_WIDTH_CM,
         CARD_HEIGHT_CM * 2,
       )
-      downloadImage(page, 'comit-tarjeta-carta.png')
+      downloadImage(page, 'comit-tarjeta-carta.pdf')
       showDownloadToast()
     } catch {
       setError(texts.card.error)

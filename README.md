@@ -30,7 +30,7 @@ requiere servidor de datos, credenciales ni variables de entorno.
 Los datos permanecen en el estado de React. No hay base de datos, cookies,
 almacenamiento local, analitica ni peticiones de red con informacion del
 formulario. Recargar, cerrar la pagina o pulsar Limpiar elimina el estado. El QR
-y el PNG descargado contienen los datos en texto; cualquiera que tenga la imagen
+y el PDF descargado contienen los datos en texto; cualquiera que tenga la imagen
 puede leerlos. El boton de descarga genera una imagen localmente, sin servicios
 externos. Los limites de los campos mantienen el QR dentro de su capacidad; se
 recomienda incluir solo informacion breve y util.
@@ -140,7 +140,7 @@ básicos no cumplen la recomendación o no caben, se bloquea la descarga y se pi
 resumir; no se recortan automáticamente. La página muestra siempre los datos
 incluidos en el QR, sin detalles técnicos, junto con una explicación breve y la
 recomendación de resumir o aumentar el tamaño cuando se omiten campos. Las
-descargas se llaman PNG y SVG. El componente QR genérico conserva su API de 1 a
+descargas se llaman PDF y SVG. El componente QR genérico conserva su API de 1 a
 6 cm y sus diagnósticos opcionales para otros usos. El contenido se clasifica
 como `optimal`, `warning` u `over-limit` con los presupuestos del modo
 detectado; el mínimo físico se comprueba además con la matriz real y una guía
@@ -152,17 +152,17 @@ guía, incluso un QR pequeño puede necesitar más de 1 cm aunque cumpla el
 presupuesto de bytes. Por encima del rango soportado, se pide resumir el texto;
 no se recorta automáticamente.
 
-PNG y SVG exportan la misma etiqueta con logo `public/comit_words.png`, QR sin
+PDF y SVG exportan la misma etiqueta con logo `public/comit_words.png`, QR sin
 leyenda y borde punteado redondeado. Los 3–6 cm elegidos corresponden al QR; el
 logo y el borde amplían la imagen exportada. La capacidad vuelve a usar la
 recomendación y matriz real del QR a su tamaño original, sin restar espacio por
 el logo. Se reservan franjas simétricas para centrar el QR horizontal y
 verticalmente dentro del borde. Los módulos se rasterizan en píxeles enteros con
 el mismo margen blanco de lectura. La vista previa usa el mismo SVG que se
-descarga. El logo queda incrustado en el SVG. El PNG individual se coloca a 1 cm
-del borde superior e izquierdo de una imagen carta de 2550 × 3300 px con
-metadatos pHYs a 300 ppp, para que al imprimir al 100 % conserve las medidas
-originales. Toastify JS confirma la descarga de QR o tarjeta.
+descarga. El logo queda incrustado en el SVG. El PDF individual contiene una
+página carta y coloca la etiqueta a 1 cm de arriba y de la izquierda,
+conservando las medidas al imprimir al 100 %. Toastify JS confirma la descarga
+de QR o tarjeta.
 
 La vista en pantalla es una previsualización adaptable de hasta 320 px para la
 etiqueta. La clase `qr-print` mantiene el tamaño físico seleccionado con
@@ -176,11 +176,10 @@ sustituyen esa comprobación.
 
 La pieza plegable de 8.56 × 10.8 cm contiene ambas caras sin QR y un borde
 punteado exterior de corte, además de la línea central de doblez. Su descarga
-PNG se coloca a 1 cm de los bordes superior e izquierdo en una hoja carta de
-2550 × 3300 px, a 300 ppp. Cada mitad mide 8.56 × 5.4 cm (1011 × 638 píxeles).
-El reverso está girado 180° para quedar orientado al plegar por la línea
-central. Imprimir al tamaño original, recortar el borde y doblar antes de
-enmicar.
+PDF se coloca a 1 cm de arriba y de la izquierda en una página carta. Cada mitad
+mide 8.56 × 5.4 cm (1011 × 638 píxeles). El reverso está girado 180° para quedar
+orientado al plegar por la línea central. Imprimir al tamaño original, recortar
+el borde y doblar antes de enmicar.
 
 El frente muestra nombre, nacimiento, sangre y contactos. El reverso contiene
 nombre, condiciones médicas, aseguradora, nivel o plan, póliza y notas. El
@@ -195,7 +194,7 @@ sus medidas.
 
 ## Plantilla carta de QR
 
-El botón debajo de PNG/SVG crea un PDF de una sola página carta. Contiene 15
+El botón debajo de PDF/SVG crea un PDF de una sola página carta. Contiene 15
 etiquetas: ocho QR de 3 cm, tres de 4 cm, dos de 5 cm y dos de 6 cm. Cada tamaño
 usa su propio contenido seleccionado, logo y borde punteado. La distribución
 comprueba límites de página y no superpone piezas. Si los datos básicos no
@@ -235,7 +234,7 @@ se etiqueta «Número de seguro social» y para las demás «Número de afiliaci
 Admite texto ASCII libre en mayúsculas, hasta 32 caracteres, sin exigir 11
 dígitos. El número aparece solo en la tarjeta y se borra al cambiar de
 institución o volver a una aseguradora privada. El QR y la tarjeta descargados
-en PNG conservan sus medidas dentro de una hoja carta, a 1 cm de arriba y de la
+en PDF conservan sus medidas dentro de una hoja carta, a 1 cm de arriba y de la
 izquierda.
 
 ## Verificación
@@ -273,3 +272,9 @@ enlaces para llamar.
 - Reemplazados: `MedicalField.jsx` por `ExpandableField.jsx` y `qrImage.js` por
   `createPrintableQr.js`. Eliminado `domain/formatEmergencyData.js`: la revisión
   ahora usa directamente el único contenido QR, sin un segundo formateador.
+
+Las descargas individuales de QR y tarjeta son PDF de una página carta;
+conservan las medidas de cada pieza y su ubicación a 1 cm de arriba y de la
+izquierda. Los PNG se usan internamente para la vista previa y para incrustar
+las piezas en el PDF. El SVG del QR y la plantilla PDF múltiple siguen
+disponibles.

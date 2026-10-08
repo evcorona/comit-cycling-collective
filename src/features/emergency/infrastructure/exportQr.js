@@ -1,4 +1,4 @@
-import { exportImageOnLetter } from '@/shared/exportImageOnLetter'
+import { exportImagePdf } from '@/shared/exportImagePdf'
 import { qrLabelSvg } from '@/features/emergency/infrastructure/qrLabelSvg'
 import { analyzeQrLabel } from '@/features/emergency/domain/analyzeQrLabel'
 import { svgImageSource } from '@/lib/qr/svg'
@@ -28,9 +28,9 @@ export async function exportQrLabelImage(qr, sizeCm) {
   return withPngResolution(canvas.toDataURL('image/png'), PRINT_DPI)
 }
 
-export async function exportQr(qr, sizeCm) {
+export async function exportQrPdf(qr, sizeCm) {
   const layout = analyzeQrLabel(qr.text, sizeCm, qr.totalModules)
-  return exportImageOnLetter(
+  return exportImagePdf(
     await exportQrLabelImage(qr, sizeCm),
     layout.sizeCm,
     layout.sizeCm,

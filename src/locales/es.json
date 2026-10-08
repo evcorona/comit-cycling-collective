@@ -145,7 +145,7 @@
     "noMedicalData": "Sin datos medicos registrados"
   },
   "export": {
-    "download": "PNG",
+    "download": "PDF",
     "size": "Tamaño del QR",
     "labelSizeHint": "El logo y el borde ocupan espacio adicional al tamaño del QR.",
     "sizeHint": "Para facilitar la lectura, el QR solo incluye la información adecuada para el tamaño elegido.",
@@ -184,7 +184,7 @@
     "title": "Tarjeta de emergencia",
     "description": "Toda tu información escrita, sin QR, en una sola imagen plegable.",
     "size": "Tarjeta: 8.56 × 10.8 cm · Doblada: 8.56 × 5.4 cm",
-    "download": "Descargar tarjeta",
+    "download": "Descargar tarjeta PDF",
     "error": "No pudimos crear la tarjeta. Vuelve a intentarlo o reduce la cantidad de texto.",
     "footer": "Comit Cycling Collective",
     "printHint": "Imprime en tamaño carta al 100 %, sin ajustar. Recorta y dobla por la línea central; después enmica.",
