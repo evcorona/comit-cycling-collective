@@ -16,3 +16,15 @@ export function filterHealthProviders(value) {
     sanitizeEmergencyText(item.label).includes(query),
   )
 }
+
+export function getAffiliationLabels(insurer) {
+  return sanitizeEmergencyText(insurer)
+    .replace(/[-\s]+/g, ' ')
+    .trim()
+    .startsWith('IMSS')
+    ? {
+        label: texts.fields.affiliation.nssLabel,
+        placeholder: texts.fields.affiliation.nssPlaceholder,
+      }
+    : texts.fields.affiliation
+}

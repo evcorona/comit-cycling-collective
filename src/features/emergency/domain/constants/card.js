@@ -18,6 +18,7 @@ export const CARD_BACK_ROWS = [
     { label: 'insurancePlan', fields: ['insurancePlan'] },
     { label: 'policy', fields: ['policy'] },
   ],
+  [{ label: 'affiliation', fields: ['affiliation'] }],
   [{ label: 'notes', fields: ['notes'] }],
 ]
 export const CARD_STYLE = {

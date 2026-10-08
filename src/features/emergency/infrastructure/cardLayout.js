@@ -1,3 +1,4 @@
+import { getAffiliationLabels } from '@/features/emergency/domain/constants/healthProviders'
 import { formatCardValue } from '@/features/emergency/domain/formatCardValue'
 import texts from '@/locales/es.json'
 import { CARD_STYLE } from '@/features/emergency/domain/constants/card'
@@ -8,7 +9,10 @@ export function createCardLayout(context, data, rows, width, availableHeight) {
     .map((row) =>
       row
         .map(({ label, fields }) => ({
-          label: texts.fields[label].label,
+          label:
+            label === 'affiliation'
+              ? getAffiliationLabels(data.insurer).label
+              : texts.fields[label].label,
           values: fields
             .map((name) => formatCardValue(name, data[name]))
             .filter(Boolean),

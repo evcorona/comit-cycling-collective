@@ -19,8 +19,8 @@ export async function exportImageOnLetter(blob, widthCm, heightCm) {
     context.imageSmoothingEnabled = false
     context.drawImage(
       image,
-      Math.floor((canvas.width - width) / 2),
-      Math.floor((canvas.height - height) / 2),
+      cmToPrintPixels(LETTER_PAGE.marginCm),
+      cmToPrintPixels(LETTER_PAGE.marginCm),
       width,
       height,
     )

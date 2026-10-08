@@ -159,10 +159,10 @@ recomendación y matriz real del QR a su tamaño original, sin restar espacio po
 el logo. Se reservan franjas simétricas para centrar el QR horizontal y
 verticalmente dentro del borde. Los módulos se rasterizan en píxeles enteros con
 el mismo margen blanco de lectura. La vista previa usa el mismo SVG que se
-descarga. El logo queda incrustado en el SVG. El PNG individual se coloca
-centrado en una imagen carta de 2550 × 3300 px con metadatos pHYs a 300 ppp,
-para que al imprimir al 100 % conserve las medidas originales. Toastify JS
-confirma la descarga de QR o tarjeta.
+descarga. El logo queda incrustado en el SVG. El PNG individual se coloca a 1 cm
+del borde superior e izquierdo de una imagen carta de 2550 × 3300 px con
+metadatos pHYs a 300 ppp, para que al imprimir al 100 % conserve las medidas
+originales. Toastify JS confirma la descarga de QR o tarjeta.
 
 La vista en pantalla es una previsualización adaptable de hasta 320 px para la
 etiqueta. La clase `qr-print` mantiene el tamaño físico seleccionado con
@@ -174,11 +174,13 @@ sustituyen esa comprobación.
 
 ## Tarjeta de emergencia plegable
 
-La pieza plegable de 8.56 × 10.8 cm contiene ambas caras sin QR. Su descarga PNG
-se coloca centrada en una hoja carta de 2550 × 3300 px, a 300 ppp. Cada mitad
-mide 8.56 × 5.4 cm (1011 × 638 píxeles). El reverso está girado 180° para quedar
-orientado al plegar por la línea central. Imprimir al tamaño original, recortar
-el borde y doblar antes de enmicar.
+La pieza plegable de 8.56 × 10.8 cm contiene ambas caras sin QR y un borde
+punteado exterior de corte, además de la línea central de doblez. Su descarga
+PNG se coloca a 1 cm de los bordes superior e izquierdo en una hoja carta de
+2550 × 3300 px, a 300 ppp. Cada mitad mide 8.56 × 5.4 cm (1011 × 638 píxeles).
+El reverso está girado 180° para quedar orientado al plegar por la línea
+central. Imprimir al tamaño original, recortar el borde y doblar antes de
+enmicar.
 
 El frente muestra nombre, nacimiento, sangre y contactos. El reverso contiene
 nombre, condiciones médicas, aseguradora, nivel o plan, póliza y notas. El
@@ -227,6 +229,14 @@ valores. La misma regla se aplica en Zod y antes de generar los resultados para
 evitar que la tarjeta muestre datos ocultos de un seguro anterior. Al volver a
 una aseguradora privada o a una entrada libre, los campos reaparecen vacíos. Los
 datos de seguro siguen apareciendo exclusivamente en la tarjeta.
+
+Las instituciones públicas muestran un número de afiliación opcional: para IMSS
+se etiqueta «Número de seguro social» y para las demás «Número de afiliación».
+Admite texto ASCII libre en mayúsculas, hasta 32 caracteres, sin exigir 11
+dígitos. El número aparece solo en la tarjeta y se borra al cambiar de
+institución o volver a una aseguradora privada. El QR y la tarjeta descargados
+en PNG conservan sus medidas dentro de una hoja carta, a 1 cm de arriba y de la
+izquierda.
 
 ## Verificación
 

@@ -108,6 +108,15 @@ export const emergencyFields = [
     maxLength: 24,
   },
   {
+    name: 'affiliation',
+    label: texts.fields.affiliation.label,
+    placeholder: texts.fields.affiliation.placeholder,
+    required: false,
+    type: 'text',
+    fullWidth: true,
+    maxLength: 32,
+  },
+  {
     name: 'notes',
     group: 'notes',
     expandable: true,

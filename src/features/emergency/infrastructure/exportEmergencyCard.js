@@ -100,5 +100,7 @@ export async function exportEmergencyCard(result) {
   context.moveTo(0, faceHeight)
   context.lineTo(faceWidth, faceHeight)
   context.stroke()
+  context.strokeStyle = '#999999'
+  context.strokeRect(1, 1, canvas.width - 2, canvas.height - 2)
   return withPngResolution(canvas.toDataURL('image/png'), PRINT_DPI)
 }

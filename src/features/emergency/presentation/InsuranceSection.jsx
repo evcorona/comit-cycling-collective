@@ -5,7 +5,10 @@ import texts from '@/locales/es.json'
 import { InsuranceAutocomplete } from '@/features/emergency/presentation/InsuranceAutocomplete'
 import { EmergencyField } from '@/features/emergency/presentation/EmergencyField'
 import { emergencyFields } from '@/features/emergency/domain/constants/fields'
-import { isPublicHealthProvider } from '@/features/emergency/domain/constants/healthProviders'
+import {
+  isPublicHealthProvider,
+  getAffiliationLabels,
+} from '@/features/emergency/domain/constants/healthProviders'
 
 export function InsuranceSection({
   control,
@@ -17,6 +20,8 @@ export function InsuranceSection({
   const [isExpanded, setIsExpanded] = useState(false)
   const insurer = useWatch({ control, name: 'insurer' })
   function providerChanged(value) {
+    if (value !== insurer)
+      setValue('affiliation', '', { shouldValidate: true, shouldDirty: true })
     if (isPublicHealthProvider(value))
       for (const name of ['insurancePlan', 'policy'])
         setValue(name, '', { shouldValidate: true, shouldDirty: true })
@@ -33,6 +38,18 @@ export function InsuranceSection({
         error={errors.insurer}
         onProviderChange={providerChanged}
       />
+      {isPublicHealthProvider(insurer) && (
+        <EmergencyField
+          field={{
+            ...emergencyFields.find((item) => item.name === 'affiliation'),
+            ...getAffiliationLabels(insurer),
+          }}
+          control={control}
+          register={register}
+          error={errors.affiliation}
+          onChange={invalidate}
+        />
+      )}
       {!isPublicHealthProvider(insurer) &&
         ['insurancePlan', 'policy'].map((name) => (
           <EmergencyField
