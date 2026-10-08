@@ -1,3 +1,4 @@
+import { exportImageOnLetter } from '@/shared/exportImageOnLetter'
 import { qrLabelSvg } from '@/features/emergency/infrastructure/qrLabelSvg'
 import { analyzeQrLabel } from '@/features/emergency/domain/analyzeQrLabel'
 import { svgImageSource } from '@/lib/qr/svg'
@@ -15,7 +16,7 @@ export async function exportQrSvg(qr, sizeCm) {
     type: 'image/svg+xml;charset=utf-8',
   })
 }
-export async function exportQr(qr, sizeCm) {
+export async function exportQrLabelImage(qr, sizeCm) {
   const image = await loadImage(svgImageSource(await printableSvg(qr, sizeCm)))
   const canvas = document.createElement('canvas')
   canvas.width = analyzeQrLabel(qr.text, sizeCm, qr.totalModules).size
@@ -25,4 +26,13 @@ export async function exportQr(qr, sizeCm) {
   context.imageSmoothingEnabled = false
   context.drawImage(image, 0, 0, canvas.width, canvas.height)
   return withPngResolution(canvas.toDataURL('image/png'), PRINT_DPI)
+}
+
+export async function exportQr(qr, sizeCm) {
+  const layout = analyzeQrLabel(qr.text, sizeCm, qr.totalModules)
+  return exportImageOnLetter(
+    await exportQrLabelImage(qr, sizeCm),
+    layout.sizeCm,
+    layout.sizeCm,
+  )
 }

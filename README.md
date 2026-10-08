@@ -159,8 +159,10 @@ recomendación y matriz real del QR a su tamaño original, sin restar espacio po
 el logo. Se reservan franjas simétricas para centrar el QR horizontal y
 verticalmente dentro del borde. Los módulos se rasterizan en píxeles enteros con
 el mismo margen blanco de lectura. La vista previa usa el mismo SVG que se
-descarga y rasteriza a PNG. El logo queda incrustado en el SVG; el PNG mantiene
-metadatos pHYs a 300 ppp. Toastify JS confirma la descarga de QR o tarjeta.
+descarga. El logo queda incrustado en el SVG. El PNG individual se coloca
+centrado en una imagen carta de 2550 × 3300 px con metadatos pHYs a 300 ppp,
+para que al imprimir al 100 % conserve las medidas originales. Toastify JS
+confirma la descarga de QR o tarjeta.
 
 La vista en pantalla es una previsualización adaptable de hasta 320 px para la
 etiqueta. La clase `qr-print` mantiene el tamaño físico seleccionado con
@@ -172,18 +174,35 @@ sustituyen esa comprobación.
 
 ## Tarjeta de emergencia plegable
 
-Una sola imagen PNG de aproximadamente 8.56 × 10.8 cm, a 300 ppp, contiene ambas
-caras sin QR. Cada mitad mide 8.56 × 5.4 cm (1011 × 638 píxeles). El reverso
-está girado 180° para quedar orientado al plegar por la línea central. Imprimir
-al tamaño original, recortar el borde y doblar antes de enmicar.
+La pieza plegable de 8.56 × 10.8 cm contiene ambas caras sin QR. Su descarga PNG
+se coloca centrada en una hoja carta de 2550 × 3300 px, a 300 ppp. Cada mitad
+mide 8.56 × 5.4 cm (1011 × 638 píxeles). El reverso está girado 180° para quedar
+orientado al plegar por la línea central. Imprimir al tamaño original, recortar
+el borde y doblar antes de enmicar.
 
 El frente muestra nombre, nacimiento, sangre y contactos. El reverso contiene
-nombre, condiciones médicas y notas, incluidas alergias y medicamentos cuando se
-proporcionan. Las líneas y tipografía se ajustan sin recortar datos; si el
-contenido no cabe con la tipografía mínima, se solicita resumirlo. Ambas caras
-llevan el logo y `Comit Cycling Collective`. Las etiquetas conservan sus
-acentos. La vista previa y la descarga comparten el mismo PNG generado en
-memoria.
+nombre, condiciones médicas, aseguradora, nivel o plan, póliza y notas. El
+seguro es opcional y nunca se incluye en el QR. Sus límites son 30 caracteres
+para aseguradora y 24 para plan y póliza; se aplica la máscara ASCII y Zod. Los
+teléfonos se muestran como 55-1234-5678 en la tarjeta y solo dígitos en el QR.
+Las líneas y tipografía se ajustan sin recortar datos; si el contenido no cabe
+con la tipografía mínima, se solicita resumirlo. Ambas caras llevan el logo y
+`Comit Cycling Collective`. Las etiquetas conservan sus acentos. La vista previa
+muestra la pieza de cerca; la descarga la coloca en una hoja carta, manteniendo
+sus medidas.
+
+## Plantilla carta de QR
+
+El botón debajo de PNG/SVG crea un PDF de una sola página carta. Contiene 15
+etiquetas: ocho QR de 3 cm, tres de 4 cm, dos de 5 cm y dos de 6 cm. Cada tamaño
+usa su propio contenido seleccionado, logo y borde punteado. La distribución
+comprueba límites de página y no superpone piezas. Si los datos básicos no
+permiten los cuatro tamaños, se pide resumir antes de descargar. jsPDF se carga
+solo al solicitar la plantilla. Imprimir carta al 100 %, sin ajustar.
+
+Notas aparece al final del formulario, con ejemplos breves. La ayuda recomienda
+resumir para encontrar lo importante y facilitar la lectura del QR; no promete
+tiempos de atención ni lectura garantizada.
 
 ## Verificación
 

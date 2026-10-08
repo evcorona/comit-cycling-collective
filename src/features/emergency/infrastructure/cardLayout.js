@@ -1,3 +1,4 @@
+import { formatCardValue } from '@/features/emergency/domain/formatCardValue'
 import texts from '@/locales/es.json'
 import { CARD_STYLE } from '@/features/emergency/domain/constants/card'
 import { wrapCanvasText } from '@/shared/wrapCanvasText'
@@ -8,7 +9,9 @@ export function createCardLayout(context, data, rows, width, availableHeight) {
       row
         .map(({ label, fields }) => ({
           label: texts.fields[label].label,
-          values: fields.map((name) => data[name]?.trim()).filter(Boolean),
+          values: fields
+            .map((name) => formatCardValue(name, data[name]))
+            .filter(Boolean),
         }))
         .filter(({ values }) => values.length),
     )

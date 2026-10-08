@@ -1,3 +1,8 @@
+import { exportImageOnLetter } from '@/shared/exportImageOnLetter'
+import {
+  CARD_WIDTH_CM,
+  CARD_HEIGHT_CM,
+} from '@/features/emergency/domain/constants/card'
 import { useEffect, useState } from 'react'
 import { CreditCard, Download } from 'lucide-react'
 import texts from '@/locales/es.json'
@@ -8,6 +13,7 @@ import { downloadImage } from '@/shared/downloadImage'
 export function CardDownload({ result }) {
   const [image, setImage] = useState(null)
   const [error, setError] = useState('')
+  const [isDownloading, setIsDownloading] = useState(false)
   const [attempt, setAttempt] = useState(0)
   useEffect(() => {
     let cancelled = false
@@ -26,14 +32,26 @@ export function CardDownload({ result }) {
       if (url) URL.revokeObjectURL(url)
     }
   }, [result, attempt])
-  function download() {
+  async function download() {
     if (!image) {
       setError('')
       setAttempt((value) => value + 1)
       return
     }
-    downloadImage(image.blob, 'comit-tarjeta-plegable.png')
-    showDownloadToast()
+    setIsDownloading(true)
+    try {
+      const page = await exportImageOnLetter(
+        image.blob,
+        CARD_WIDTH_CM,
+        CARD_HEIGHT_CM * 2,
+      )
+      downloadImage(page, 'comit-tarjeta-carta.png')
+      showDownloadToast()
+    } catch {
+      setError(texts.card.error)
+    } finally {
+      setIsDownloading(false)
+    }
   }
   return (
     <div className="space-y-3 text-left">
@@ -56,15 +74,18 @@ export function CardDownload({ result }) {
       <button
         type="button"
         onClick={download}
-        disabled={!image && !error}
+        disabled={isDownloading || (!image && !error)}
+        aria-busy={isDownloading}
         className="flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-black px-4 py-3 text-sm font-semibold text-white hover:bg-black/80 disabled:opacity-50"
       >
         <Download size={16} />
-        {error
-          ? texts.card.retry
-          : !image
-            ? texts.export.busy
-            : texts.card.download}
+        {isDownloading
+          ? texts.export.busy
+          : error
+            ? texts.card.retry
+            : !image
+              ? texts.export.busy
+              : texts.card.download}
       </button>
       <p className="text-xs leading-5 text-muted">{texts.card.printHint}</p>
       {error && (

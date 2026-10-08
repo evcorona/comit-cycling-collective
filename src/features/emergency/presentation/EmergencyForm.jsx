@@ -8,12 +8,14 @@ import {
 } from '@/features/emergency/domain/constants/fields'
 import { EmergencyField } from '@/features/emergency/presentation/EmergencyField'
 const groups = [
-  { title: 'personal', names: ['name', 'birthDate', 'bloodType', 'notes'] },
+  { title: 'personal', names: ['name', 'birthDate', 'bloodType'] },
   { title: 'contact', names: ['contact', 'phone'] },
   {
     title: 'medical',
     names: medicalFieldNames,
   },
+  { title: 'insurance', names: ['insurer', 'insurancePlan', 'policy'] },
+  { title: 'notes', names: ['notes'] },
 ]
 export function EmergencyForm({
   register,
@@ -35,6 +37,9 @@ export function EmergencyForm({
       <p className="mb-5 text-xs text-muted">
         {texts.emergencyForm.requiredHint}
       </p>
+      <p className="mb-5 text-xs leading-5 text-muted">
+        {texts.emergencyForm.conciseHint}
+      </p>
       <div className="space-y-6">
         {groups.map((group) => (
           <fieldset
@@ -48,6 +53,23 @@ export function EmergencyForm({
               <p className="mb-3 text-xs leading-5 text-muted">
                 {texts.emergencyForm.medicalHint}
               </p>
+            )}
+            {group.title === 'insurance' && (
+              <p className="mb-3 text-xs text-muted">
+                {texts.emergencyForm.insuranceHint}
+              </p>
+            )}
+            {group.title === 'notes' && (
+              <div className="mb-3 rounded-xl bg-cream p-3 text-xs leading-5 text-muted">
+                <p className="font-semibold text-black">
+                  {texts.emergencyForm.notesSuggestionsTitle}
+                </p>
+                <ul className="mt-1 list-disc space-y-1 pl-4">
+                  {texts.emergencyForm.notesSuggestions.map((suggestion) => (
+                    <li key={suggestion}>{suggestion}</li>
+                  ))}
+                </ul>
+              </div>
             )}
             <div className="grid min-w-0 gap-x-4 gap-y-4 sm:grid-cols-2">
               {group.names.map((name) => {

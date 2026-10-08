@@ -14,6 +14,10 @@ export function QrDownload({ qrBySize }) {
   const [size, setSize] = useState(3)
   const qr = qrBySize[size]
   const [isExporting, setIsExporting] = useState(false)
+  const [isSheetExporting, setIsSheetExporting] = useState(false)
+  const canExportSheet = Object.values(qrBySize).every(
+    (item) => item.canDownload,
+  )
   const [error, setError] = useState('')
   async function download(format) {
     if (!qr.canDownload) return
@@ -30,6 +34,20 @@ export function QrDownload({ qrBySize }) {
       setError(texts.qr.exportError)
     } finally {
       setIsExporting(false)
+    }
+  }
+  async function downloadSheet() {
+    setIsSheetExporting(true)
+    setError('')
+    try {
+      const { exportQrSheet } =
+        await import('@/features/emergency/infrastructure/exportQrSheet')
+      downloadImage(await exportQrSheet(qrBySize), 'comit-plantilla-carta.pdf')
+      showDownloadToast()
+    } catch {
+      setError(texts.sheet.error)
+    } finally {
+      setIsSheetExporting(false)
     }
   }
   return (
@@ -67,7 +85,7 @@ export function QrDownload({ qrBySize }) {
       </div>
       <fieldset
         className="qr-controls"
-        disabled={isExporting}
+        disabled={isExporting || isSheetExporting}
       >
         <div className="flex items-center justify-between gap-3">
           <label
@@ -134,6 +152,19 @@ export function QrDownload({ qrBySize }) {
             </button>
           ))}
         </div>
+        <button
+          type="button"
+          onClick={downloadSheet}
+          disabled={!canExportSheet || isSheetExporting}
+          aria-busy={isSheetExporting}
+          className="mt-2 flex min-h-12 w-full items-center justify-center gap-2 rounded-xl border border-black/15 px-3 py-3 text-sm font-semibold disabled:opacity-50"
+        >
+          <Download size={17} />
+          {isSheetExporting ? texts.export.busy : texts.sheet.download}
+        </button>
+        {!canExportSheet && (
+          <p className="mt-2 text-xs text-muted">{texts.sheet.blocked}</p>
+        )}
       </fieldset>
       <details className="qr-controls min-w-0 border-t border-black/10 pt-3">
         <summary className="flex min-h-11 w-full cursor-pointer items-center justify-between gap-3 py-3 text-sm font-semibold">

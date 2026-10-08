@@ -12,9 +12,13 @@ export const CARD_FRONT_ROWS = [
 ]
 export const CARD_BACK_ROWS = [
   [{ label: 'name', fields: ['name'] }],
-  ...[...medicalFieldNames, 'notes'].map((name) => [
-    { label: name, fields: [name] },
-  ]),
+  ...medicalFieldNames.map((name) => [{ label: name, fields: [name] }]),
+  [{ label: 'insurer', fields: ['insurer'] }],
+  [
+    { label: 'insurancePlan', fields: ['insurancePlan'] },
+    { label: 'policy', fields: ['policy'] },
+  ],
+  [{ label: 'notes', fields: ['notes'] }],
 ]
 export const CARD_STYLE = {
   padding: 40,

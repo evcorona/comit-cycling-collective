@@ -39,7 +39,14 @@
     "generate": "Crear QR/tarjeta",
     "inputHint": "El texto se ajusta a mayúsculas, sin acentos ni emojis.",
     "addContact": "Agregar otro contacto",
-    "counter": "{count}/{limit} caracteres"
+    "counter": "{count}/{limit} caracteres",
+    "conciseHint": "Resume tus datos: menos texto facilita encontrar lo importante y mejora la lectura del QR.",
+    "notesSuggestionsTitle": "¿Qué puedes agregar?",
+    "notesSuggestions": [
+      "Idioma o ayuda que necesitas para comunicarte.",
+      "Una indicación breve que no hayas incluido en los otros campos."
+    ],
+    "insuranceHint": "Opcional. Estos datos aparecen solo en la tarjeta."
   },
   "emergencyPage": {
     "description": "Crea tu QR y tarjeta para llevar en cada rodada."
@@ -84,6 +91,18 @@
     "notes": {
       "label": "Notas",
       "placeholder": "Otros datos útiles para una emergencia."
+    },
+    "insurer": {
+      "label": "Aseguradora",
+      "placeholder": "Nombre del seguro médico"
+    },
+    "insurancePlan": {
+      "label": "Nivel o plan",
+      "placeholder": "Nombre del plan contratado"
+    },
+    "policy": {
+      "label": "Número de póliza",
+      "placeholder": "Letras y números de tu póliza"
     }
   },
   "common": {
@@ -131,7 +150,7 @@
     "customLabel": "Lado del QR (cm)",
     "confirm": "Descargar",
     "busy": "Preparando…",
-    "description": "Imprime al tamaño original y comprueba la lectura antes de salir.",
+    "description": "Imprime en tamaño carta al 100 %, sin ajustar, y comprueba la lectura.",
     "rangeError": "Elige entre 2 y 30 cm.",
     "preset": "{size} cm",
     "success": "¡Listo! Revisa tus descargas.",
@@ -161,11 +180,11 @@
   "card": {
     "title": "Tarjeta de emergencia",
     "description": "Toda tu información escrita, sin QR, en una sola imagen plegable.",
-    "size": "Imagen: 8.56 × 10.8 cm · Doblada: 8.56 × 5.4 cm",
+    "size": "Tarjeta: 8.56 × 10.8 cm · Doblada: 8.56 × 5.4 cm",
     "download": "Descargar tarjeta",
     "error": "No pudimos crear la tarjeta. Vuelve a intentarlo o reduce la cantidad de texto.",
     "footer": "Comit Cycling Collective",
-    "printHint": "Imprime al tamaño original. Recorta y dobla por la línea central; el reverso quedará orientado. Luego enmica.",
+    "printHint": "Imprime en tamaño carta al 100 %, sin ajustar. Recorta y dobla por la línea central; después enmica.",
     "medicalTitle": "Información médica",
     "noMedicalData": "Sin información médica registrada.",
     "fold": "Dobla por la línea",
@@ -175,7 +194,9 @@
   "sections": {
     "personal": "Tus datos",
     "contact": "Contacto de emergencia",
-    "medical": "Información médica"
+    "medical": "Información médica",
+    "insurance": "Seguro médico",
+    "notes": "Notas"
   },
   "qrDiagnostics": {
     "title": "Detalles de impresión",
@@ -227,5 +248,12 @@
   "expandable": {
     "conditions": "Agregar condiciones médicas",
     "notes": "Agregar notas"
+  },
+  "sheet": {
+    "title": "Comit · Plantilla de QR",
+    "download": "Descargar plantilla PDF",
+    "printHint": "Tamaño carta · Imprime al 100 %, sin ajustar. Cada QR incluye los datos que permite su tamaño.",
+    "blocked": "Resume los datos básicos para crear la plantilla de todos los tamaños.",
+    "error": "No se pudo crear la plantilla. Inténtalo de nuevo."
   }
 }
