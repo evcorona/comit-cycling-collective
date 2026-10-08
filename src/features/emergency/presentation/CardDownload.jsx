@@ -32,7 +32,7 @@ export function CardDownload({ result }) {
       if (url) URL.revokeObjectURL(url)
     }
   }, [result, attempt])
-  async function download() {
+  async function download(isTemplate = false) {
     if (!image) {
       setError('')
       setAttempt((value) => value + 1)
@@ -44,8 +44,14 @@ export function CardDownload({ result }) {
         image.blob,
         CARD_WIDTH_CM,
         CARD_HEIGHT_CM * 2,
+        isTemplate,
       )
-      downloadImage(page, 'comit-tarjeta-carta.pdf')
+      downloadImage(
+        page,
+        isTemplate
+          ? 'comit-plantilla-tarjetas-carta.pdf'
+          : 'comit-tarjeta-carta.pdf',
+      )
       showDownloadToast()
     } catch {
       setError(texts.card.error)
@@ -73,7 +79,7 @@ export function CardDownload({ result }) {
       )}
       <button
         type="button"
-        onClick={download}
+        onClick={() => download()}
         disabled={isDownloading || (!image && !error)}
         aria-busy={isDownloading}
         className="flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-black px-4 py-3 text-sm font-semibold text-white hover:bg-black/80 disabled:opacity-50"
@@ -87,6 +93,17 @@ export function CardDownload({ result }) {
               ? texts.export.busy
               : texts.card.download}
       </button>
+      <button
+        type="button"
+        onClick={() => download(true)}
+        disabled={isDownloading || !image}
+        aria-busy={isDownloading}
+        className="flex min-h-12 w-full items-center justify-center gap-2 rounded-lg border border-black/15 px-4 py-3 text-sm font-semibold disabled:opacity-50"
+      >
+        <Download size={16} />
+        {isDownloading ? texts.export.busy : texts.card.templateDownload}
+      </button>
+      <p className="text-xs leading-5 text-muted">{texts.card.templateHint}</p>
       <p className="text-xs leading-5 text-muted">{texts.card.printHint}</p>
       {error && (
         <p

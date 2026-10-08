@@ -185,6 +185,8 @@
     "description": "Toda tu información escrita, sin QR, en una sola imagen plegable.",
     "size": "Tarjeta: 8.56 × 10.8 cm · Doblada: 8.56 × 5.4 cm",
     "download": "Descargar tarjeta PDF",
+    "templateDownload": "Descargar plantilla PDF",
+    "templateHint": "4 tarjetas por hoja carta, listas para recortar y doblar.",
     "error": "No pudimos crear la tarjeta. Vuelve a intentarlo o reduce la cantidad de texto.",
     "footer": "Comit Cycling Collective",
     "printHint": "Imprime en tamaño carta al 100 %, sin ajustar. Recorta y dobla por la línea central; después enmica.",

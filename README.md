@@ -192,6 +192,12 @@ con la tipografía mínima, se solicita resumirlo. Ambas caras llevan el logo y
 muestra la pieza de cerca; la descarga la coloca en una hoja carta, manteniendo
 sus medidas.
 
+El botón «Descargar plantilla PDF» genera cuatro tarjetas en una sola hoja
+carta, distribuidas en dos columnas y dos filas. Cada pieza conserva sus 8.56 ×
+10.8 cm, las guías de corte y doblez, un margen superior e izquierdo de 1 cm y
+una separación de 0.5 cm. La descarga individual sigue disponible. Imprimir al
+100 %, sin ajustar a página.
+
 ## Plantilla carta de QR
 
 El botón debajo de PDF/SVG crea un PDF de una sola página carta. Contiene 15

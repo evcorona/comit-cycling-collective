@@ -1,6 +1,6 @@
-import { LETTER_PAGE } from '@/shared/constants/print'
+import { imagePrintPositions } from '@/shared/imagePrintPositions'
 
-export async function exportImagePdf(blob, widthCm, heightCm) {
+export async function exportImagePdf(blob, widthCm, heightCm, repeat = false) {
   const { jsPDF } = await import('jspdf')
   const pdf = new jsPDF({
     orientation: 'portrait',
@@ -8,15 +8,8 @@ export async function exportImagePdf(blob, widthCm, heightCm) {
     format: 'letter',
     compress: true,
   })
-  pdf.addImage(
-    new Uint8Array(await blob.arrayBuffer()),
-    'PNG',
-    LETTER_PAGE.marginCm,
-    LETTER_PAGE.marginCm,
-    widthCm,
-    heightCm,
-    undefined,
-    'FAST',
-  )
+  const image = new Uint8Array(await blob.arrayBuffer())
+  for (const { x, y } of imagePrintPositions(widthCm, heightCm, repeat))
+    pdf.addImage(image, 'PNG', x, y, widthCm, heightCm, 'piece', 'FAST')
   return pdf.output('blob')
 }
