@@ -179,14 +179,23 @@ describe('emergency input and single QR integration', () => {
       formSchema.safeParse({ ...data, conditions: 'A'.repeat(101) }).success,
     ).toBe(false)
   })
-  it('includes contacts, medical text and notes in one embedded uppercase payload', async () => {
+  it('uses a vCard with emergency contacts and medical text, keeping notes card-only', async () => {
     const result = await createEmergencyQr(data, createPrintableQr)
     expect(result.qrs).toBeUndefined()
-    expect(result.qr.text).toContain('CONTACTO-1: LUIS 5512345678')
-    expect(result.qr.text).toContain('INFO-MEDICA: ALERGIA: PENICILINA')
-    expect(result.qr.text).toContain('NOTAS: AVISAR A MI FAMILIA')
-    expect(result.qr.text).toBe(result.qr.text.toUpperCase())
-    expect(result.qr.text.endsWith('EMERGENCIA')).toBe(true)
+    const text = result.qr.text.replace(/\r\n /g, '')
+    expect(text).toContain('CONTACTO-1: LUIS 5512345678')
+    expect(text).toContain('INFO-MEDICA: ALERGIA: PENICILINA')
+    expect(text).not.toContain('NOTAS: AVISAR A MI FAMILIA')
+    expect(result.data.notes).toBe(data.notes)
+    expect(result.qr.displayText).toBe(result.qr.displayText.toUpperCase())
+    expect(result.qr.text).toMatch(/^BEGIN:VCARD\r\nVERSION:3.0/)
+    expect(result.qr.text).toMatch(/END:VCARD\r\n$/)
+    for (const qr of Object.values(result.qrBySize)) {
+      expect(qr.text).toContain('BEGIN:VCARD')
+      expect(qr.text).not.toContain(data.notes)
+      expect(qr.omitted).not.toContain('notes')
+      expect(qr.displayText).not.toContain('BEGIN:VCARD')
+    }
     expect(
       CARD_FRONT_ROWS.flatMap((row) => row.flatMap(({ fields }) => fields)),
     ).not.toContain('notes')

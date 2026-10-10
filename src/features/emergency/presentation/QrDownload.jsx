@@ -1,4 +1,3 @@
-import { VCardDownload } from '@/features/emergency/presentation/VCardDownload'
 import { useState } from 'react'
 import clsx from 'clsx'
 import { Download } from 'lucide-react'
@@ -11,7 +10,7 @@ import {
 import { showDownloadToast } from '@/shared/showDownloadToast'
 import { downloadImage } from '@/shared/downloadImage'
 
-export function QrDownload({ qrBySize, data }) {
+export function QrDownload({ qrBySize }) {
   const [size, setSize] = useState(3)
   const qr = qrBySize[size]
   const [isExporting, setIsExporting] = useState(false)
@@ -163,11 +162,6 @@ export function QrDownload({ qrBySize, data }) {
           <Download size={17} />
           {isSheetExporting ? texts.export.busy : texts.sheet.download}
         </button>
-        <VCardDownload
-          key={size}
-          data={data}
-          size={size}
-        />
         {!canExportSheet && (
           <p className="mt-2 text-xs text-muted">{texts.sheet.blocked}</p>
         )}
@@ -177,7 +171,7 @@ export function QrDownload({ qrBySize, data }) {
           {texts.export.qrDataTitle}
         </summary>
         <pre className="mt-2 whitespace-pre-wrap break-words rounded-xl bg-cream p-3 font-sans text-sm leading-6 [overflow-wrap:anywhere]">
-          {qr.text}
+          {qr.displayText ?? qr.text}
         </pre>
       </details>
     </div>

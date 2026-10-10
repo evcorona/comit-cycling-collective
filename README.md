@@ -81,14 +81,13 @@ Limpiar elimina los valores y vuelve a cerrar estos campos.
 
 ## QR de emergencia
 
-Un solo QR puede contener nombre, año de nacimiento, sangre, contactos,
-condiciones médicas, aseguradora o institución y notas. El texto termina con
-`EMERGENCIA`, está en mayúsculas y no depende de URLs, servicios externos ni
-almacenamiento. Las etiquetas son breves (`NOMBRE`, `NACIMIENTO`, `SANGRE`,
-`CONTACTO-1`, `CONTACTO-2`, `INFO-MEDICA`, `SEGURO`, `NOTAS`). Cada contacto
-reúne nombre y teléfono en una línea, separados por un espacio. La revisión
-muestra exactamente el texto que se codifica. Si no hay información médica, se
-indica explícitamente.
+El QR utiliza vCard 3.0 para que los lectores compatibles reconozcan un contacto
+con teléfonos de emergencia. Puede contener nombre, año de nacimiento, sangre,
+contactos, información médica y aseguradora o institución. El campo Notas se
+conserva únicamente en la tarjeta. Los valores son mayúsculas sin acentos y no
+dependen de URLs, servicios externos ni almacenamiento. La sección «Datos
+incluidos en tu QR» presenta una versión legible del contenido, sin las
+propiedades técnicas de vCard.
 
 El campo de condiciones médicas permite incluir alergias, enfermedades y
 medicamentos y tiene un límite de 100 caracteres. Notas tiene 80 caracteres.
@@ -295,18 +294,17 @@ izquierda. Los PNG se usan internamente para la vista previa y para incrustar
 las piezas en el PDF. El SVG del QR y la plantilla PDF múltiple siguen
 disponibles.
 
-## Prueba temporal de QR vCard
+## QR vCard
 
-El botón «Probar QR vCard · PDF» genera un QR con contenido vCard 3.0 en una
-página carta, usando el tamaño seleccionado, logo y borde existentes. Conserva
-el formato de texto y sus descargas. La selección de campos se calcula con la
-capacidad real del contenido vCard y las mismas prioridades; el campo Notas se
-excluye siempre. Los teléfonos usan propiedades TEL y etiquetas de emergencia
-para iOS; los nombres de contactos y datos médicos se incluyen en NOTE para
-lectores de contactos. El plan, póliza y afiliación siguen fuera del QR.
+PDF, SVG, vista previa y plantilla utilizan el mismo contenido vCard 3.0 y la
+selección correspondiente al tamaño. El botón temporal fue retirado tras la
+validación del usuario en iPhone. Los teléfonos usan propiedades TEL y etiquetas
+de emergencia para iOS; los nombres de contactos y datos médicos se incluyen en
+NOTE para lectores de contactos. El campo Notas del formulario no se incluye. El
+plan, póliza y afiliación siguen fuera del QR.
 
-El archivo utiliza CRLF, escapes y líneas plegadas a 75 caracteres ASCII. Las
-pruebas digitales comprueban generación y lectura del código, no garantizan cómo
-Cámara o Contactos de iOS presentan las notas. Validar esa presentación en un
-iPhone antes de sustituir el formato habitual. No se requiere conexión para leer
-el contenido ni se guarda información.
+El archivo utiliza CRLF, escapes y líneas plegadas a 75 caracteres ASCII. La
+capacidad se calcula sobre ese contenido completo, no sobre la vista legible.
+Las pruebas digitales comprueban generación y lectura del código. La
+presentación de campos depende del lector del teléfono. No se requiere conexión
+para leer el contenido ni se guarda información.

@@ -18,7 +18,7 @@ const data = {
 }
 const unfold = (text) => text.replace(/\r\n /g, '')
 
-describe('temporary emergency vCard QR', () => {
+describe('emergency vCard QR', () => {
   it('encodes a vCard 3.0 with callable emergency phones and excludes user notes', () => {
     const text = unfold(formatVCardData(data).text)
     expect(text).toContain('BEGIN:VCARD\r\nVERSION:3.0\r\n')

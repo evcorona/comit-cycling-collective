@@ -43,6 +43,7 @@ export function formatVCardData(data) {
   return {
     id: 'vcard',
     title: details.title,
+    displayText: details.text,
     text: `${lines.map(foldLine).join('\r\n')}\r\n`,
   }
 }
