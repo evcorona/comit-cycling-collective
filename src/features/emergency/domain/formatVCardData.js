@@ -39,7 +39,11 @@ export function formatVCardData(data) {
     { ...data, notes: '' },
     { includeMedicalNotice: false },
   )
-  lines.push(`NOTE:${escapeValue(details.text)}`, 'END:VCARD')
+  const note = formatQrData(
+    { ...data, name: '', notes: '' },
+    { includeMedicalNotice: false },
+  )
+  lines.push(`NOTE:${escapeValue(note.text)}`, 'END:VCARD')
   return {
     id: 'vcard',
     title: details.title,

@@ -20,9 +20,12 @@ const unfold = (text) => text.replace(/\r\n /g, '')
 
 describe('emergency vCard QR', () => {
   it('encodes a vCard 3.0 with callable emergency phones and excludes user notes', () => {
-    const text = unfold(formatVCardData(data).text)
+    const result = formatVCardData(data)
+    const text = unfold(result.text)
     expect(text).toContain('BEGIN:VCARD\r\nVERSION:3.0\r\n')
     expect(text).toContain('N:;ANA;;;\r\nFN:ANA\r\n')
+    expect(text).not.toContain('NOMBRE: ANA')
+    expect(result.displayText).toContain('NOMBRE: ANA')
     expect(text).toContain('item1.TEL;TYPE=VOICE:5512345678')
     expect(text).toContain('item2.TEL;TYPE=VOICE:5598765432')
     expect(text).toContain('item1.X-ABLabel:EMERGENCIA - LUIS')
