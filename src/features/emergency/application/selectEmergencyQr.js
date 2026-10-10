@@ -6,12 +6,17 @@ import {
 } from '@/features/emergency/domain/constants/qr'
 
 // Keep name and primary contact intact; add complete groups in priority order.
-export async function selectEmergencyQr(data, size, encodeQr) {
+export async function selectEmergencyQr(
+  data,
+  size,
+  encodeQr,
+  formatContent = formatQrData,
+) {
   const selected = Object.fromEntries(
     QR_REQUIRED_FIELDS.map((field) => [field, data[field]]),
   )
   async function encode(values) {
-    const content = formatQrData(values, { includeMedicalNotice: false })
+    const content = formatContent(values, { includeMedicalNotice: false })
     return { ...content, ...(await encodeQr(content.text)) }
   }
   let qr = await encode(selected)

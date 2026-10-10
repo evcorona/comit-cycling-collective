@@ -294,3 +294,19 @@ conservan las medidas de cada pieza y su ubicación a 1 cm de arriba y de la
 izquierda. Los PNG se usan internamente para la vista previa y para incrustar
 las piezas en el PDF. El SVG del QR y la plantilla PDF múltiple siguen
 disponibles.
+
+## Prueba temporal de QR vCard
+
+El botón «Probar QR vCard · PDF» genera un QR con contenido vCard 3.0 en una
+página carta, usando el tamaño seleccionado, logo y borde existentes. Conserva
+el formato de texto y sus descargas. La selección de campos se calcula con la
+capacidad real del contenido vCard y las mismas prioridades; el campo Notas se
+excluye siempre. Los teléfonos usan propiedades TEL y etiquetas de emergencia
+para iOS; los nombres de contactos y datos médicos se incluyen en NOTE para
+lectores de contactos. El plan, póliza y afiliación siguen fuera del QR.
+
+El archivo utiliza CRLF, escapes y líneas plegadas a 75 caracteres ASCII. Las
+pruebas digitales comprueban generación y lectura del código, no garantizan cómo
+Cámara o Contactos de iOS presentan las notas. Validar esa presentación en un
+iPhone antes de sustituir el formato habitual. No se requiere conexión para leer
+el contenido ni se guarda información.

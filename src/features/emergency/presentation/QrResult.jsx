@@ -75,6 +75,7 @@ export function QrResult({ result }) {
             <QrDownload
               key={qr.text}
               qrBySize={result.qrBySize}
+              data={result.data}
             />
           </div>
           {downloadType === 'card' && (

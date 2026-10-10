@@ -375,5 +375,12 @@
         "type": "private"
       }
     ]
+  },
+  "vcard": {
+    "download": "Probar QR vCard · PDF",
+    "hint": "Prueba temporal para iPhone. No incluye el campo Notas.",
+    "tooLong": "Aumenta el tamaño o resume los nombres para descargar el QR vCard.",
+    "partial": "Este QR vCard incluye solo la información adecuada para el tamaño elegido.",
+    "error": "No pudimos descargar el QR vCard. Vuelve a intentarlo."
   }
 }
