@@ -31,6 +31,7 @@ describe('emergency vCard QR', () => {
     expect(text).not.toContain(data.notes)
     expect(text).not.toContain(data.policy)
     expect(text).toMatch(/END:VCARD\r\n$/)
+    expect(text).not.toContain('\\nEMERGENCIA\r\nEND:VCARD')
   })
   it('escapes punctuation and folds long ASCII lines without corrupting values', () => {
     const name = 'ANA;LOPEZ,TEST\\NAME'

@@ -21,8 +21,6 @@ export function formatQrData(data, { includeMedicalNotice = true } = {}) {
   return {
     id: 'emergencia',
     title: texts.qr.titles.emergency,
-    text: stripDiacritics(
-      [...lines, texts.qr.titles.emergency].join('\n'),
-    ).toUpperCase(),
+    text: stripDiacritics(lines.join('\n')).toUpperCase(),
   }
 }

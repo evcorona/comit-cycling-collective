@@ -29,7 +29,6 @@ describe('compact emergency QR labels', () => {
         'SEGURO: IMSS',
         'CONTACTO-2: SOFIA 5598765432',
         'NOTAS: AVISAR A MI FAMILIA',
-        'EMERGENCIA',
       ].join('\n'),
     )
   })
